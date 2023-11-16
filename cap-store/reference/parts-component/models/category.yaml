@@ -1,0 +1,32 @@
+title: Category
+x-stoplight:
+  id: 6smcltlkxnmc1
+type: object
+description: 電子部品のカテゴリー
+properties:
+  id:
+    type: integer
+    description: カテゴリーID
+  name:
+    type: string
+    description: カテゴリー名
+  image:
+    type: string
+    description: カテゴリーの画像URL
+    format: uri
+required:
+  - id
+  - name
+examples:
+  - id: 0
+    name: LED
+    image: 'http://example.com'
+  - id: 0
+    name: 電池
+    image: 'http://example.com'
+  - id: 0
+    name: 半導体
+    image: 'http://example.com'
+  - id: 0
+    name: センサー
+    image: 'http://example.com'

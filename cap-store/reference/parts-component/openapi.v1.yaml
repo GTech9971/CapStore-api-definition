@@ -1,0 +1,127 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 8uw9lqwqytvi1
+info:
+  title: PartsComponentsAPI.v1
+  version: '1.0'
+  description: |-
+    # Components API
+    電子部品のCRUDを行うWebAPI
+  summary: 電子部品のCRUDを行う
+servers:
+  - url: 'http://localhost:3000/api/v1/'
+paths:
+  '/components/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: 電子部品ID
+    get:
+      summary: 電子部品情報取得
+      tags:
+        - components
+      operationId: get-components-componentId
+      description: 指定した電子部品IDと一致する電子部品情報を取得する
+  /components:
+    post:
+      summary: 電子部品新規登録
+      operationId: post-components
+      description: 電子部品を新規登録する
+      responses:
+        '200':
+          description: |-
+            ## OK
+            新規登録成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/success-model'
+                  - type: object
+                    properties:
+                      data:
+                        allOf:
+                          - $ref: '#/components/schemas/componentId'
+              examples:
+                Example 1:
+                  value:
+                    success: true
+                    data:
+                      id: 100
+      x-internal: false
+components:
+  schemas:
+    error:
+      title: error
+      x-stoplight:
+        id: a5b38c4d1f089
+      type: object
+      description: エラー内容
+      examples: []
+      properties:
+        code:
+          type: string
+          minLength: 3
+          description: エラーコード
+          example: C999
+          default: C999
+        message:
+          type: string
+          description: エラーメッセージ
+          example: 異常終了しました
+          default: 異常終了しました
+      required:
+        - code
+        - message
+    success-model:
+      title: success-model
+      x-stoplight:
+        id: vv1aeg7dc0o1c
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+    error-model:
+      title: error-model
+      x-stoplight:
+        id: 18d99ed9e7399
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        data:
+          type: object
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      required:
+        - success
+        - errors
+    componentId:
+      title: 電子部品ID
+      x-stoplight:
+        id: 6esz520eaz4wc
+      type: object
+      properties:
+        id:
+          type: integer
+          minimum: 100
+          default: 100
+          example: 100
+          description: 電子部品ID
+      required:
+        - id
+      description: ''
+  securitySchemes: {}
+  requestBodies: {}
+  responses: {}
+tags:
+  - name: components
+x-internal: false

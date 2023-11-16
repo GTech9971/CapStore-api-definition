@@ -1,0 +1,49 @@
+title: PartsComponent
+x-stoplight:
+  id: b5ph0jllalwgv
+type: object
+description: 電子部品
+examples:
+  - id: 0
+    name: PIC16F1827
+    modelName: PIC16F1827-I/P
+    description: string
+    category:
+      id: 0
+      name: 半導体
+      image: 'http://example.com'
+    maker:
+      id: 0
+      name: Microchip
+      image: string
+    image: string
+properties:
+  id:
+    type: integer
+    description: 電子部品ID
+    minimum: 0
+  name:
+    type: string
+    description: 電子部品名
+  modelName:
+    type: string
+    description: モデル名
+  description:
+    type: string
+    description: 説明
+  category:
+    $ref: ./category.yaml
+    description: カテゴリー
+  maker:
+    $ref: ./maker.yaml
+    description: 製造メーカー
+  image:
+    type: string
+    description: 電子部品画像URL
+    format: uri
+required:
+  - id
+  - name
+  - modelName
+  - category
+  - maker
