@@ -1,0 +1,184 @@
+openapi: 3.1.0
+x-stoplight:
+  id: z5fs5e7ybz99x
+info:
+  title: 秋月電子連携API
+  version: '1.0'
+  summary: 秋月電子通販サイトの情報を取得、注文情報の取得等を行う
+  description: |
+    # 秋月電子連携API
+    ## 目的
+
+    ## 共通処理
+    ### 1.
+    ### 2. 
+  termsOfService: 'https://akizukidenshi.com/catalog/top.aspx'
+servers:
+  - url: 'http://localhost:3000/api/v1/akizuki/'
+paths:
+  '/catalogs/{catalogId}':
+    get:
+      summary: カタログ情報取得
+      tags: []
+      responses:
+        '200':
+          description: |-
+            ## OK(200) 成功
+            電子部品情報取得成功
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/success-model
+                  - type: object
+                    properties:
+                      data:
+                        $ref: ../parts-component/models/parts-component.yaml
+        '400':
+          description: |-
+            ## Bad Request(400) 不正リクエスト
+            ### エラーコード:C400
+            入力パラメータ不正
+          content:
+            application/json:
+              schema:
+                $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
+              examples:
+                C400:
+                  value:
+                    success: false
+                    data: {}
+                    errors:
+                      - code: C400
+                        message: 入力パラメータ不正
+        '404':
+          description: |-
+            ## Not Found(404) 存在しない
+            ### エラーコード: AKE0101
+              カタログIDが存在しない
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
+              examples:
+                AKE0101:
+                  value:
+                    success: false
+                    data: {}
+                    errors:
+                      - code: AKE0101
+                        message: 異常終了しました
+        '500':
+          description: |-
+            ## Internal Server Error(500) サーバー内エラー
+            ### エラーコード:AKE0102
+            パース処理に失敗
+
+            ### エラーコード:AKE0103
+            通販サイトの接続に失敗
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
+              examples:
+                AKE0102:
+                  value:
+                    success: false
+                    data: {}
+                    errors:
+                      - code: AKE0102
+                        message: パース処理に失敗
+                AKE0103:
+                  value:
+                    success: false
+                    data: {}
+                    errors:
+                      - code: AKE0103
+                        message: 通販サイトの接続に失敗
+      operationId: get-catalogs-catalogId
+      description: |-
+        # カタログ情報取得 API
+        1. パスパラメーターのカタログIDを基に秋月電子の通販サイトを検索する
+
+        2. 電子部品が存在した場合、ページ内容をパースする
+
+        3. パースした結果をレスポンスとして返す
+      x-internal: true
+    parameters:
+      - name: catalogId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^gI-\d{5}$'
+          minLength: 8
+          maxLength: 8
+          example: gI-12467
+        description: '## 秋月電子のカタログID'
+components:
+  schemas:
+    error:
+      title: error
+      x-stoplight:
+        id: a5b38c4d1f089
+      type: object
+      description: エラー内容
+      examples: []
+      properties:
+        code:
+          type: string
+          minLength: 3
+          description: エラーコード
+          example: C999
+          default: C999
+        message:
+          type: string
+          description: エラーメッセージ
+          example: 異常終了しました
+          default: 異常終了しました
+      required:
+        - code
+        - message
+    success-model:
+      title: success-model
+      x-stoplight:
+        id: vv1aeg7dc0o1c
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+    error-model:
+      title: error-model
+      x-stoplight:
+        id: 18d99ed9e7399
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        data:
+          type: object
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      required:
+        - success
+        - errors
+  parameters:
+    catalogId:
+      name: catalogId
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^gI-\d{5}$'
+        minLength: 8
+        maxLength: 8
+        example: gI-12467
+      description: '## 秋月電子のカタログID'
+x-internal: true

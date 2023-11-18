@@ -2,21 +2,8 @@ title: PartsComponent
 x-stoplight:
   id: b5ph0jllalwgv
 type: object
-description: 電子部品
-examples:
-  - id: 0
-    name: PIC16F1827
-    modelName: PIC16F1827-I/P
-    description: string
-    category:
-      id: 0
-      name: 半導体
-      image: 'http://example.com'
-    maker:
-      id: 0
-      name: Microchip
-      image: string
-    image: string
+description: '## 電子部品'
+examples: []
 properties:
   id:
     type: integer
