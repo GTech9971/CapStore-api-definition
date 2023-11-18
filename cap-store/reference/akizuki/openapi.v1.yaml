@@ -117,6 +117,34 @@ paths:
           maxLength: 8
           example: gI-12467
         description: '## 秋月電子のカタログID'
+  /catalogs/orders:
+    get:
+      summary: 購入履歴
+      tags: []
+      responses: {}
+      operationId: get-catalogs-orders
+      x-internal: true
+      description: |-
+        # 購入履歴取得API
+        ## 秋月電子の購入履歴を取得する
+      parameters:
+        - schema:
+            type: integer
+            example: 1
+            minimum: 1
+          in: query
+          name: page
+          description: 取得ページ
+          allowEmptyValue: true
+        - schema:
+            type: integer
+            default: 10
+            example: 10
+            minimum: 1
+          in: query
+          name: size
+          description: 取得件数
+          allowEmptyValue: true
 components:
   schemas:
     error:
@@ -169,6 +197,55 @@ components:
       required:
         - success
         - errors
+    orderId:
+      title: 注文ID
+      x-stoplight:
+        id: 9sznsfy7vrad8
+      type: object
+      description: '## 秋月電子で注文した際のID'
+      properties:
+        orderId:
+          type: string
+          description: 注文ID
+          pattern: '^E\d{6}-\d{6}-\d{2}$'
+          minLength: 17
+          maxLength: 17
+          example: E230617-031873-01
+      required:
+        - orderId
+    order-model:
+      allOf:
+        - $ref: '#/components/schemas/orderId'
+          description: 注文ID
+        - $ref: '#/components/schemas/slipNumber-model'
+        - type: object
+          properties:
+            process:
+              type: integer
+              minimum: 0
+              maximum: 100
+              example: 20
+              description: |-
+                ## 発送状況
+                ### 配送業者 佐川急便
+                - 20%…発送待ち
+                - 40～80%…発送作業中
+                - 100%…出荷完了
+      title: 注文モデル
+      x-internal: true
+      description: '## 秋月電子で注文した注文モデル'
+    slipNumber-model:
+      title: 伝票番号
+      x-stoplight:
+        id: 1oj8xsipw2msc
+      type: object
+      description: '## 秋月電子で注文した伝票番号'
+      properties:
+        slipNumber:
+          type: integer
+          example: 569321486926
+          minimum: 12
+          description: 伝票番号
   parameters:
     catalogId:
       name: catalogId
@@ -181,4 +258,15 @@ components:
         maxLength: 8
         example: gI-12467
       description: '## 秋月電子のカタログID'
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+        example: E230617-031873-01
+        pattern: '^E\d{6}-\d{6}-\d{2}$'
+        minLength: 17
+        maxLength: 17
+      description: 秋月電子で注文した注文ID
 x-internal: true
