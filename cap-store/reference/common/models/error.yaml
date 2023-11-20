@@ -1,0 +1,54 @@
+title: Error
+x-stoplight:
+  id: 0b3boky0jstnh
+type: object
+description: |-
+  ## エラー情報
+  ### C400
+  入力パラメーターエラー
+
+  ### C401
+  認証失敗エラー
+
+  ### C999
+  異常終了時のエラー
+  このパターンのみ`stack`に値が入る
+
+  ### AKE0101
+  API固有のエラー
+
+  先頭の2文字がAPIの頭文字
+  3文字目のEは`Error`の`E`
+  最後の数字の最初の2桁はAPIのHttpStatusCodeごとに繰り上がる
+  #### 例
+  - HttpStatusCode 400
+    - エラー1つ目 `0101`
+    - エラー2つ目 `0102`
+  - HttpStatusCode 404
+    - エラー1つ目 `0201`
+    - エラー2つ目 `0202`
+x-internal: true
+properties:
+  code:
+    type: string
+    x-stoplight:
+      id: w0dlik87ps9tb
+    example: AKE0101
+    default: C999
+    minLength: 4
+    description: エラーコード
+  message:
+    type: string
+    x-stoplight:
+      id: 73vo0ypib8p18
+    example: 予期せぬエラーが発生しました
+    description: エラーメッセージ
+  stack:
+    type: string
+    x-stoplight:
+      id: 5i0wwhjgp768f
+    description: StackTraceの内容 C999の場合のみ
+    example: IOException StreamReader.Read at 102 line...
+required:
+  - code
+  - message

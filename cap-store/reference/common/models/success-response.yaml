@@ -1,0 +1,20 @@
+title: success-response
+x-stoplight:
+  id: mue4kyllicgvo
+type: object
+description: '## 成功時のレスポンス'
+properties:
+  success:
+    type: boolean
+    x-stoplight:
+      id: nshc4hozoax1y
+    default: true
+    description: 成功かどうか
+  data:
+    type: object
+    x-stoplight:
+      id: fdvic39o78vr4
+    description: データ
+required:
+  - success
+x-internal: true
