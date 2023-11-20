@@ -132,6 +132,59 @@ paths:
       x-internal: true
       requestBody:
         $ref: '#/components/requestBodies/stock-entry-request'
+  /inventories/allocation:
+    post:
+      summary: 在庫引当登録
+      operationId: post-inventories-allocation
+      responses:
+        '200':
+          $ref: '#/components/responses/allocation-success-response'
+        '400':
+          description: |-
+            ## Bad Request(400) 不正リクエスト
+            ### C400
+
+            ### IACXXXX
+            在庫数が足りない
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '401':
+          description: |-
+            ## Unauthorized(401) 認証されていない
+            ### C401
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '403':
+          description: |-
+            ## Forbidden(403) 権限が無い
+            ### IACXXXX
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '404':
+          description: |-
+            ## Not Found(404) 存在しない
+            ### IACXXXX
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '500':
+          description: |-
+            ## Internal Server Error(500) サーバー内エラー
+            ### C999
+      x-internal: true
+      description: |-
+        # 在庫引当登録
+        ## 目的
+        電子部品の在庫を引当登録する
+      requestBody:
+        $ref: '#/components/requestBodies/allocation-request'
 components:
   schemas:
     inventory:
@@ -189,6 +242,35 @@ components:
           required:
             - arrivalDate
       x-internal: true
+    allocationId:
+      title: allocationId
+      x-stoplight:
+        id: vxbgf8nlozs3f
+      type: object
+      description: '## 引当ID'
+      properties:
+        allocationId:
+          type: integer
+          x-stoplight:
+            id: 36suefe2dvxtn
+          description: 引当ID
+          minimum: 1
+          example: 21
+      required:
+        - allocationId
+    allocation-inventory:
+      title: allocation-inventory
+      x-stoplight:
+        id: 5t8uynb22isao
+      description: '## 引当在庫情報'
+      x-internal: true
+      allOf:
+        - $ref: '#/components/schemas/inventory'
+          description: 在庫情報
+        - $ref: '#/components/schemas/allocationId'
+          x-stoplight:
+            id: qsq02d5ubw0jc
+          description: 引当ID
   responses:
     fetch-inventories-success-response:
       description: '## 在庫情報取得成功レスポンス'
@@ -252,6 +334,29 @@ components:
                       x-stoplight:
                         id: 2i7pcqs29gxyt
           examples: {}
+    allocation-success-response:
+      description: '## 在庫引当登録成功レスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-response.yaml
+                x-stoplight:
+                  id: p0vb2xc4rrqcj
+              - type: object
+                x-stoplight:
+                  id: 3wjscqlob2yln
+                properties:
+                  data:
+                    x-stoplight:
+                      id: 6mbwoxyy4f2ki
+                    type: array
+                    description: 引当登録在庫情報リスト
+                    items:
+                      $ref: '#/components/schemas/allocation-inventory'
+                      x-stoplight:
+                        id: lmdo7of6gzvv6
+          examples: {}
   requestBodies:
     stock-entry-request:
       content:
@@ -270,4 +375,15 @@ components:
                   quantity: 3
                   arrivalDate: 2023/11/20
       description: '## 入荷登録リクエスト'
+    allocation-request:
+      content:
+        application/json:
+          schema:
+            description: 引当情報
+            type: array
+            items:
+              $ref: '#/components/schemas/inventory'
+              x-stoplight:
+                id: bw9znownsaqt9
+      description: '## 在庫引当登録リクエスト'
 x-internal: true
