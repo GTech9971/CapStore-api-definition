@@ -1,0 +1,11 @@
+title: 電子部品ID
+x-stoplight:
+  id: alka0nixtof8w
+type: object
+description: '## 電子部品ID'
+x-internal: true
+properties:
+  componentId:
+    type: integer
+    example: 100
+    description: 電子部品ID

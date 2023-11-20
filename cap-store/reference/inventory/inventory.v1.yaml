@@ -1,0 +1,83 @@
+openapi: 3.1.0
+x-stoplight:
+  id: bchw6x11wjjij
+info:
+  title: 在庫管理
+  version: '1.0'
+  summary: 電子部品の在庫管理を行う
+  description: |-
+    # 在庫管理
+    ## 目的
+    電子部品の在庫照会・入荷・引当・出荷を行う
+
+    ### 在庫照会
+
+    ### 入荷
+
+    ### 引当
+
+    ### 出荷
+servers:
+  - url: 'http://localhost:3000/api/v1/inventories'
+paths:
+  /inventories:
+    get:
+      summary: 在庫照会API
+      tags: []
+      responses:
+        '200':
+          description: '## OK(200) 成功'
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/inventory'
+                type: object
+      operationId: get-inventories
+      x-internal: true
+      description: |-
+        # 在庫照会API
+        在庫照会を行う
+      parameters:
+        - schema:
+            type: integer
+            minimum: 1
+          in: query
+          name: page
+          description: ページ数
+          allowEmptyValue: true
+        - schema:
+            type: integer
+            default: 10
+            example: 10
+            minimum: 1
+          in: query
+          name: size
+          description: 表示数
+          allowEmptyValue: true
+components:
+  schemas:
+    inventory:
+      allOf:
+        - $ref: '#/components/schemas/quantity'
+          description: 個数
+        - $ref: ../parts-component/models/parts-component.yaml
+          description: 電子部品情報
+    quantity:
+      title: 個数
+      x-stoplight:
+        id: hebzy9aosm326
+      type: object
+      description: |-
+        ## 個数
+        在庫管理に使用する個数
+      x-internal: true
+      properties:
+        quantity:
+          type: integer
+          example: 3
+          description: 個数
+      required:
+        - quantity
