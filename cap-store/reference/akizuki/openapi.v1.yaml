@@ -29,7 +29,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/success-model
+                  - $ref: ../common/models/success-response.yaml
                   - type: object
                     properties:
                       data:
@@ -42,15 +42,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
+                $ref: ../common/models/error-response.yaml
               examples:
                 C400:
                   value:
                     success: false
                     data: {}
                     errors:
-                      - code: C400
-                        message: 入力パラメータ不正
+                      code: AKE0101
+                      message: 予期せぬエラーが発生しました
+                      stack: IOException StreamReader.Read at 102 line...
         '404':
           description: |-
             ## Not Found(404) 存在しない
@@ -60,15 +61,8 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
-              examples:
-                AKE0101:
-                  value:
-                    success: false
-                    data: {}
-                    errors:
-                      - code: AKE0101
-                        message: 異常終了しました
+                  - $ref: ../common/models/error-response.yaml
+              examples: {}
         '500':
           description: |-
             ## Internal Server Error(500) サーバー内エラー
@@ -81,22 +75,8 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: ../parts-component/openapi.v1.yaml#/components/schemas/error-model
-              examples:
-                AKE0102:
-                  value:
-                    success: false
-                    data: {}
-                    errors:
-                      - code: AKE0102
-                        message: パース処理に失敗
-                AKE0103:
-                  value:
-                    success: false
-                    data: {}
-                    errors:
-                      - code: AKE0103
-                        message: 通販サイトの接続に失敗
+                  - $ref: ../common/models/error-response.yaml
+              examples: {}
       operationId: get-catalogs-catalogId
       description: |-
         # カタログ情報取得 API
@@ -147,56 +127,6 @@ paths:
           allowEmptyValue: true
 components:
   schemas:
-    error:
-      title: error
-      x-stoplight:
-        id: a5b38c4d1f089
-      type: object
-      description: エラー内容
-      examples: []
-      properties:
-        code:
-          type: string
-          minLength: 3
-          description: エラーコード
-          example: C999
-          default: C999
-        message:
-          type: string
-          description: エラーメッセージ
-          example: 異常終了しました
-          default: 異常終了しました
-      required:
-        - code
-        - message
-    success-model:
-      title: success-model
-      x-stoplight:
-        id: vv1aeg7dc0o1c
-      type: object
-      properties:
-        success:
-          type: boolean
-        data:
-          type: object
-    error-model:
-      title: error-model
-      x-stoplight:
-        id: 18d99ed9e7399
-      type: object
-      properties:
-        success:
-          type: boolean
-          default: false
-        data:
-          type: object
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/error'
-      required:
-        - success
-        - errors
     orderId:
       title: 注文ID
       x-stoplight:
