@@ -12,17 +12,17 @@ info:
 
     ### 在庫照会
 
-    ### 入荷
+    ### 入荷登録
 
-    ### 引当
+    ### 引当登録
 
-    ### 出荷
+    ### 出荷登録
 servers:
   - url: 'http://localhost:3000/api/v1/inventories'
 paths:
   /inventories:
     get:
-      summary: /inventories
+      summary: 在庫照会(ページネーション)
       tags: []
       responses:
         '200':
@@ -49,7 +49,7 @@ paths:
       operationId: get-inventories
       x-internal: true
       description: |-
-        # 在庫照会API
+        # 在庫照会
         在庫照会を行う
       parameters:
         - $ref: ../common/commons.v1.yaml#/components/parameters/page
@@ -58,19 +58,19 @@ paths:
     parameters:
       - $ref: ../parts-component/openapi.v1.yaml#/components/parameters/componentId
     get:
-      summary: 電子部品在庫照会
+      summary: 在庫照会
       tags: []
       responses:
         '200':
           $ref: '#/components/responses/fetch-inventory-success-response'
       operationId: get-inventories-componentId
       description: |-
-        # 電子部品在庫照会
+        # 在庫照会
         ## 目的
         電子部品IDの在庫数を取得する
   /inventories/stock-entry:
     post:
-      summary: 電子部品入荷登録
+      summary: 入荷登録
       operationId: post-inventories-stock-entry
       responses:
         '200':
@@ -126,7 +126,7 @@ paths:
               schema:
                 $ref: ../common/models/error-response.yaml
       description: |-
-        # 電子部品入荷登録
+        # 入荷登録
         ## 目的
         電子部品の入荷を行う
       x-internal: true
@@ -134,7 +134,7 @@ paths:
         $ref: '#/components/requestBodies/stock-entry-request'
   /inventories/allocation:
     post:
-      summary: 在庫引当登録
+      summary: 引当登録
       operationId: post-inventories-allocation
       responses:
         '200':
@@ -180,11 +180,73 @@ paths:
             ### C999
       x-internal: true
       description: |-
-        # 在庫引当登録
+        # 引当登録
         ## 目的
         電子部品の在庫を引当登録する
       requestBody:
         $ref: '#/components/requestBodies/allocation-request'
+  /inventories/shipment:
+    post:
+      summary: 出荷登録
+      operationId: post-inventories-shipment
+      responses:
+        '200':
+          $ref: '#/components/responses/shipment-success-response'
+        '400':
+          description: |-
+            ## Bad Request(400) 不正リクエスト
+            ### C400
+
+            ### ISPXXXX
+            出荷数が引当数を超えています
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '401':
+          description: |-
+            ## Unauthorized(401) 認証されていない
+            ### C401
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '403':
+          description: |-
+            ## Forbidden(403) 権限が無い
+            ### ISPXXXX
+            出荷登録権限がありません
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '404':
+          description: |-
+            ## Not Found(404) 存在しない
+            #### ISPXXXX
+            電子部品が存在しない
+
+            #### ISPXXXX
+            引当IDが存在しない
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '500':
+          description: |-
+            ## Internal Server Error(500) サーバー内エラー
+            ### C999
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+      x-internal: true
+      description: |-
+        # 出荷登録
+        ## 目的
+        引当られた在庫を出荷登録する
+      requestBody:
+        $ref: '#/components/requestBodies/shipment-request'
 components:
   schemas:
     inventory:
@@ -271,6 +333,56 @@ components:
           x-stoplight:
             id: qsq02d5ubw0jc
           description: 引当ID
+    shipmentId:
+      title: shipmentId
+      x-stoplight:
+        id: evxnp54tojnhe
+      type: object
+      description: '## 出荷登録ID'
+      x-internal: true
+      properties:
+        shipmentId:
+          type: integer
+          x-stoplight:
+            id: 6h7xljfplp61l
+          example: 32
+          minimum: 1
+          description: 出荷ID
+      required:
+        - shipmentId
+    shipment-inventory:
+      title: shipment-inventory
+      x-stoplight:
+        id: o7mlqpb1j101e
+      description: '## 出荷登録在庫情報'
+      x-internal: true
+      allOf:
+        - $ref: '#/components/schemas/inventory'
+          x-stoplight:
+            id: dxggio2g8hy7n
+          description: 出荷情報、出荷個数
+        - $ref: '#/components/schemas/allocationId'
+          x-stoplight:
+            id: yidsops8hk7vb
+          description: 引当ID
+    destination:
+      title: destination
+      x-stoplight:
+        id: 88cd7aleindvj
+      type: object
+      description: |-
+        ## 保管先
+        TODO
+        いずれはID（QRコード）管理する
+        部屋・box・boxの色とか？
+      properties:
+        destination:
+          type: string
+          x-stoplight:
+            id: 3cd5ssk9c7oha
+          description: 保管先
+          example: 北倉庫
+      x-internal: true
   responses:
     fetch-inventories-success-response:
       description: '## 在庫情報取得成功レスポンス'
@@ -357,6 +469,37 @@ components:
                       x-stoplight:
                         id: lmdo7of6gzvv6
           examples: {}
+    shipment-success-response:
+      description: '## 出荷登録成功レスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-response.yaml
+                x-stoplight:
+                  id: kpwp4uj4mxqms
+              - type: object
+                x-stoplight:
+                  id: 56szakv9fzn3d
+                properties:
+                  data:
+                    x-stoplight:
+                      id: go77zl9duyqjb
+                    description: 在庫数リスト
+                    type: array
+                    items:
+                      x-stoplight:
+                        id: v1p2w29lr97c3
+                      allOf:
+                        - $ref: '#/components/schemas/shipment-inventory'
+                          x-stoplight:
+                            id: vhj6qd8c7ut4n
+                          description: 出荷情報
+                        - $ref: '#/components/schemas/shipmentId'
+                          x-stoplight:
+                            id: ij8apxjve0b5s
+                          description: 出荷ID
+          examples: {}
   requestBodies:
     stock-entry-request:
       content:
@@ -386,4 +529,24 @@ components:
               x-stoplight:
                 id: bw9znownsaqt9
       description: '## 在庫引当登録リクエスト'
+    shipment-request:
+      content:
+        application/json:
+          schema:
+            type: array
+            description: 出荷登録リスト
+            items:
+              x-stoplight:
+                id: 6ysb4xa5e9hb9
+              allOf:
+                - $ref: '#/components/schemas/shipment-inventory'
+                  x-stoplight:
+                    id: rqexxttr0big4
+                  description: 出荷情報、出荷数
+                - $ref: '#/components/schemas/destination'
+                  x-stoplight:
+                    id: 38ilj9j19mtji
+                  description: 出荷先
+          examples: {}
+      description: '## 在庫出荷登録リクエストモデル'
 x-internal: true
