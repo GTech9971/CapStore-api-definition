@@ -1,0 +1,60 @@
+title: success-page-response
+x-stoplight:
+  id: 69fcoxozb9dw3
+description: '## ページ情報付き成功レスポンス'
+x-internal: true
+allOf:
+  - $ref: ./success-response.yaml
+  - type: object
+    x-stoplight:
+      id: jz6ea3i2sut9o
+    description: ページネーションデータ
+    properties:
+      page:
+        type: integer
+        x-stoplight:
+          id: sg0ox8zrry3av
+        minimum: 1
+        default: 1
+        example: 1
+        description: ページ数
+      totalPage:
+        type: integer
+        x-stoplight:
+          id: b1cddtrlr838c
+        example: 10
+        minimum: 1
+        description: 全ページ数
+      count:
+        type: integer
+        x-stoplight:
+          id: dt0gelc5zb9wz
+        example: '10'
+        minimum: 1
+        default: 10
+        description: 表示数
+      totalCount:
+        type: integer
+        x-stoplight:
+          id: d5bi5wow8mcmb
+        minimum: 1
+        example: 100
+        description: 全表示数
+      hasNext:
+        type: boolean
+        x-stoplight:
+          id: qp25tsugf4l7q
+        description: 次のページがあるか
+      hasPrevious:
+        type: boolean
+        x-stoplight:
+          id: t5r11p3z67ty7
+        description: 前のページがあるか
+        default: false
+    required:
+      - page
+      - totalPage
+      - count
+      - totalCount
+      - hasNext
+      - hasPrevious
