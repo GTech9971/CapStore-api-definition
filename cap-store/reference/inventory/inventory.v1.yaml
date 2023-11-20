@@ -22,41 +22,52 @@ servers:
 paths:
   /inventories:
     get:
-      summary: 在庫照会API
+      summary: /inventories
       tags: []
       responses:
         '200':
-          description: '## OK(200) 成功'
+          $ref: '#/components/responses/fetch-inventories-success-response'
+        '204':
+          description: |-
+            ## No Content(204)
+            データなし
           content:
             application/json:
               schema:
                 allOf:
-                  - properties:
+                  - $ref: ../common/models/success-response.yaml
+                  - type: object
+                    x-stoplight:
+                      id: ri87qvrqwgjwm
+                    properties:
                       data:
-                        $ref: '#/components/schemas/inventory'
-                type: object
+                        type: array
+                        x-stoplight:
+                          id: x1c7x5ex6uq23
+                        items: {}
+              examples: {}
       operationId: get-inventories
       x-internal: true
       description: |-
         # 在庫照会API
         在庫照会を行う
       parameters:
-        - schema:
-            type: integer
-            minimum: 1
-          in: query
-          name: page
-          description: ページ数
-          allowEmptyValue: true
-        - schema:
-            type: integer
-            default: 10
-            example: 10
-            minimum: 1
-          in: query
-          name: size
-          description: 表示数
-          allowEmptyValue: true
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page
+        - $ref: ../common/commons.v1.yaml#/components/parameters/size
+  '/inventories/{componentId}':
+    parameters:
+      - $ref: ../parts-component/openapi.v1.yaml#/components/parameters/componentId
+    get:
+      summary: 電子部品在庫照会
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/fetch-inventory-success-response'
+      operationId: get-inventories-componentId
+      description: |-
+        # 電子部品在庫照会
+        ## 目的
+        電子部品IDの在庫数を取得する
 components:
   schemas:
     inventory:
@@ -64,9 +75,12 @@ components:
         - $ref: '#/components/schemas/quantity'
           description: 個数
         - $ref: ../parts-component/models/parts-component.yaml
-          description: 電子部品情報
+          description: 電子部品
+      x-internal: true
+      title: inventory
+      description: '## 在庫数'
     quantity:
-      title: 個数
+      title: quantity
       x-stoplight:
         id: hebzy9aosm326
       type: object
@@ -81,3 +95,45 @@ components:
           description: 個数
       required:
         - quantity
+  responses:
+    fetch-inventories-success-response:
+      description: '## 在庫情報取得成功レスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-page-response.yaml
+                x-stoplight:
+                  id: 7wsp9e6naxlyk
+              - type: object
+                x-stoplight:
+                  id: xhfn9ag4e6l0c
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: hecapc2xhvx63
+                    items:
+                      $ref: '#/components/schemas/inventory'
+                      x-stoplight:
+                        id: uq21j2fsxh11g
+          examples: {}
+    fetch-inventory-success-response:
+      description: '## 電子部品在庫照会成功レスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-response.yaml
+                x-stoplight:
+                  id: u1h3vdawnr5nc
+              - type: object
+                x-stoplight:
+                  id: 5444ujngqqywq
+                properties:
+                  data:
+                    $ref: '#/components/schemas/inventory'
+                    x-stoplight:
+                      id: a9x48rqg7385o
+                    description: 在庫情報
+x-internal: true
