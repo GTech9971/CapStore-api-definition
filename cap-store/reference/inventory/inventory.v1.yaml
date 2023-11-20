@@ -68,14 +68,80 @@ paths:
         # 電子部品在庫照会
         ## 目的
         電子部品IDの在庫数を取得する
+  /inventories/stock-entry:
+    post:
+      summary: 電子部品入荷登録
+      operationId: post-inventories-stock-entry
+      responses:
+        '200':
+          $ref: '#/components/responses/stock-entory-success-response'
+        '400':
+          description: |-
+            ## Bad Request(400) 不正リクエスト
+            ### C400
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '401':
+          description: |-
+            ## Unauthorized(401) 認証されていない
+            ### C401
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '403':
+          description: |-
+            ## Forbidden(403) 権限がない
+            ### ISEEXXXX
+            入荷登録権限がない
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+        '404':
+          description: |-
+            ## Not Found(404) 存在しない
+            ### ISEEXXXX
+            電子部品が存在しない
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+              examples:
+                ISEEXXXX:
+                  value:
+                    success: false
+                    data: {}
+                    errors:
+                      code: ISEEXXXX
+                      message: '電子部品ID:100が存在しません'
+        '500':
+          description: |-
+            ## Internal Server Error(500) サーバー内エラー
+            ### C999
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+      description: |-
+        # 電子部品入荷登録
+        ## 目的
+        電子部品の入荷を行う
+      x-internal: true
+      requestBody:
+        $ref: '#/components/requestBodies/stock-entry-request'
 components:
   schemas:
     inventory:
       allOf:
         - $ref: '#/components/schemas/quantity'
           description: 個数
-        - $ref: ../parts-component/models/parts-component.yaml
-          description: 電子部品
+        - $ref: ../parts-component/models/componentId.yaml
+          x-stoplight:
+            id: ijp4kvm7f18o1
+          description: 電子部品ID
       x-internal: true
       title: inventory
       description: '## 在庫数'
@@ -95,6 +161,34 @@ components:
           description: 個数
       required:
         - quantity
+    stock-entry:
+      title: stock-entry
+      x-stoplight:
+        id: w8vewjzftkwkq
+      description: '## 入荷登録モデル'
+      allOf:
+        - $ref: ../parts-component/models/componentId.yaml
+          x-stoplight:
+            id: eqn0ja4n4oj36
+          description: 電子部品ID
+        - $ref: '#/components/schemas/quantity'
+          x-stoplight:
+            id: cocdjf781sku4
+          description: 入荷数
+        - type: object
+          x-stoplight:
+            id: ewghlbjca76ey
+          properties:
+            arrivalDate:
+              type: string
+              x-stoplight:
+                id: 9m4zrwciruszp
+              example: 2023/11/20
+              description: 入荷日(yyyy/MM/dd)
+              pattern: '^\d{4}/\d{2}/\d{2}$'
+          required:
+            - arrivalDate
+      x-internal: true
   responses:
     fetch-inventories-success-response:
       description: '## 在庫情報取得成功レスポンス'
@@ -136,4 +230,44 @@ components:
                     x-stoplight:
                       id: a9x48rqg7385o
                     description: 在庫情報
+    stock-entory-success-response:
+      description: '## 入荷登録成功レスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-response.yaml
+                x-stoplight:
+                  id: o396lduixy67k
+              - type: object
+                x-stoplight:
+                  id: im20v5kutog89
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: aptddezgk6cbx
+                    items:
+                      $ref: '#/components/schemas/inventory'
+                      x-stoplight:
+                        id: 2i7pcqs29gxyt
+          examples: {}
+  requestBodies:
+    stock-entry-request:
+      content:
+        application/json:
+          schema:
+            type: array
+            description: 入荷登録リスト
+            items:
+              $ref: '#/components/schemas/stock-entry'
+              x-stoplight:
+                id: barvjjyp8ej6p
+          examples:
+            Example 1:
+              value:
+                - componentId: 100
+                  quantity: 3
+                  arrivalDate: 2023/11/20
+      description: '## 入荷登録リクエスト'
 x-internal: true

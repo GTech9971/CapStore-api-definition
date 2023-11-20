@@ -9,3 +9,5 @@ properties:
     type: integer
     example: 100
     description: 電子部品ID
+required:
+  - componentId
