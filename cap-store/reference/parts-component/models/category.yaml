@@ -2,21 +2,7 @@ title: Category
 x-stoplight:
   id: 6smcltlkxnmc1
 type: object
-description: 電子部品のカテゴリー
-properties:
-  id:
-    type: integer
-    description: カテゴリーID
-  name:
-    type: string
-    description: カテゴリー名
-  image:
-    type: string
-    description: カテゴリーの画像URL
-    format: uri
-required:
-  - id
-  - name
+description: '## 電子部品のカテゴリー'
 examples:
   - id: 0
     name: LED
@@ -30,3 +16,18 @@ examples:
   - id: 0
     name: センサー
     image: 'http://example.com'
+properties:
+  id:
+    type: integer
+    description: カテゴリーID
+  name:
+    type: string
+    description: カテゴリー名
+    example: ＰＩＣマイコン
+  image:
+    type: string
+    description: カテゴリーの画像URL
+    format: uri
+required:
+  - id
+  - name

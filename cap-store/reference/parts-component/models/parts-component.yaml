@@ -1,36 +1,39 @@
-title: PartsComponent
-x-stoplight:
-  id: b5ph0jllalwgv
-type: object
-description: '## 電子部品'
-examples: []
-properties:
-  id:
-    type: integer
+allOf:
+  - $ref: ./componentId.yaml
     description: 電子部品ID
-    minimum: 0
-  name:
-    type: string
-    description: 電子部品名
-  modelName:
-    type: string
-    description: モデル名
-  description:
-    type: string
-    description: 説明
-  category:
-    $ref: ./category.yaml
-    description: カテゴリー
-  maker:
-    $ref: ./maker.yaml
-    description: 製造メーカー
-  image:
-    type: string
-    description: 電子部品画像URL
-    format: uri
-required:
-  - id
-  - name
-  - modelName
-  - category
-  - maker
+  - type: object
+    properties:
+      name:
+        type: string
+        description: 電子部品名
+        example: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
+      modelName:
+        type: string
+        description: モデル名
+        example: PIC16F1827-I/P
+      description:
+        type: string
+        description: 説明
+        example: 'ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400'
+      category:
+        $ref: ./category.yaml
+        description: カテゴリー
+      maker:
+        $ref: ./maker.yaml
+        description: 製造メーカー
+      images:
+        type: array
+        description: 電子部品画像リスト
+        uniqueItems: true
+        items:
+          type: string
+          format: uri
+          example: 'https://akizukidenshi.com/img/goods/C/I-04430.jpg'
+    required:
+      - name
+      - modelName
+      - category
+      - maker
+description: '## 電子部品モデル'
+x-internal: true
+title: 電子部品

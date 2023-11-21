@@ -66,6 +66,8 @@ paths:
         '500':
           description: |-
             ## Internal Server Error(500) サーバー内エラー
+            ### C999
+
             ### エラーコード:AKE0102
             パース処理に失敗
 
@@ -80,6 +82,7 @@ paths:
       operationId: get-catalogs-catalogId
       description: |-
         # カタログ情報取得 API
+        ## 目的
         1. パスパラメーターのカタログIDを基に秋月電子の通販サイトを検索する
 
         2. 電子部品が存在した場合、ページ内容をパースする

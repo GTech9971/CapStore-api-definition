@@ -2,22 +2,7 @@ title: Maker
 x-stoplight:
   id: gc1sm5qedyina
 type: object
-description: 電子部品製造メーカー
-properties:
-  id:
-    type: integer
-    description: 製造メーカーID
-    minimum: 0
-  name:
-    type: string
-    description: 製造メーカー名
-  image:
-    type: string
-    description: 製造メーカー画像URL
-    format: uri
-required:
-  - id
-  - name
+description: '## 電子部品製造メーカー'
 examples:
   - id: 0
     name: Microchip
@@ -28,3 +13,20 @@ examples:
   - id: 0
     name: Raspberry
     image: 'http://example.com'
+x-internal: true
+properties:
+  id:
+    type: integer
+    description: 製造メーカーID
+    minimum: 0
+  name:
+    type: string
+    description: 製造メーカー名
+    example: Microchip Technology Inc
+  image:
+    type: string
+    description: 製造メーカー画像URL
+    format: uri
+required:
+  - id
+  - name
