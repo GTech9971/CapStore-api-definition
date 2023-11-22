@@ -20,7 +20,8 @@
   <script>
     window.onload = () => {
       window.ui = SwaggerUIBundle({
-        url: '../akizuki/openapi.v1.yaml',
+        url: new URL(location).searchParams.get('q') || 'swagger.yml',
+        deepLinking: true,
         dom_id: '#swagger-ui',
         presets: [
           SwaggerUIBundle.presets.apis,
