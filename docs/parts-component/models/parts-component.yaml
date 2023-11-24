@@ -15,6 +15,7 @@ allOf:
         type: string
         description: 説明
         example: 'ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400'
+        default: 説明文なし
       category:
         $ref: ./category.yaml
         description: カテゴリー
@@ -32,8 +33,10 @@ allOf:
     required:
       - name
       - modelName
+      - description
       - category
       - maker
+      - images
 description: '## 電子部品モデル'
 x-internal: true
 title: 電子部品
