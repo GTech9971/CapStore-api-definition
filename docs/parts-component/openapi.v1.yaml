@@ -51,7 +51,7 @@ paths:
                     success: true
                     data:
                       id: 100
-      x-internal: false
+      x-internal: true
 components:
   schemas:
     componentId:
@@ -64,7 +64,7 @@ components:
       properties:
         componentId:
           type: integer
-          minimum: 100
+          minimum: 1
           example: 100
           description: 電子部品ID
           x-stoplight:
@@ -82,7 +82,7 @@ components:
       schema:
         type: integer
         example: 100
-        minimum: 100
+        minimum: 1
       description: '## 電子部品ID'
 tags:
   - name: components
