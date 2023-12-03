@@ -11,20 +11,22 @@ info:
 servers:
   - url: 'http://localhost:3000/api/v1/'
 paths:
-  '/components/{id}':
+  '/components/{componentId}':
     parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-        description: 電子部品ID
+      - $ref: '#/components/parameters/componentId'
     get:
       summary: 電子部品情報取得
       tags:
         - components
       operationId: get-components-componentId
       description: 指定した電子部品IDと一致する電子部品情報を取得する
+      x-internal: true
+      requestBody:
+        content: {}
+        description: ''
+      responses:
+        '200':
+          $ref: '#/components/responses/fetch-component-success-response'
   /components:
     post:
       summary: 電子部品新規登録
@@ -45,13 +47,21 @@ paths:
                       data:
                         allOf:
                           - $ref: '#/components/schemas/componentId'
-              examples:
-                Example 1:
-                  value:
-                    success: true
-                    data:
-                      id: 100
+              examples: {}
       x-internal: true
+    get:
+      summary: 電子部品情報取得
+      operationId: get-components
+      responses:
+        '200':
+          $ref: '#/components/responses/fetch-component-success-page-response'
+        '204':
+          $ref: '#/components/responses/fetch-component-success-empty-response'
+      description: 電子部品情報を取得する
+      x-internal: true
+      parameters:
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page
+        - $ref: ../common/commons.v1.yaml#/components/parameters/size
 components:
   schemas:
     componentId:
@@ -73,7 +83,57 @@ components:
         - componentId
   securitySchemes: {}
   requestBodies: {}
-  responses: {}
+  responses:
+    fetch-component-success-response:
+      description: '## 電子部品情報取得成功時のレスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-response.yaml
+                x-stoplight:
+                  id: 0886vnfatjdz3
+              - type: object
+                x-stoplight:
+                  id: xr2lmzgin2fy2
+                properties:
+                  data:
+                    $ref: ./models/parts-component.yaml
+                    x-stoplight:
+                      id: zhs4hmw9jymf2
+          examples: {}
+    fetch-component-success-page-response:
+      description: '## 電子部品情報取得成功ページレスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-page-response.yaml
+                x-stoplight:
+                  id: lnhyfuw535f7q
+              - type: object
+                x-stoplight:
+                  id: gys7zd54vsmwp
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 1fnldy34nz7f4
+                    items:
+                      $ref: ./models/parts-component.yaml
+                      x-stoplight:
+                        id: qpkvbpfiwi58d
+          examples: {}
+    fetch-component-success-empty-response:
+      description: '## 電子部品情報取得成功データなしレスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-page-response.yaml
+                x-stoplight:
+                  id: f4cv9n158cr4u
+          examples: {}
   parameters:
     componentId:
       name: componentId
