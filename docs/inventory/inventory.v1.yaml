@@ -52,8 +52,8 @@ paths:
         # 在庫照会
         在庫照会を行う
       parameters:
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page
-        - $ref: ../common/commons.v1.yaml#/components/parameters/size
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
   '/inventories/{componentId}':
     parameters:
       - $ref: ../parts-component/openapi.v1.yaml#/components/parameters/componentId

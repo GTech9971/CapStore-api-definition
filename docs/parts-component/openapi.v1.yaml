@@ -60,8 +60,8 @@ paths:
       description: 電子部品情報を取得する
       x-internal: true
       parameters:
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page
-        - $ref: ../common/commons.v1.yaml#/components/parameters/size
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
 components:
   schemas:
     componentId:
