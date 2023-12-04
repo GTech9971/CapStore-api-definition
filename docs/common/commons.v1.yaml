@@ -30,3 +30,21 @@ components:
         minimum: 1
       description: 表示数
       allowEmptyValue: true
+    sort-column:
+      name: sortColumn
+      in: query
+      required: false
+      schema:
+        type: string
+        example: ComponentName
+      description: ソートするカラム名
+    sort-order:
+      name: sortOrder
+      in: query
+      schema:
+        type: string
+        enum:
+          - ASC
+          - DESC
+        example: ASC
+      description: ソート順(ASC、DESC)

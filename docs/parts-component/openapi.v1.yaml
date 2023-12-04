@@ -62,6 +62,8 @@ paths:
       parameters:
         - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
         - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
+        - $ref: ../common/commons.v1.yaml#/components/parameters/sort-column
+        - $ref: ../common/commons.v1.yaml#/components/parameters/sort-order
 components:
   schemas:
     componentId:
