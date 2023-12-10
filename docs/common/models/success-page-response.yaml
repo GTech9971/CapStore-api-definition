@@ -10,7 +10,7 @@ allOf:
       id: jz6ea3i2sut9o
     description: ページネーションデータ
     properties:
-      page:
+      pageIndex:
         type: integer
         x-stoplight:
           id: sg0ox8zrry3av
@@ -18,14 +18,7 @@ allOf:
         default: 1
         example: 1
         description: ページ数
-      totalPage:
-        type: integer
-        x-stoplight:
-          id: b1cddtrlr838c
-        example: 10
-        minimum: 1
-        description: 全ページ数
-      count:
+      pageSize:
         type: integer
         x-stoplight:
           id: dt0gelc5zb9wz
@@ -33,13 +26,20 @@ allOf:
         minimum: 1
         default: 10
         description: 表示数
+      totalPages:
+        type: integer
+        x-stoplight:
+          id: b1cddtrlr838c
+        example: 10
+        minimum: 1
+        description: 全ページ数
       totalCount:
         type: integer
         x-stoplight:
           id: d5bi5wow8mcmb
         minimum: 1
         example: 100
-        description: 全表示数
+        description: 全件数
       hasNext:
         type: boolean
         x-stoplight:
@@ -52,9 +52,9 @@ allOf:
         description: 前のページがあるか
         default: false
     required:
-      - page
-      - totalPage
-      - count
+      - pageIndex
+      - pageSize
+      - totalPages
       - totalCount
       - hasNext
       - hasPrevious
