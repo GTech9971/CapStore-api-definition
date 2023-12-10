@@ -48,7 +48,34 @@ paths:
                         allOf:
                           - $ref: '#/components/schemas/componentId'
               examples: {}
+        '400':
+          description: |-
+            ## Bad Request
+            ### C400
+            入力バリデーションエラー
+
+            ### CRE0101
+            電子部品がすでに存在する
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+              examples: {}
+        '404':
+          description: |
+            ## Not Found
+            ### CRE0102
+            カテゴリーが存在しない
+
+            ### CRE0103
+            メーカーが存在しない
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
       x-internal: true
+      requestBody:
+        $ref: '#/components/requestBodies/registry-component-request'
     get:
       summary: 電子部品情報取得
       operationId: get-components
@@ -82,7 +109,66 @@ components:
       required:
         - componentId
   securitySchemes: {}
-  requestBodies: {}
+  requestBodies:
+    registry-component-request:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                x-stoplight:
+                  id: map5g7nf0iqnr
+              modelName:
+                type: string
+                x-stoplight:
+                  id: kbwl4ongahxim
+              description:
+                type: string
+                x-stoplight:
+                  id: 87oc27ftqvvb7
+              categoryId:
+                type: string
+                x-stoplight:
+                  id: 4hlo7g2sejtvb
+              makerId:
+                type: string
+                x-stoplight:
+                  id: 79pv9spxcdki0
+              images:
+                type: array
+                x-stoplight:
+                  id: ryh0tka1ss4qk
+                items:
+                  x-stoplight:
+                    id: 21jr220eip6s2
+                  type: string
+                  format: uri
+            required:
+              - name
+              - modelName
+              - description
+              - categoryId
+              - makerId
+          examples:
+            Example 1:
+              value:
+                componentId: 5
+                name: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
+                modelName: PIC16F1827-I/P
+                description: 'ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400'
+                category:
+                  id: 0
+                  name: LED
+                  image: 'http://example.com'
+                maker:
+                  id: 0
+                  name: Microchip
+                  image: 'http://example.com'
+                images:
+                  - 'https://akizukidenshi.com/img/goods/C/I-04430.jpg'
+      description: '## 電子部品登録リクエスト'
   responses:
     fetch-component-success-response:
       description: '## 電子部品情報取得成功時のレスポンス'
