@@ -1,12 +1,11 @@
 allOf:
   - $ref: ./componentId.yaml
     description: 電子部品ID
+  - $ref: ./componentName.yaml
+    x-stoplight:
+      id: yoguw6g1nyrsh
   - type: object
     properties:
-      name:
-        type: string
-        description: 電子部品名
-        example: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
       modelName:
         type: string
         description: モデル名
@@ -31,7 +30,6 @@ allOf:
           format: uri
           example: 'https://akizukidenshi.com/img/goods/C/I-04430.jpg'
     required:
-      - name
       - modelName
       - description
       - category
@@ -40,3 +38,4 @@ allOf:
 description: '## 電子部品モデル'
 x-internal: true
 title: 電子部品
+examples: []

@@ -1,0 +1,15 @@
+title: componentName
+x-stoplight:
+  id: ly63333cbdktv
+type: object
+description: '## 電子部品名'
+x-internal: true
+properties:
+  name:
+    type: string
+    x-stoplight:
+      id: f5ojlsxnnovpr
+    description: 電子部品名
+    example: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
+required:
+  - name

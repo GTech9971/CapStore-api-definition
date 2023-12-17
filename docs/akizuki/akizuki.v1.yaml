@@ -95,7 +95,20 @@ paths:
     get:
       summary: 購入履歴
       tags: []
-      responses: {}
+      responses:
+        '200':
+          $ref: '#/components/responses/fetch-order-page-success-response'
+        '204':
+          $ref: '#/components/responses/fetch-order-page-success-response'
+        '500':
+          description: |-
+            ## Internal Server Error
+            ### C999
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../common/models/error-response.yaml
       operationId: get-catalogs-orders
       x-internal: true
       description: |-
@@ -104,6 +117,8 @@ paths:
       parameters:
         - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
         - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
+      requestBody:
+        content: {}
 components:
   schemas:
     orderId:
@@ -192,6 +207,9 @@ components:
         - $ref: ../parts-component/models/componentId.yaml
           x-stoplight:
             id: fbtkvabi26qe0
+        - $ref: ../parts-component/models/componentName.yaml
+          x-stoplight:
+            id: jsw108c0fetiq
       description: '## 秋月電子の電子部品情報'
       x-internal: true
     orderDate:
@@ -230,4 +248,29 @@ components:
         minLength: 17
         maxLength: 17
       description: 秋月電子で注文した注文ID
+  responses:
+    fetch-order-page-success-response:
+      description: '## 秋月電子注文情報取得成功ページレスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-page-response.yaml
+                x-stoplight:
+                  id: q1tbcy8k9ffc8
+              - type: object
+                x-stoplight:
+                  id: 0jdulg5wrqrra
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 3h6g3p4wowirl
+                    items:
+                      $ref: '#/components/schemas/order-model'
+                      x-stoplight:
+                        id: sgt5e6rjx3bru
+                required:
+                  - data
+          examples: {}
 x-internal: true
