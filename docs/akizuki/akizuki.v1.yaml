@@ -128,19 +128,21 @@ components:
         - $ref: '#/components/schemas/orderId'
           description: 注文ID
         - $ref: '#/components/schemas/slipNumber-model'
+        - $ref: '#/components/schemas/orderDate'
+          x-stoplight:
+            id: r54p1wuqxpxld
         - type: object
+          x-stoplight:
+            id: 6981jbyhsm9su
           properties:
-            process:
-              type: integer
-              minimum: 0
-              maximum: 100
-              example: 20
-              description: |-
-                ## 発送状況
-                ### 配送業者 佐川急便
-                - 20%…発送待ち
-                - 40～80%…発送作業中
-                - 100%…出荷完了
+            components:
+              type: array
+              x-stoplight:
+                id: nirl5gwii69wb
+              items:
+                $ref: '#/components/schemas/akizuki-component'
+                x-stoplight:
+                  id: yawz9sokm4gn3
       title: 注文モデル
       x-internal: true
       description: '## 秋月電子で注文した注文モデル'
@@ -157,16 +159,17 @@ components:
           minimum: 12
           description: 伝票番号
       x-internal: true
-    zipCode:
-      title: zipCode
+    catalogId:
+      title: catalogId
       x-stoplight:
         id: hpyx9c3rxim69
       type: object
       description: |-
-        ## 通販コード
+        ## カタログコード
         秋月電子の通販コード
+      x-internal: true
       properties:
-        zipCode:
+        catalogId:
           type: string
           x-stoplight:
             id: y1qh0cysv87q4
@@ -176,8 +179,34 @@ components:
           maxLength: 7
           example: M-18246
       required:
-        - zipCode
+        - catalogId
+    akizuki-component:
+      title: akizuki-component
+      x-stoplight:
+        id: p71zxuqi724b2
+      allOf:
+        - $ref: '#/components/schemas/catalogId'
+          x-stoplight:
+            id: a3ownw3uh9qwi
+          description: カタログID
+        - $ref: ../parts-component/models/componentId.yaml
+          x-stoplight:
+            id: fbtkvabi26qe0
+      description: '## 秋月電子の電子部品情報'
       x-internal: true
+    orderDate:
+      title: orderDate
+      x-stoplight:
+        id: z73vn0r9xj0i0
+      type: object
+      description: '## 秋月電子で注文した日'
+      properties:
+        orderDate:
+          type: string
+          x-stoplight:
+            id: c85qvm97n7w4n
+          format: date
+          example: '2023-12-3'
   parameters:
     catalogId:
       name: catalogId
