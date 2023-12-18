@@ -100,10 +100,24 @@ paths:
           $ref: '#/components/responses/fetch-order-page-success-response'
         '204':
           $ref: '#/components/responses/fetch-order-page-success-response'
+        '400':
+          description: |-
+            ## Bad Request
+            ### AKE0201
+            htmlのファイル容量エラー
+
+            ### AKE0202
+            htmlファイルフォーマットエラー
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../common/models/error-response.yaml
         '500':
           description: |-
             ## Internal Server Error
             ### C999
+            予期せぬエラー
           content:
             application/json:
               schema:
@@ -114,11 +128,15 @@ paths:
       description: |-
         # 購入履歴取得API
         ## 秋月電子の購入履歴を取得する
-      parameters:
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
+      parameters: []
       requestBody:
-        content: {}
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+        description: |-
+          ## 秋月電子の購入履歴ページのhtmlファイル
+          https://akizukidenshi.com/catalog/customer/history.aspx
 components:
   schemas:
     orderId:
@@ -255,7 +273,7 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: ../common/models/success-page-response.yaml
+              - $ref: ../common/models/success-response.yaml
                 x-stoplight:
                   id: q1tbcy8k9ffc8
               - type: object
