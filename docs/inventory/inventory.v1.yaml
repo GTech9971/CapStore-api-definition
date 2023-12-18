@@ -251,31 +251,18 @@ components:
   schemas:
     inventory:
       allOf:
-        - $ref: '#/components/schemas/quantity'
+        - $ref: ./models/quantity.yaml
           description: 個数
         - $ref: ../parts-component/models/componentId.yaml
           x-stoplight:
             id: ijp4kvm7f18o1
           description: 電子部品ID
+        - $ref: ./models/unit.yaml
+          x-stoplight:
+            id: 73qoa6uh4t39x
       x-internal: true
       title: inventory
       description: '## 在庫数'
-    quantity:
-      title: quantity
-      x-stoplight:
-        id: hebzy9aosm326
-      type: object
-      description: |-
-        ## 個数
-        在庫管理に使用する個数
-      x-internal: true
-      properties:
-        quantity:
-          type: integer
-          example: 3
-          description: 個数
-      required:
-        - quantity
     stock-entry:
       title: stock-entry
       x-stoplight:
@@ -286,7 +273,7 @@ components:
           x-stoplight:
             id: eqn0ja4n4oj36
           description: 電子部品ID
-        - $ref: '#/components/schemas/quantity'
+        - $ref: ./models/quantity.yaml
           x-stoplight:
             id: cocdjf781sku4
           description: 入荷数

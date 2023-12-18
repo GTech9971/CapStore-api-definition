@@ -1,0 +1,25 @@
+title: unit
+x-stoplight:
+  id: ifqa2hn3hfro5
+type: object
+x-internal: true
+description: |-
+  ## 在庫の単位
+  ### 例
+  - 個（pieces）
+  - ケース（cases）
+  - パレット（pallets）
+  - ボリューム（volume）
+  - 重量（weight）
+  - メートル（meters）
+properties:
+  unit:
+    type: string
+    x-stoplight:
+      id: qjmrdbry98ecw
+    description: 在庫の単位
+    example: pieces
+    enum:
+      - pieces
+required:
+  - unit
