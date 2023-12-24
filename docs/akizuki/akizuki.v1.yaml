@@ -187,6 +187,73 @@ paths:
           ## 秋月電子の購入履歴詳細のhtmlファイル
           https://akizukidenshi.com/catalog/customer/historydetail.aspx?order_id=E230617-031873-01
     parameters: []
+  /orders:
+    post:
+      summary: 秋月電子の注文登録
+      operationId: post-orders
+      responses:
+        '200':
+          description: |-
+            ## OK
+            成功
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/success-response.yaml
+        '400':
+          description: |-
+            ## Bad Request
+            ### C400
+            入力バリデーションエラー
+            ### AKE0401
+            注文IDが既に登録済み
+        '404':
+          description: |-
+            ## Not Found
+            ### AKE0402
+            電子部品IDが電子部品マスタに登録されていない
+        '500':
+          description: |-
+            ## Internal Server Error
+            ### C999
+            異常終了
+      x-internal: true
+      description: |-
+        # 秋月電子の注文登録API
+        ## 秋月電子の注文を登録する
+
+        1. DBに登録する
+        2. 入荷登録にここで登録した注文IDを使用する
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/orderId'
+                  x-stoplight:
+                    id: f0kn7464w5efa
+                - $ref: '#/components/schemas/slipNumber-model'
+                  x-stoplight:
+                    id: bvkwmtr3hxa5q
+                - $ref: '#/components/schemas/orderDate'
+                  x-stoplight:
+                    id: id3ptmw0ml4q1
+                - type: object
+                  x-stoplight:
+                    id: o1zutnmz67apy
+                  properties:
+                    components:
+                      x-stoplight:
+                        id: doicreycl3gdg
+                      type: array
+                      description: 注文詳細
+                      items:
+                        $ref: '#/components/schemas/akizuki-order-registry-component'
+                        x-stoplight:
+                          id: mu6kfg9vi6elg
+                  required:
+                    - components
+        description: '## 注文登録のリクエストボディ'
 components:
   schemas:
     orderId:
@@ -324,6 +391,25 @@ components:
               description: 'true:マスターに登録されている, false:マスターに登録されていない'
           required:
             - registered
+    akizuki-order-registry-component:
+      title: akizuki-order-registry-component
+      x-stoplight:
+        id: vf30ooejpkch1
+      allOf:
+        - $ref: '#/components/schemas/catalogId'
+          x-stoplight:
+            id: qiha0kidzemmh
+        - $ref: ../parts-component/models/componentId.yaml
+          x-stoplight:
+            id: m6iw6epqri2g3
+        - $ref: ../inventory/models/quantity.yaml
+          x-stoplight:
+            id: liizvfd4li2gx
+        - $ref: ../inventory/models/unit.yaml
+          x-stoplight:
+            id: yskmw4tofyev2
+      x-internal: true
+      description: '## 秋月電子で注文した電子部品情報(登録用)'
   parameters:
     catalogId:
       name: catalogId
@@ -413,4 +499,5 @@ components:
                 required:
                   - data
       headers: {}
+  requestBodies: {}
 x-internal: true
