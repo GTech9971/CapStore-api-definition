@@ -92,7 +92,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/catalogId'
   /orders:
-    get:
+    post:
       summary: 購入履歴取得
       tags: []
       responses:
@@ -137,7 +137,7 @@ paths:
           https://akizukidenshi.com/catalog/customer/history.aspx
     parameters: []
   /orders/details:
-    get:
+    post:
       summary: 購入履歴詳細取得
       tags: []
       responses:
@@ -154,11 +154,24 @@ paths:
 
             ### AKE0302
             htmlファイルフォーマットエラー
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../common/models/error-response.yaml
         '500':
           description: |-
             ## Internal Server Error
             ### C999
             予期せぬエラー
+
+            ### AKE0303
+            htmlファイル解析失敗エラー
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: ../common/models/error-response.yaml
       operationId: get-orders-details
       x-internal: true
       description: |-
@@ -300,6 +313,17 @@ components:
         - $ref: ../inventory/models/unit.yaml
           x-stoplight:
             id: gcgs9k4enneu5
+        - type: object
+          x-stoplight:
+            id: t1gmptutwxwj3
+          properties:
+            registered:
+              type: boolean
+              x-stoplight:
+                id: jxg55mfgae2fh
+              description: 'true:マスターに登録されている, false:マスターに登録されていない'
+          required:
+            - registered
   parameters:
     catalogId:
       name: catalogId
