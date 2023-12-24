@@ -91,7 +91,7 @@ paths:
       x-internal: true
     parameters:
       - $ref: '#/components/parameters/catalogId'
-  /orders:
+  /orders/upload:
     post:
       summary: 購入履歴取得
       tags: []
@@ -136,7 +136,7 @@ paths:
           ## 秋月電子の購入履歴ページのhtmlファイル
           https://akizukidenshi.com/catalog/customer/history.aspx
     parameters: []
-  /orders/details:
+  /orders/details/upload:
     post:
       summary: 購入履歴詳細取得
       tags: []
