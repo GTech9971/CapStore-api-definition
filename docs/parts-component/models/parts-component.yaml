@@ -4,12 +4,11 @@ allOf:
   - $ref: ./componentName.yaml
     x-stoplight:
       id: yoguw6g1nyrsh
+  - $ref: ./componentModelName.yaml
+    x-stoplight:
+      id: offqa5ngzrmpe
   - type: object
     properties:
-      modelName:
-        type: string
-        description: モデル名
-        example: PIC16F1827-I/P
       description:
         type: string
         description: 説明
@@ -30,7 +29,6 @@ allOf:
           format: uri
           example: 'https://akizukidenshi.com/img/goods/C/I-04430.jpg'
     required:
-      - modelName
       - description
       - category
       - maker

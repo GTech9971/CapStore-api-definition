@@ -87,7 +87,9 @@ paths:
 
         2. 電子部品が存在した場合、ページ内容をパースする
 
-        3. パースした結果をレスポンスとして返す
+        3. メーカー名、カテゴリー名がDBに存在しなければ登録する
+
+        4. パースした結果をレスポンスとして返す
       x-internal: true
     parameters:
       - $ref: '#/components/parameters/catalogId'

@@ -31,3 +31,4 @@ properties:
 required:
   - id
   - name
+x-internal: true
