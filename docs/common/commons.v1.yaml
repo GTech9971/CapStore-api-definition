@@ -48,3 +48,17 @@ components:
           - DESC
         example: ASC
       description: ソート順(ASC、DESC)
+    filter-column:
+      name: filter-column
+      in: query
+      required: false
+      schema:
+        type: string
+      description: フィルター項目
+    filter-query:
+      name: filter-query
+      in: query
+      required: false
+      schema:
+        type: string
+      description: フィルター内容

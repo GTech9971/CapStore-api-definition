@@ -234,9 +234,6 @@ paths:
                 - $ref: '#/components/schemas/orderId'
                   x-stoplight:
                     id: f0kn7464w5efa
-                - $ref: '#/components/schemas/slipNumber-model'
-                  x-stoplight:
-                    id: bvkwmtr3hxa5q
                 - $ref: '#/components/schemas/orderDate'
                   x-stoplight:
                     id: id3ptmw0ml4q1
@@ -256,6 +253,33 @@ paths:
                   required:
                     - components
         description: '## 注文登録のリクエストボディ'
+    get:
+      summary: 秋月電子の注文取得
+      operationId: get-orders
+      responses:
+        '200':
+          $ref: '#/components/responses/fetch-order-success-page-response'
+        '204':
+          $ref: '#/components/responses/fetch-order-success-page-response'
+        '500':
+          description: |-
+            ## Internal Server Error
+            ### C999
+            異常終了
+          content:
+            application/json:
+              schema:
+                $ref: ../common/models/error-response.yaml
+      description: |
+        # 秋月電子の注文取得API
+        ## 秋月電子の注文を取得する
+      parameters:
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
+        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
+      requestBody:
+        content: {}
+        description: ''
+      x-internal: true
 components:
   schemas:
     orderId:
@@ -279,7 +303,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/orderId'
           description: 注文ID
-        - $ref: '#/components/schemas/slipNumber-model'
         - $ref: '#/components/schemas/orderDate'
           x-stoplight:
             id: r54p1wuqxpxld
@@ -298,21 +321,6 @@ components:
       title: 注文モデル
       x-internal: true
       description: '## 秋月電子で注文した注文モデル'
-    slipNumber-model:
-      title: 伝票番号
-      x-stoplight:
-        id: 1oj8xsipw2msc
-      type: object
-      description: '## 秋月電子で注文した伝票番号'
-      x-internal: true
-      properties:
-        slipNumber:
-          type: integer
-          example: 569321486926
-          minimum: 12
-          description: 伝票番号
-      required:
-        - slipNumber
     catalogId:
       title: catalogId
       x-stoplight:
@@ -328,10 +336,10 @@ components:
           x-stoplight:
             id: y1qh0cysv87q4
           description: 通販コード
-          pattern: '^[A-Z]-\d{5}$'
-          minLength: 7
-          maxLength: 7
-          example: M-18246
+          pattern: '\d{6}$'
+          minLength: 6
+          maxLength: 6
+          example: '118246'
       required:
         - catalogId
     akizuki-component:
@@ -346,9 +354,6 @@ components:
         - $ref: ../parts-component/models/componentId.yaml
           x-stoplight:
             id: fbtkvabi26qe0
-        - $ref: ../parts-component/models/componentName.yaml
-          x-stoplight:
-            id: jsw108c0fetiq
       description: '## 秋月電子の電子部品情報'
       x-internal: true
     orderDate:
@@ -382,17 +387,6 @@ components:
         - $ref: ../inventory/models/unit.yaml
           x-stoplight:
             id: gcgs9k4enneu5
-        - type: object
-          x-stoplight:
-            id: t1gmptutwxwj3
-          properties:
-            registered:
-              type: boolean
-              x-stoplight:
-                id: jxg55mfgae2fh
-              description: 'true:マスターに登録されている, false:マスターに登録されていない'
-          required:
-            - registered
     akizuki-order-registry-component:
       title: akizuki-order-registry-component
       x-stoplight:
@@ -412,6 +406,45 @@ components:
             id: yskmw4tofyev2
       x-internal: true
       description: '## 秋月電子で注文した電子部品情報(登録用)'
+    akizuki-order-fetch-component:
+      title: akizuki-order-fetch-component
+      x-stoplight:
+        id: xnc9f0c8cw2g4
+      description: '## 秋月電子で注文した電子部品情報(取得用)'
+      x-internal: true
+      allOf:
+        - $ref: '#/components/schemas/orderId'
+          x-stoplight:
+            id: k2v3v2ec41uzj
+        - $ref: '#/components/schemas/orderDate'
+          x-stoplight:
+            id: 1zdnbgfwno9ac
+        - type: object
+          x-stoplight:
+            id: 2ag8a97y2n310
+          properties:
+            details:
+              x-stoplight:
+                id: be5i1w2xuz3uh
+              allOf:
+                - x-stoplight:
+                    id: 9gpydmd4muyp7
+                  items:
+                    x-stoplight:
+                      id: ga8mejux8ygr0
+                    allOf:
+                      - $ref: ../inventory/models/quantity.yaml
+                      - $ref: ../inventory/models/unit.yaml
+                        x-stoplight:
+                          id: teu627zgzqika
+                      - $ref: ../parts-component/models/parts-component.yaml
+                        x-stoplight:
+                          id: elphcyi0y6596
+                      - $ref: ../inventory/models/status.yaml
+                        x-stoplight:
+                          id: p9pej6v0c9cpq
+                        description: 在庫のステータス
+              type: array
   parameters:
     catalogId:
       name: catalogId
@@ -478,7 +511,6 @@ components:
                       id: pmymvebpqrcz2
                     allOf:
                       - $ref: '#/components/schemas/orderId'
-                      - $ref: '#/components/schemas/slipNumber-model'
                         x-stoplight:
                           id: 594gfkkzegbzm
                       - $ref: '#/components/schemas/orderDate'
@@ -501,5 +533,26 @@ components:
                 required:
                   - data
       headers: {}
+    fetch-order-success-page-response:
+      description: '## 注文取得成功ページレスポンス'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models/success-page-response.yaml
+                x-stoplight:
+                  id: dj0mjxm0pk038
+              - type: object
+                x-stoplight:
+                  id: asjf9rkbjg2ur
+                properties:
+                  data:
+                    type: array
+                    x-stoplight:
+                      id: 89oov594lkhgs
+                    items:
+                      $ref: '#/components/schemas/akizuki-order-fetch-component'
+                      x-stoplight:
+                        id: dt1yrv7gdnb8y
   requestBodies: {}
 x-internal: true

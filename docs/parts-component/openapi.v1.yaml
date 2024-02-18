@@ -91,6 +91,8 @@ paths:
         - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
         - $ref: ../common/commons.v1.yaml#/components/parameters/sort-column
         - $ref: ../common/commons.v1.yaml#/components/parameters/sort-order
+        - $ref: ../common/commons.v1.yaml#/components/parameters/filter-column
+        - $ref: ../common/commons.v1.yaml#/components/parameters/filter-query
 components:
   schemas:
     componentId:
