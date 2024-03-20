@@ -2,69 +2,78 @@
 
  電子部品在庫管理のWebAPI定義
 
-## Github.comに公開
+## localhostでSwagger UI 起動
 
-1. 以下のgithubのコードをダウンロード
-    <https://github.com/swagger-api/swagger-ui.git>
+### Swagger UIダウンロード
 
-2. ルートに`docs`ディレクトリを作成
-
-3. 先ほどダウンロードしたソースの`dist`の中身を`docs`にコピー
-
-4. `index.html`を以下のように修正
-
-```html:index.html
-<!-- HTML for static distribution bundle build -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Swagger UI</title>
-  <link rel="stylesheet" type="text/css" href="./swagger-ui.css" />
-  <link rel="stylesheet" type="text/css" href="index.css" />
-  <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
-  <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
-</head>
-
-<body>
-  <div id="swagger-ui"></div>
-  <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
-  <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
-  <script src="./swagger-initializer.js" charset="UTF-8"> </script>
-
-+  <script>
-+   window.onload = () => {
-+     window.ui = SwaggerUIBundle({
-+       url: '../cap-store/reference/akizuki/openapi.v1.yaml',
-+       dom_id: '#swagger-ui',
-+       presets: [
-+         SwaggerUIBundle.presets.apis,
-+         SwaggerUIStandalonePreset
-+       ],
-+       layout: "StandaloneLayout",
-+     });
-+    };
-+  </script>
-</body>
-
-</html>
+```bash
+git clone https://github.com/swagger-api/swagger-ui.git
 ```
 
-5. GithubPagesの設定
+`dist`フォルダの`swagger-initializer.js`を以下のように変更
 
-- Settings > Pages
+swagger-initializer.js
 
-### Source
+```javascript
+  window.onload = function () {
+    //<editor-fold desc="Changeable Configuration Block">
 
-- `deploy from a branch`
++    function get_url() {
++      // @see https://stackoverflow.com/questions/35914069/how-can-i-get-query-parameters-from-a-url-in-vue-js
++      let uri = window.location.href.split('?');
++      if (uri.length === 2) {
++        let vars = uri[1].split('&');
++        let getVars = {};
++        let tmp = '';
++        vars.forEach(function (v) {
++          tmp = v.split('=');
++          if (tmp.length === 2)
++            getVars[tmp[0]] = tmp[1];
++        });
++        return getVars.url;
++      }
++    }
 
-### branch
+    // the following lines will be replaced by docker/configurator, when it runs in a docker-container
+    window.ui = SwaggerUIBundle({
+-     url: "https://petstore.swagger.io/v2/swagger.json",
++     url: get_url(),
+      dom_id: '#swagger-ui',
+      deepLinking: true,
+      presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIStandalonePreset
+      ],
+      plugins: [
+        SwaggerUIBundle.plugins.DownloadUrl
+      ],
+      layout: "StandaloneLayout"
+    });
 
-- branch > `main`
-- folder > `docs`
-- `save`ボタンを押し、数分すると同じページの上部にURLが表示される
+    //</editor-fold>
+  };
+```
 
-### 参考
+### openapiファイル配置
 
-<https://zenn.dev/yuki_tu/articles/11618e3bd6fcf2>
+`index.html`があるファイルと同じ場所にyamlファイルまたはそれらが格納されているフォルダを配置する
+
+### ローカルhttp server起動
+
+以下のコマンドを実行
+
+```bash
+python3 -m http.server 8000
+```
+
+### Swagger UIをブラウザで閲覧
+
+以下のURLをブラウザで開く
+
+<http://localhost:8000>
+
+ファイルを指定して開く場合は以下
+<http://localhost:8000?url=http://localhost:8000/akizuki/akizuki.v1.yaml>
+
+## 参考
+<https://qiita.com/hidao/items/d13e7dda3da02d37dd45>
