@@ -1,0 +1,65 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  responses:
+    Ok:
+      description: "注文取得成功ページレスポンス"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/successPageResponse
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/akizuki-order-fetch-component"
+
+    NoContent:
+      description: "NoContent"
+
+    InternalServerError:
+      description: |-
+        ## Internal Server Error
+        ### C999
+        異常終了
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+  schemas:
+    akizuki-order-fetch-component:
+      title: 秋月電子で注文した電子部品情報(取得用)
+      type: object
+      properties:
+        orderId:
+          $ref: "./models.yaml#/components/schemas/orderId"
+        orderDate:
+          $ref: "./models.yaml#/components/schemas/orderDate"
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              quantity:
+                $ref: ../inventory/models.yaml#/components/schemas/quantity
+              unit:
+                $ref: ../inventory/models.yaml#/components/schemas/unit
+              component:
+                $ref: ../parts-component/models.yaml#/components/schemas/parts-component
+              status:
+                $ref: ../inventory/models.yaml#/components/schemas/status
+            required:
+              - quantity
+              - unit
+              - component
+              - status
+      required:
+        - orderId
+        - orderDate
+        - details

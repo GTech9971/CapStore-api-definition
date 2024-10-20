@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  requestBodies:
+    request:
+      description: |-
+        ## 秋月電子の購入履歴詳細のhtmlファイル
+        https://akizukidenshi.com/catalog/customer/historydetail.aspx?order_id=E230617-031873-01
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties: {}
+
+  responses:
+    Ok:
+      description: "秋月電子の注文詳細取得の成功レスポンス"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/successResponse
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      orderId:
+                        $ref: "./models.yaml#/components/schemas/orderId"
+                      orderDate:
+                        $ref: "./models.yaml#/components/schemas/orderDate"
+                      components:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/akizuki-order-component"
+                        required:
+                          - components
+
+    BadRequest:
+      description: |-
+        ## Bad Request
+        ### C400
+        入力パラメターエラー
+
+        ### AKE0301
+        htmlのファイル容量エラー
+
+        ### AKE0302
+        htmlファイルフォーマットエラー
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+    InternalServerError:
+      description: |-
+        ## Internal Server Error
+        ### C999
+        予期せぬエラー
+
+        ### AKE0303
+        htmlファイル解析失敗エラー
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+  schemas:
+    akizuki-order-component:
+      title: 秋月電子で注文した電子部品情報
+      type: object
+      properties:
+        components:
+          $ref: "./models.yaml#/components/schemas/akizuki-component"
+        quantity:
+          $ref: ../inventory/models.yaml#/components/schemas/quantity
+        unit:
+          $ref: ../inventory/models.yaml#/components/schemas/unit

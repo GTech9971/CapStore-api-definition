@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  requestBodies:
+    request:
+      required: true
+      description: "## 注文登録のリクエストボディ"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              orderId:
+                $ref: "./models.yaml#/components/schemas/orderId"
+              orderDate:
+                $ref: "./models.yaml#/components/schemas/orderDate"
+              components:
+                type: array
+                items:
+                  uniqueItems: true
+                  $ref: "#/components/schemas/akizuki-order-registry-component"
+            required:
+              - orderId
+              - orderDate
+              - components
+
+  responses:
+    Ok:
+      description: |-
+        ## OK
+        成功
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/successResponse
+
+    BadRequest:
+      description: |-
+        ## Bad Request
+        ### C400
+        入力バリデーションエラー
+        ### AKE0401
+        注文IDが既に登録済み
+
+    NotFound:
+      description: |-
+        ## Not Found
+        ### AKE0402
+        電子部品IDが電子部品マスタに登録されていない
+    InternalServerError:
+      description: |-
+        ## Internal Server Error
+        ### C999
+        異常終了
+
+  schemas:
+    akizuki-order-registry-component:
+      title: 秋月電子で注文した電子部品情報(登録用)
+      type: object
+      properties:
+        catalogId:
+          $ref: "./models.yaml#/components/schemas/catalogId"
+        componentId:
+          $ref: ../parts-component/models.yaml#/components/schemas/componentId
+        quantity:
+          $ref: ../inventory/models.yaml#/components/schemas/quantity
+        unit:
+          $ref: ../inventory/models.yaml#/components/schemas/unit
+      required:
+        - catalogId
+        - componentId
+        - quantity
+        - unit

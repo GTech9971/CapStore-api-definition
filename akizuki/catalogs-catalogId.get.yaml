@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  responses:
+    Ok:
+      description: |-
+        電子部品情報取得成功
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/successResponse
+              - type: object
+                properties:
+                  data:
+                    $ref: ../parts-component/models.yaml#/components/schemas/parts-component
+    BadRequest:
+      description: |-
+        ### エラーコード:C400
+        入力パラメータ不正
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+    NotFound:
+      description: |-
+        ### エラーコード: AKE0101
+          カタログIDが存在しない
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+    InternalServerError:
+      description: |-
+        ### C999
+
+        ### エラーコード:AKE0102
+        パース処理に失敗
+
+        ### エラーコード:AKE0103
+        通販サイトの接続に失敗
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/errorResponse

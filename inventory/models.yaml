@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  schemas:
+    quantity:
+      title: 個数
+      type: integer
+      example: 3
+
+    unit:
+      title: 在庫の単位
+      type: string
+      description: |-
+        在庫の単位
+        ### 例
+        - 個（pieces）
+        - ケース（cases）
+        - パレット（pallets）
+        - ボリューム（volume）
+        - 重量（weight）
+        - メートル（meters）
+      example: pieces
+      enum:
+        - pieces
+
+    status:
+      title: 在庫ステータス
+      type: string
+      description: |-
+        - Order : 発注
+        - Arrival : 入荷
+        - Allocation: 引当
+        - Shipment: 出荷
+      enum:
+        - Order
+        - Arrival
+        - Allocation
+        - Shipment

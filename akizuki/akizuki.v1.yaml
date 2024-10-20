@@ -1,558 +1,117 @@
-openapi: 3.1.0
-x-stoplight:
-  id: z5fs5e7ybz99x
+openapi: 3.0.3
 info:
   title: 秋月電子連携API
-  version: '1.0'
-  summary: 秋月電子通販サイトの情報を取得、注文情報の取得等を行う
+  version: "1.0"
   description: |
     # 秋月電子連携API
-    ## 目的
-
-    ## 共通処理
-    ### 1.
-    ### 2. 
-  termsOfService: 'https://akizukidenshi.com/catalog/top.aspx'
+    秋月電子通販サイトの情報を取得、注文情報の取得等を行う
+  termsOfService: "https://akizukidenshi.com/catalog/top.aspx"
 servers:
-  - url: 'http://localhost:3000/api/v1/akizuki/'
+  - url: "http://localhost:3000/api/v1/akizuki/"
+tags:
+  - name: "akizuki"
+
 paths:
-  '/catalogs/{catalogId}':
+  "/catalogs/{catalogId}":
     get:
       summary: カタログ情報取得
-      tags: []
-      responses:
-        '200':
-          description: |-
-            ## OK(200) 成功
-            電子部品情報取得成功
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/success-response.yaml
-                  - type: object
-                    properties:
-                      data:
-                        $ref: ../parts-component/models/parts-component.yaml
-        '400':
-          description: |-
-            ## Bad Request(400) 不正リクエスト
-            ### エラーコード:C400
-            入力パラメータ不正
-          content:
-            application/json:
-              schema:
-                $ref: ../common/models/error-response.yaml
-              examples:
-                C400:
-                  value:
-                    success: false
-                    data: {}
-                    errors:
-                      code: AKE0101
-                      message: 予期せぬエラーが発生しました
-                      stack: IOException StreamReader.Read at 102 line...
-        '404':
-          description: |-
-            ## Not Found(404) 存在しない
-            ### エラーコード: AKE0101
-              カタログIDが存在しない
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-              examples: {}
-        '500':
-          description: |-
-            ## Internal Server Error(500) サーバー内エラー
-            ### C999
-
-            ### エラーコード:AKE0102
-            パース処理に失敗
-
-            ### エラーコード:AKE0103
-            通販サイトの接続に失敗
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-              examples: {}
-      operationId: get-catalogs-catalogId
       description: |-
         # カタログ情報取得 API
-        ## 目的
         1. パスパラメーターのカタログIDを基に秋月電子の通販サイトを検索する
 
         2. 電子部品が存在した場合、ページ内容をパースする
 
         3. メーカー名、カテゴリー名がDBに存在しなければ登録する
+          - TODO この動きはどうかと。。。
 
         4. パースした結果をレスポンスとして返す
-      x-internal: true
-    parameters:
-      - $ref: '#/components/parameters/catalogId'
+      tags: ["akizuki"]
+      operationId: get-catalogs-catalogId
+      parameters:
+        - $ref: "./models.yaml#/components/parameters/catalogId"
+      responses:
+        200:
+          $ref: "./catalogs-catalogId.get.yaml#/components/responses/Ok"
+        400:
+          $ref: "./catalogs-catalogId.get.yaml#/components/responses/BadRequest"
+        404:
+          $ref: "./catalogs-catalogId.get.yaml#/components/responses/NotFound"
+        500:
+          $ref: "./catalogs-catalogId.get.yaml#/components/responses/InternalServerError"
+
   /orders/upload:
     post:
       summary: 購入履歴取得
-      tags: []
-      responses:
-        '200':
-          $ref: '#/components/responses/fetch-order-success-response'
-        '400':
-          description: |-
-            ## Bad Request
-            ### AKE0201
-            htmlのファイル容量エラー
-
-            ### AKE0202
-            htmlファイルフォーマットエラー
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-        '500':
-          description: |-
-            ## Internal Server Error
-            ### C999
-            予期せぬエラー
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-      operationId: get-catalogs-orders
-      x-internal: true
       description: |-
         # 購入履歴取得API
         ## 秋月電子の購入履歴を取得する
-      parameters: []
+      tags: ["akizuki"]
+      operationId: get-catalogs-orders
       requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-        description: |-
-          ## 秋月電子の購入履歴ページのhtmlファイル
-          https://akizukidenshi.com/catalog/customer/history.aspx
-    parameters: []
+        $ref: "./orders-upload.post.yaml#/components/requestBodies/request"
+      responses:
+        200:
+          $ref: "./orders-upload.post.yaml#/components/responses/Ok"
+        400:
+          $ref: "./orders-upload.post.yaml#/components/responses/BadRequest"
+        500:
+          $ref: "./orders-upload.post.yaml#/components/responses/InternalServerError"
+
   /orders/details/upload:
     post:
       summary: 購入履歴詳細取得
-      tags: []
-      responses:
-        '200':
-          $ref: '#/components/responses/fetch-order-detail-success-response'
-        '400':
-          description: |-
-            ## Bad Request
-            ### C400
-            入力パラメターエラー
-
-            ### AKE0301
-            htmlのファイル容量エラー
-
-            ### AKE0302
-            htmlファイルフォーマットエラー
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-        '500':
-          description: |-
-            ## Internal Server Error
-            ### C999
-            予期せぬエラー
-
-            ### AKE0303
-            htmlファイル解析失敗エラー
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/error-response.yaml
-      operationId: get-orders-details
-      x-internal: true
       description: |-
         # 購入履歴詳細取得API
         ## 秋月電子の購入履歴詳細を取得する
+      tags: ["akizuki"]
+      operationId: get-orders-details
       requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties: {}
-        description: |-
-          ## 秋月電子の購入履歴詳細のhtmlファイル
-          https://akizukidenshi.com/catalog/customer/historydetail.aspx?order_id=E230617-031873-01
-    parameters: []
+        $ref: "./orders-details-upload.post.yaml#/components/requestBodies/request"
+      responses:
+        200:
+          $ref: "./orders-details-upload.post.yaml#/components/responses/Ok"
+        400:
+          $ref: "./orders-details-upload.post.yaml#/components/responses/BadRequest"
+        500:
+          $ref: "./orders-details-upload.post.yaml#/components/responses/InternalServerError"
+
   /orders:
     post:
       summary: 秋月電子の注文登録
-      operationId: post-orders
-      responses:
-        '200':
-          description: |-
-            ## OK
-            成功
-          content:
-            application/json:
-              schema:
-                $ref: ../common/models/success-response.yaml
-        '400':
-          description: |-
-            ## Bad Request
-            ### C400
-            入力バリデーションエラー
-            ### AKE0401
-            注文IDが既に登録済み
-        '404':
-          description: |-
-            ## Not Found
-            ### AKE0402
-            電子部品IDが電子部品マスタに登録されていない
-        '500':
-          description: |-
-            ## Internal Server Error
-            ### C999
-            異常終了
-      x-internal: true
       description: |-
-        # 秋月電子の注文登録API
         ## 秋月電子の注文を登録する
 
         1. DBに登録する
         2. 入荷登録にここで登録した注文IDを使用する
+      operationId: post-orders
+      tags:
+        - "akizuki"
       requestBody:
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: '#/components/schemas/orderId'
-                  x-stoplight:
-                    id: f0kn7464w5efa
-                - $ref: '#/components/schemas/orderDate'
-                  x-stoplight:
-                    id: id3ptmw0ml4q1
-                - type: object
-                  x-stoplight:
-                    id: o1zutnmz67apy
-                  properties:
-                    components:
-                      x-stoplight:
-                        id: doicreycl3gdg
-                      type: array
-                      description: 注文詳細
-                      items:
-                        $ref: '#/components/schemas/akizuki-order-registry-component'
-                        x-stoplight:
-                          id: mu6kfg9vi6elg
-                  required:
-                    - components
-        description: '## 注文登録のリクエストボディ'
+        $ref: "./orders.post.yaml#/components/requestBodies/request"
+      responses:
+        200:
+          $ref: "orders.post.yaml#/components/responses/Ok"
+        400:
+          $ref: "orders.post.yaml#/components/responses/BadRequest"
+        404:
+          $ref: "orders.post.yaml#/components/responses/NotFound"
+        500:
+          $ref: "orders.post.yaml#/components/responses/InternalServerError"
+
     get:
       summary: 秋月電子の注文取得
-      operationId: get-orders
-      responses:
-        '200':
-          $ref: '#/components/responses/fetch-order-success-page-response'
-        '204':
-          $ref: '#/components/responses/fetch-order-success-page-response'
-        '500':
-          description: |-
-            ## Internal Server Error
-            ### C999
-            異常終了
-          content:
-            application/json:
-              schema:
-                $ref: ../common/models/error-response.yaml
       description: |
-        # 秋月電子の注文取得API
         ## 秋月電子の注文を取得する
       parameters:
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
-      requestBody:
-        content: {}
-        description: ''
-      x-internal: true
-components:
-  schemas:
-    orderId:
-      title: 注文ID
-      x-stoplight:
-        id: 9sznsfy7vrad8
-      type: object
-      description: '## 秋月電子で注文した際のID'
-      properties:
-        orderId:
-          type: string
-          description: 注文ID
-          pattern: '^E\d{6}-\d{6}-\d{2}$'
-          minLength: 17
-          maxLength: 17
-          example: E230617-031873-01
-      required:
-        - orderId
-      x-internal: true
-    order-model:
-      allOf:
-        - $ref: '#/components/schemas/orderId'
-          description: 注文ID
-        - $ref: '#/components/schemas/orderDate'
-          x-stoplight:
-            id: r54p1wuqxpxld
-        - type: object
-          x-stoplight:
-            id: 6981jbyhsm9su
-          properties:
-            components:
-              type: array
-              x-stoplight:
-                id: nirl5gwii69wb
-              items:
-                $ref: '#/components/schemas/akizuki-component'
-                x-stoplight:
-                  id: yawz9sokm4gn3
-      title: 注文モデル
-      x-internal: true
-      description: '## 秋月電子で注文した注文モデル'
-    catalogId:
-      title: catalogId
-      x-stoplight:
-        id: hpyx9c3rxim69
-      type: object
-      description: |-
-        ## カタログコード
-        秋月電子の通販コード
-      x-internal: true
-      properties:
-        catalogId:
-          type: string
-          x-stoplight:
-            id: y1qh0cysv87q4
-          description: 通販コード
-          pattern: '\d{6}$'
-          minLength: 6
-          maxLength: 6
-          example: '118246'
-      required:
-        - catalogId
-    akizuki-component:
-      title: akizuki-component
-      x-stoplight:
-        id: p71zxuqi724b2
-      allOf:
-        - $ref: '#/components/schemas/catalogId'
-          x-stoplight:
-            id: a3ownw3uh9qwi
-          description: カタログID
-        - $ref: ../parts-component/models/componentId.yaml
-          x-stoplight:
-            id: fbtkvabi26qe0
-      description: '## 秋月電子の電子部品情報'
-      x-internal: true
-    orderDate:
-      title: orderDate
-      x-stoplight:
-        id: z73vn0r9xj0i0
-      type: object
-      description: '## 秋月電子で注文した日'
-      properties:
-        orderDate:
-          type: string
-          x-stoplight:
-            id: c85qvm97n7w4n
-          format: date
-          example: '2023-12-3'
-          description: 秋月電子で注文した日
-      required:
-        - orderDate
-      x-internal: true
-    akizuki-order-component:
-      title: akizuki-order-component
-      x-stoplight:
-        id: h1y4kcyv8rd5h
-      description: '## 秋月電子で注文した電子部品情報'
-      x-internal: true
-      allOf:
-        - $ref: '#/components/schemas/akizuki-component'
-        - $ref: ../inventory/models/quantity.yaml
-          x-stoplight:
-            id: vf5uq2zydis22
-        - $ref: ../inventory/models/unit.yaml
-          x-stoplight:
-            id: gcgs9k4enneu5
-    akizuki-order-registry-component:
-      title: akizuki-order-registry-component
-      x-stoplight:
-        id: vf30ooejpkch1
-      allOf:
-        - $ref: '#/components/schemas/catalogId'
-          x-stoplight:
-            id: qiha0kidzemmh
-        - $ref: ../parts-component/models/componentId.yaml
-          x-stoplight:
-            id: m6iw6epqri2g3
-        - $ref: ../inventory/models/quantity.yaml
-          x-stoplight:
-            id: liizvfd4li2gx
-        - $ref: ../inventory/models/unit.yaml
-          x-stoplight:
-            id: yskmw4tofyev2
-      x-internal: true
-      description: '## 秋月電子で注文した電子部品情報(登録用)'
-    akizuki-order-fetch-component:
-      title: akizuki-order-fetch-component
-      x-stoplight:
-        id: xnc9f0c8cw2g4
-      description: '## 秋月電子で注文した電子部品情報(取得用)'
-      x-internal: true
-      allOf:
-        - $ref: '#/components/schemas/orderId'
-          x-stoplight:
-            id: k2v3v2ec41uzj
-        - $ref: '#/components/schemas/orderDate'
-          x-stoplight:
-            id: 1zdnbgfwno9ac
-        - type: object
-          x-stoplight:
-            id: 2ag8a97y2n310
-          properties:
-            details:
-              x-stoplight:
-                id: be5i1w2xuz3uh
-              allOf:
-                - x-stoplight:
-                    id: 9gpydmd4muyp7
-                  items:
-                    x-stoplight:
-                      id: ga8mejux8ygr0
-                    allOf:
-                      - $ref: ../inventory/models/quantity.yaml
-                      - $ref: ../inventory/models/unit.yaml
-                        x-stoplight:
-                          id: teu627zgzqika
-                      - $ref: ../parts-component/models/parts-component.yaml
-                        x-stoplight:
-                          id: elphcyi0y6596
-                      - $ref: ../inventory/models/status.yaml
-                        x-stoplight:
-                          id: p9pej6v0c9cpq
-                        description: 在庫のステータス
-              type: array
-  parameters:
-    catalogId:
-      name: catalogId
-      in: path
-      required: true
-      schema:
-        type: string
-        pattern: '^[A-Z]-\d{5}$'
-        example: I-12467
-        minLength: 7
-        maxLength: 7
-      description: '## 秋月電子のカタログID'
-    orderId:
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
-        example: E230617-031873-01
-        pattern: '^E\d{6}-\d{6}-\d{2}$'
-        minLength: 17
-        maxLength: 17
-      description: 秋月電子で注文した注文ID
-  responses:
-    fetch-order-success-response:
-      description: '## 秋月電子注文情報取得成功レスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-response.yaml
-                x-stoplight:
-                  id: q1tbcy8k9ffc8
-              - type: object
-                x-stoplight:
-                  id: 0jdulg5wrqrra
-                properties:
-                  data:
-                    type: array
-                    x-stoplight:
-                      id: 3h6g3p4wowirl
-                    items:
-                      $ref: '#/components/schemas/order-model'
-                      x-stoplight:
-                        id: sgt5e6rjx3bru
-                required:
-                  - data
-          examples: {}
-    fetch-order-detail-success-response:
-      description: '## 秋月電子の注文詳細取得の成功レスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-response.yaml
-                x-stoplight:
-                  id: bp4g7rj2lbkj6
-              - type: object
-                x-stoplight:
-                  id: 1i9n93e0i62iw
-                properties:
-                  data:
-                    x-stoplight:
-                      id: pmymvebpqrcz2
-                    allOf:
-                      - $ref: '#/components/schemas/orderId'
-                        x-stoplight:
-                          id: 594gfkkzegbzm
-                      - $ref: '#/components/schemas/orderDate'
-                        x-stoplight:
-                          id: e2dcot906vmwv
-                      - type: object
-                        x-stoplight:
-                          id: 51tflmvyyocu9
-                        properties:
-                          components:
-                            type: array
-                            x-stoplight:
-                              id: zwsiry3uoez01
-                            items:
-                              $ref: '#/components/schemas/akizuki-order-component'
-                              x-stoplight:
-                                id: hecrdlzf8s5nl
-                        required:
-                          - components
-                required:
-                  - data
-      headers: {}
-    fetch-order-success-page-response:
-      description: '## 注文取得成功ページレスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-page-response.yaml
-                x-stoplight:
-                  id: dj0mjxm0pk038
-              - type: object
-                x-stoplight:
-                  id: asjf9rkbjg2ur
-                properties:
-                  data:
-                    type: array
-                    x-stoplight:
-                      id: 89oov594lkhgs
-                    items:
-                      $ref: '#/components/schemas/akizuki-order-fetch-component'
-                      x-stoplight:
-                        id: dt1yrv7gdnb8y
-  requestBodies: {}
-x-internal: true
+        - $ref: ../common/models.yaml#/components/parameters/page-index
+        - $ref: ../common/models.yaml#/components/parameters/page-size
+      tags:
+        - "akizuki"
+      operationId: get-orders
+      responses:
+        200:
+          $ref: "./orders.get.yaml#/components/responses/Ok"
+        204:
+          $ref: "./orders.get.yaml#/components/responses/NoContent"
+        500:
+          $ref: "./orders.get.yaml#/components/responses/InternalServerError"

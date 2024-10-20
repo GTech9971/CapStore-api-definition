@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "1.0"
+paths: {}
+components:
+  requestBodies:
+    request:
+      required: true
+      description: |-
+        ## 秋月電子の購入履歴ページのhtmlファイル
+        https://akizukidenshi.com/catalog/customer/history.aspx
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+
+  responses:
+    Ok:
+      description: "秋月電子注文情報取得成功"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/successResponse
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "./models.yaml#/components/schemas/order-model"
+
+    BadRequest:
+      description: |-
+        ### AKE0201
+        htmlのファイル容量エラー
+
+        ### AKE0202
+        htmlファイルフォーマットエラー
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
+
+    InternalServerError:
+      description: |-
+        ### C999
+        予期せぬエラー
+      content:
+        application/json:
+          schema:
+            $ref: ../common/models.yaml#/components/schemas/errorResponse
