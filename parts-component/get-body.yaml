@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: "部品"
+  version: "1.0"
+paths: {}
+components:
+  responses:
+    Ok:
+      description: "## 電子部品情報取得成功時のレスポンス"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/successResponse
+              - type: object
+                properties:
+                  data:
+                    $ref: ./models.yaml#/components/schemas/parts-component
+    NotFound:
+      description: |-
+        ## 電子部品情報取得成功データなしレスポンス
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: ../common/models.yaml#/components/schemas/errorResponse

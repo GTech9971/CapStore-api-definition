@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: "電子部品モデル"
+  version: "1.0"
+paths: {}
+components:
+  schemas:
+    componentId:
+      title: 電子部品ID
+      description: "## 電子部品ID"
+      type: integer
+      example: 5
+      minimum: 1
+
+    componentName:
+      title: 電子部品名
+      type: string
+      example: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
+
+    componentModelName:
+      title: 電子部品モデル名
+      type: string
+      description: |-
+        ## 電子部品モデル名
+        ### 存在しない場合
+        - modelName=`なし`
+      example: PIC16F1827-I/P
+
+    componentDescription:
+      title: 部品説明
+      type: string
+      example: ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400
+
+    componentImageUrl:
+      title: 部品画像
+      type: string
+      format: uri
+      example: "https://akizukidenshi.com/img/goods/C/I-04430.jpg"
+
+    componentImageList:
+      title: 部品画像リスト
+      type: array
+      items:
+        uniqueItems: true
+        $ref: "#/components/schemas/componentImageUrl"
+
+    categoryId:
+      title: カテゴリーID
+      type: number
+      minimum: 1
+
+    category:
+      title: 部品カテゴリー
+      type: object
+      description: "電子部品のカテゴリー"
+      properties:
+        id:
+          $ref: "#/components/schemas/categoryId"
+        name:
+          type: string
+          description: カテゴリー名
+          example: ＰＩＣマイコン
+        image:
+          type: string
+          description: カテゴリーの画像URL
+          format: uri
+      required:
+        - id
+        - name
+      example:
+        id: 1
+        name: LED
+        image: "http://example.com"
+
+    makerId:
+      title: メーカーID
+      type: number
+      minimum: 1
+
+    maker:
+      title: 電子部品製造メーカー
+      type: object
+      description: |-
+        ## 電子部品製造メーカー
+        ### メーカーが存在しない場合
+        - id=`999990`
+        - name=`なし`
+        - image=`null`
+        ### メーカー名が確定していない場合
+        - id=`999999`
+      properties:
+        id:
+          $ref: "#/components/schemas/makerId"
+        name:
+          type: string
+          description: 製造メーカー名
+          example: Microchip Technology Inc
+        image:
+          type: string
+          description: 製造メーカー画像URL
+          format: uri
+      required:
+        - id
+        - name
+      example:
+        id: 1
+        name: Microchip
+        image: "http://example.com"
+
+    parts-component:
+      description: "## 電子部品モデル"
+      title: 電子部品
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/componentId"
+        name:
+          $ref: "#/components/schemas/componentName"
+        modelName:
+          $ref: "#/components/schemas/componentModelName"
+        description:
+          $ref: "#/components/schemas/componentDescription"
+        category:
+          $ref: "#/components/schemas/category"
+        maker:
+          $ref: "#/components/schemas/maker"
+        images:
+          $ref: "#/components/schemas/componentImageList"
+      required:
+        - id
+        - name
+        - modelName
+        - category
+        - maker
+
+  parameters:
+    componentId:
+      name: componentId
+      description: "## 電子部品ID"
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/componentId"

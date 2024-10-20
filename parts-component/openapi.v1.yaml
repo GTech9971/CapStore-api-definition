@@ -1,239 +1,62 @@
-openapi: 3.1.0
-x-stoplight:
-  id: 8uw9lqwqytvi1
+openapi: 3.0.3
 info:
   title: PartsComponentsAPI.v1
-  version: '1.0'
+  version: "1.0"
   description: |-
     # Components API
     電子部品のCRUDを行うWebAPI
-  summary: 電子部品のCRUDを行う
+tags:
+  - name: components
 servers:
-  - url: 'http://localhost:3000/api/v1/'
+  - url: "http://localhost:3000/api/v1/"
 paths:
-  '/components/{componentId}':
+  "/components/{componentId}":
     parameters:
-      - $ref: '#/components/parameters/componentId'
+      - $ref: "./models.yaml#/components/parameters/componentId"
     get:
       summary: 電子部品情報取得
       tags:
         - components
       operationId: get-components-componentId
       description: 指定した電子部品IDと一致する電子部品情報を取得する
-      x-internal: true
-      requestBody:
-        content: {}
-        description: ''
       responses:
-        '200':
-          $ref: '#/components/responses/fetch-component-success-response'
-  /components:
-    post:
-      summary: 電子部品新規登録
-      operationId: post-components
-      description: 電子部品を新規登録する
-      responses:
-        '200':
-          description: |-
-            ## OK
-            新規登録成功
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: ../common/models/success-response.yaml
-                  - type: object
-                    properties:
-                      data:
-                        allOf:
-                          - $ref: '#/components/schemas/componentId'
-              examples: {}
-        '400':
-          description: |-
-            ## Bad Request
-            ### C400
-            入力バリデーションエラー
+        200:
+          $ref: "./get-body.yaml#/components/responses/Ok"
+        404:
+          $ref: "./get-body.yaml#/components/responses/NotFound"
 
-            ### CRE0101
-            電子部品がすでに存在する
-          content:
-            application/json:
-              schema:
-                $ref: ../common/models/error-response.yaml
-              examples: {}
-        '404':
-          description: |
-            ## Not Found
-            ### CRE0102
-            カテゴリーが存在しない
-
-            ### CRE0103
-            メーカーが存在しない
-          content:
-            application/json:
-              schema:
-                $ref: ../common/models/error-response.yaml
-      x-internal: true
-      requestBody:
-        $ref: '#/components/requestBodies/registry-component-request'
+  "/components":
     get:
       summary: 電子部品情報取得
+      description: 電子部品情報を取得する
+      tags:
+        - components
       operationId: get-components
       responses:
-        '200':
-          $ref: '#/components/responses/fetch-component-success-page-response'
-        '204':
-          $ref: '#/components/responses/fetch-component-success-empty-response'
-      description: 電子部品情報を取得する
-      x-internal: true
+        "200":
+          $ref: "./fetch-list-body.yaml#/components/responses/Ok"
+        "204":
+          $ref: "./fetch-list-body.yaml#/components/responses/NoContent"
       parameters:
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-index
-        - $ref: ../common/commons.v1.yaml#/components/parameters/page-size
-        - $ref: ../common/commons.v1.yaml#/components/parameters/sort-column
-        - $ref: ../common/commons.v1.yaml#/components/parameters/sort-order
-        - $ref: ../common/commons.v1.yaml#/components/parameters/filter-column
-        - $ref: ../common/commons.v1.yaml#/components/parameters/filter-query
-components:
-  schemas:
-    componentId:
-      title: componentId
-      x-stoplight:
-        id: 6esz520eaz4wc
-      type: object
-      description: '## 電子部品ID'
-      x-internal: true
-      properties:
-        componentId:
-          type: integer
-          minimum: 1
-          example: 100
-          description: 電子部品ID
-          x-stoplight:
-            id: iygtiz7aro6wc
-      required:
-        - componentId
-  securitySchemes: {}
-  requestBodies:
-    registry-component-request:
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              name:
-                type: string
-                x-stoplight:
-                  id: map5g7nf0iqnr
-              modelName:
-                type: string
-                x-stoplight:
-                  id: kbwl4ongahxim
-              description:
-                type: string
-                x-stoplight:
-                  id: 87oc27ftqvvb7
-              categoryId:
-                type: string
-                x-stoplight:
-                  id: 4hlo7g2sejtvb
-              makerId:
-                type: string
-                x-stoplight:
-                  id: 79pv9spxcdki0
-              images:
-                type: array
-                x-stoplight:
-                  id: ryh0tka1ss4qk
-                items:
-                  x-stoplight:
-                    id: 21jr220eip6s2
-                  type: string
-                  format: uri
-            required:
-              - name
-              - modelName
-              - description
-              - categoryId
-              - makerId
-          examples:
-            Example 1:
-              value:
-                componentId: 5
-                name: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
-                modelName: PIC16F1827-I/P
-                description: 'ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400'
-                category:
-                  id: 0
-                  name: LED
-                  image: 'http://example.com'
-                maker:
-                  id: 0
-                  name: Microchip
-                  image: 'http://example.com'
-                images:
-                  - 'https://akizukidenshi.com/img/goods/C/I-04430.jpg'
-      description: '## 電子部品登録リクエスト'
-  responses:
-    fetch-component-success-response:
-      description: '## 電子部品情報取得成功時のレスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-response.yaml
-                x-stoplight:
-                  id: 0886vnfatjdz3
-              - type: object
-                x-stoplight:
-                  id: xr2lmzgin2fy2
-                properties:
-                  data:
-                    $ref: ./models/parts-component.yaml
-                    x-stoplight:
-                      id: zhs4hmw9jymf2
-          examples: {}
-    fetch-component-success-page-response:
-      description: '## 電子部品情報取得成功ページレスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-page-response.yaml
-                x-stoplight:
-                  id: lnhyfuw535f7q
-              - type: object
-                x-stoplight:
-                  id: gys7zd54vsmwp
-                properties:
-                  data:
-                    type: array
-                    x-stoplight:
-                      id: 1fnldy34nz7f4
-                    items:
-                      $ref: ./models/parts-component.yaml
-                      x-stoplight:
-                        id: qpkvbpfiwi58d
-          examples: {}
-    fetch-component-success-empty-response:
-      description: '## 電子部品情報取得成功データなしレスポンス'
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: ../common/models/success-page-response.yaml
-                x-stoplight:
-                  id: f4cv9n158cr4u
-          examples: {}
-  parameters:
-    componentId:
-      name: componentId
-      in: path
-      required: true
-      schema:
-        type: integer
-        example: 100
-        minimum: 1
-      description: '## 電子部品ID'
-tags:
-  - name: components
-x-internal: false
+        - $ref: ../common/models.yaml#/components/parameters/page-index
+        - $ref: ../common/models.yaml#/components/parameters/page-size
+        - $ref: ../common/models.yaml#/components/parameters/sort-column
+        - $ref: ../common/models.yaml#/components/parameters/sort-order
+        - $ref: ../common/models.yaml#/components/parameters/filter-column
+        - $ref: ../common/models.yaml#/components/parameters/filter-query
+
+    post:
+      summary: 電子部品新規登録
+      tags:
+        - components
+      operationId: post-components
+      description: 電子部品を新規登録する
+      requestBody:
+        $ref: "./registry-body.yaml#/components/requestBodies/registry"
+      responses:
+        200:
+          $ref: "./registry-body.yaml#/components/responses/Ok"
+        400:
+          $ref: "./registry-body.yaml#/components/responses/BadRequest"
+        404:
+          $ref: "./registry-body.yaml#/components/responses/NotFound"
