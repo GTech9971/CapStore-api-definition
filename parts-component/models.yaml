@@ -80,7 +80,7 @@ components:
     makerId:
       title: メーカーID
       type: string
-      example: "Microchip Technology Inc."
+      example: "MicrochipTechnologyInc"
 
     partsComponent:
       title: 電子部品

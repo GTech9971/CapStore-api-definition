@@ -7,10 +7,12 @@ info:
     電子部品のCRUDを行うWebAPI
 tags:
   - name: components
+  - name: categories
+  - name: makers
 servers:
   - url: "http://localhost:3000/api/v1/"
 paths:
-  "/components":
+  /components:
     get:
       summary: 電子部品情報一覧取得
       description: 電子部品情報を取得する
@@ -53,7 +55,7 @@ paths:
             ### CRE40402
             メーカーが存在しない
 
-  "/components/{componentId}":
+  /components/{componentId}:
     parameters:
       - $ref: "./models.yaml#/components/parameters/componentId"
     get:
@@ -67,3 +69,54 @@ paths:
           $ref: "./fetch-component.yaml#/components/responses/Ok"
         404:
           description: "NotFound"
+
+  /categories:
+    get:
+      summary: カテゴリー一覧取得
+      tags:
+        - categories
+      operationId: fetchCategories
+      responses:
+        200:
+          $ref: "fetch-categories.yaml#/components/responses/Ok"
+        204:
+          description: NoContent
+    post:
+      summary: カテゴリー新規登録
+      tags:
+        - categories
+      operationId: registryCategory
+      requestBody:
+        $ref: "registry-category.yaml#/components/requestBodies/request"
+      responses:
+        201:
+          $ref: "registry-category.yaml#/components/responses/Create"
+        400:
+          description: |-
+            - カテゴリーIDが既に登録済み
+            - カテゴリー名が重複
+
+  /makers:
+    get:
+      summary: メーカー一覧取得
+      tags:
+        - makers
+      operationId: fetchMakers
+      responses:
+        200:
+          $ref: "fetch-makers.yaml#/components/responses/Ok"
+        204:
+          description: NoContent
+    post:
+      summary: メーカー新規登録
+      tags:
+        - makers
+      operationId: registryMaker
+      requestBody:
+        $ref: "registry-maker.yaml#/components/requestBodies/request"
+      responses:
+        201:
+          $ref: "registry-maker.yaml#/components/responses/Create"
+        400:
+          description: |-
+            - メーカーIDが既に登録済み
