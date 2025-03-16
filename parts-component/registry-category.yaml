@@ -1,0 +1,51 @@
+openapi: 3.0.2
+info:
+  title: "カテゴリー新規登録"
+  version: "v1"
+paths: {}
+components:
+  requestBodies:
+    request:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/registryCategoryRequest"
+
+  responses:
+    Create:
+      description: カテゴリー登録レスポンス
+      headers:
+        Location:
+          description: 生成したカテゴリーのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxxx/categories/register"
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+              - type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      categoryId:
+                        $ref: "./models.yaml#/components/schemas/categoryId"
+                    required:
+                      - categoryId
+
+  schemas:
+    registryCategoryRequest:
+      title: カテゴリー新規登録リクエスト
+      type: object
+      properties:
+        id:
+          $ref: "./models.yaml#/components/schemas/categoryId"
+        name:
+          $ref: "./models.yaml#/components/schemas/categoryName"
+      required:
+        - id
+        - name

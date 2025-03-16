@@ -1,0 +1,25 @@
+openapi: 3.0.2
+info:
+  title: "カテゴリー一覧取得"
+  version: "v1"
+paths: {}
+components:
+  responses:
+    Ok:
+      description: カテゴリー一覧取得レスポンス
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fetchCategoriesResponse"
+
+  schemas:
+    fetchCategoriesResponse:
+      title: カテゴリー一覧取得レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/category"

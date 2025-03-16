@@ -80,7 +80,7 @@ components:
     makerId:
       title: メーカーID
       type: string
-      example: "Microchip Technology Inc."
+      example: "MicrochipTechnologyInc"
 
     partsComponent:
       title: 電子部品
@@ -115,3 +115,19 @@ components:
       required: true
       schema:
         $ref: "#/components/schemas/componentId"
+
+    categoryId:
+      name: categoryId
+      description: カテゴリーID
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/categoryId"
+
+    makerId:
+      name: makerId
+      description: メーカーID
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/makerId"
