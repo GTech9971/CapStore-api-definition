@@ -2,22 +2,67 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "validate",
+            "detail": "openapiファイルのバリデーション",
+            "command": "openapi-generator",
+            "type": "shell",
+            "group": "test",
+            "args": [
+                "validate",
+                "-i",
+                "./${input:api}/root.yaml",
+            ],
+            "dependsOn": [
+                "bundle"
+            ]
+        },
+        {
+            "label": "bundle",
+            "detail": "openapiファイルを1ファイルに固める",
+            "command": "redocly",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "bundle",
+                "./${input:api}/openapi.v1.yaml",
+                "--output",
+                "./${input:api}/root.yaml"
+            ]
+        },
+        {
+            "label": "delete generated - server",
+            "detail": "自動生成されたフォルダを削除",
+            "command": "rm",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "-rf",
+                "*generated*",
+            ]
+        },
+        {
             "label": "generate - server",
+            "detail": "aspnetcoreのコードを自動生成",
             "command": "openapi-generator",
             "type": "shell",
             "group": "build",
             "args": [
                 "generate",
                 "-i",
-                "openapi.yaml",
+                "./${input:api}/root.yaml",
                 "-g",
                 "aspnetcore",
                 "-o",
-                "./generated-server",
+                "./${input:api}-generated-server",
                 "-c",
-                "./server.config.json"
+                "./server.config.json",
+                "--model-name-suffix",
+                "Model"
             ],
-            "problemMatcher": []
+            "dependsOn": [
+                "delete generated - server",
+                "bundle"
+            ]
         },
         {
             "label": "generate - client:typescript",
@@ -34,8 +79,17 @@
                 "./generated-client-typescript",
                 "-c",
                 "typescript.config.json"
-            ],
-            "problemMatcher": []
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "api",
+            "description": "変換API",
+            "type": "pickString",
+            "options": [
+                "parts-component",
+            ]
         }
     ]
 }
