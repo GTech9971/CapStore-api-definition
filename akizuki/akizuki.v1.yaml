@@ -103,8 +103,8 @@ paths:
       description: |
         ## 秋月電子の注文を取得する
       parameters:
-        - $ref: ../common/models.yaml#/components/parameters/page-index
-        - $ref: ../common/models.yaml#/components/parameters/page-size
+        - $ref: ../common/models.yaml#/components/parameters/pageIndex
+        - $ref: ../common/models.yaml#/components/parameters/pageSize
       tags:
         - "akizuki"
       operationId: get-orders

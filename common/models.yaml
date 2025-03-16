@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: ""
+  title: "common"
   version: "1.0"
 paths: {}
 components:
@@ -8,9 +8,9 @@ components:
     pageIndex:
       title: ページ数
       type: integer
-      minimum: 0
-      default: 0
-      example: 0
+      minimum: 1
+      default: 1
+      example: 1
     pageSize:
       title: 表示数
       type: integer
@@ -36,78 +36,36 @@ components:
       type: boolean
       default: false
 
-    errorResponse:
+    error:
+      title: エラー
       type: object
-      title: エラー情報
-      description: |-
-        ## エラー情報
-        ### C400
-        入力パラメーターエラー
-
-        ### C401
-        認証失敗エラー
-
-        ### C999
-        異常終了時のエラー
-        このパターンのみ`stack`に値が入る
-
-        ### AKE0101
-        API固有のエラー
-
-        先頭の2文字がAPIの頭文字
-        3文字目のEは`Error`の`E`
-        最後の数字の最初の2桁はAPIのHttpStatusCodeごとに繰り上がる
-        #### 例
-        - HttpStatusCode 400
-          - エラー1つ目 `0101`
-          - エラー2つ目 `0102`
-        - HttpStatusCode 404
-          - エラー1つ目 `0201`
-          - エラー2つ目 `0202`
       properties:
-        data:
-          type: object
-          default: null
-          readOnly: true
+        message:
+          title: メッセージ
+          type: string
         code:
           title: エラーコード
           type: string
-          example: AKE0101
-          default: C999
-          minLength: 4
-          description: エラーコード
-          readOnly: true
-        message:
-          title: エラーメッセージ
-          type: string
-          example: 予期せぬエラーが発生しました
-          description: エラーメッセージ
-          readOnly: true
-        stack:
-          type: string
-          description: StackTraceの内容 C999の場合のみ
-          readOnly: true
-          example: IOException StreamReader.Read at 102 line...
+          example: null
       required:
-        - code
         - message
-    successResponse:
-      title: 成功
+      example: null
+
+    baseResponse:
+      title: レスポンス
       type: object
-      description: |-
-        成功時のレスポンス
       properties:
         data:
+          title: データ
           type: object
-          description: データ
           readOnly: true
-      required:
-        - data
+        error:
+          $ref: "#/components/schemas/error"
 
-    successPageResponse:
-      title: ページ情報付き成功レスポンス
+    pageResponse:
+      title: ページレスポンス
       allOf:
-        - $ref: "#/components/schemas/successResponse"
+        - $ref: "#/components/schemas/baseResponse"
         - type: object
           description: ページネーションデータ
           properties:
@@ -132,20 +90,20 @@ components:
             - hasPrevious
 
   parameters:
-    page-index:
+    pageIndex:
       name: pageIndex
       in: query
       schema:
         $ref: "#/components/schemas/pageIndex"
       allowEmptyValue: true
-    page-size:
+    pageSize:
       name: pageSize
       in: query
       schema:
         $ref: "#/components/schemas/pageSize"
       description: 表示数
       allowEmptyValue: true
-    sort-column:
+    sortColumn:
       name: sortColumn
       in: query
       required: false
@@ -153,7 +111,7 @@ components:
         type: string
         example: ComponentName
       description: ソートするカラム名
-    sort-order:
+    sortOrder:
       name: sortOrder
       in: query
       schema:
@@ -163,15 +121,15 @@ components:
           - DESC
         example: ASC
       description: ソート順(ASC、DESC)
-    filter-column:
-      name: filter-column
+    filterColumn:
+      name: filterColumn
       in: query
       required: false
       schema:
         type: string
       description: フィルター項目
-    filter-query:
-      name: filter-query
+    filterQuery:
+      name: filterQuery
       in: query
       required: false
       schema:

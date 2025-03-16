@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "generate - server",
+            "command": "openapi-generator",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "generate",
+                "-i",
+                "openapi.yaml",
+                "-g",
+                "aspnetcore",
+                "-o",
+                "./generated-server",
+                "-c",
+                "./server.config.json"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "generate - client:typescript",
+            "command": "openapi-generator",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "generate",
+                "-i",
+                "openapi.yaml",
+                "-g",
+                "typescript-fetch",
+                "-o",
+                "./generated-client-typescript",
+                "-c",
+                "typescript.config.json"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}

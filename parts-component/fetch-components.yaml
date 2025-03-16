@@ -11,12 +11,12 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: ../common/models.yaml#/components/schemas/successPageResponse
+              - $ref: ../common/models.yaml#/components/schemas/pageResponse
               - type: object
                 properties:
                   data:
                     type: array
                     items:
-                      $ref: "./models.yaml#/components/schemas/parts-component"
+                      $ref: "./models.yaml#/components/schemas/partsComponent"
     NoContent:
       description: NoContent

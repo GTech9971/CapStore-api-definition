@@ -10,85 +10,67 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                $ref: "./models.yaml#/components/schemas/componentName"
-              modelName:
-                $ref: "./models.yaml#/components/schemas/componentModelName"
-              description:
-                $ref: "./models.yaml#/components/schemas/componentDescription"
-              categoryId:
-                $ref: "./models.yaml#/components/schemas/categoryId"
-              makerId:
-                $ref: "./models.yaml#/components/schemas/makerId"
-              images:
-                $ref: "./models.yaml#/components/schemas/componentImageList"
-            required:
-              - name
-              - modelName
-              - description
-              - categoryId
-              - makerId
-          examples:
-            登録サンプル:
-              value:
-                name: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
-                modelName: PIC16F1827-I/P
-                description: "ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400"
-                category:
-                  id: 1
-                  name: LED
-                  image: "http://example.com"
-                maker:
-                  id: 1
-                  name: Microchip
-                  image: "http://example.com"
-                images:
-                  - "https://akizukidenshi.com/img/goods/C/I-04430.jpg"
+            $ref: "#/components/schemas/registryComponentRequest"
 
   responses:
-    Ok:
+    Create:
       description: |-
-        ## OK
+        ## Created
         新規登録成功
+      headers:
+        Location:
+          description: 登録した電子部品のURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/components/C-126573"
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: ../common/models.yaml#/components/schemas/successResponse
-              - type: object
-                properties:
-                  data:
-                    allOf:
-                      - type: object
-                        properties:
-                          componentId:
-                            $ref: "./models.yaml#/components/schemas/componentId"
-                required:
-                  - componentId
-    BadRequest:
-      description: |-
-        ## Bad Request
-        ### C400
-        入力バリデーションエラー
+            $ref: "#/components/schemas/registryComponentResponse"
 
-        ### CRE0101
-        電子部品がすでに存在する
-      content:
-        application/json:
-          schema:
-            $ref: ../common/models.yaml#/components/schemas/errorResponse
+  schemas:
+    registryComponentRequest:
+      title: 電子部品登録リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/componentName"
+        modelName:
+          $ref: "./models.yaml#/components/schemas/componentModelName"
+        description:
+          $ref: "./models.yaml#/components/schemas/componentDescription"
+        categoryId:
+          $ref: "./models.yaml#/components/schemas/categoryId"
+        makerId:
+          $ref: "./models.yaml#/components/schemas/makerId"
+        images:
+          $ref: "./models.yaml#/components/schemas/componentImageList"
+      required:
+        - name
+        - modelName
+        - description
+        - categoryId
+        - makerId
+      example:
+        name: ＰＩＣマイコン　ＰＩＣ１６Ｆ１８２７－Ｉ／Ｐ
+        modelName: PIC16F1827-I/P
+        description: "ナノワットXLPテクノロジーによる超低消費電力 Cコンパイラに最適化されたアーキテクチャ mTouchタッチセンサ入力  ■主な仕様 ・シリーズ：PIC16F ・電源電圧：1.8～5.5V ・コアサイズ：8bit ・命令長：14bit ・クロック：32MHz ・プログラムメモリ：4kW ・EEPROM：256B ・RAM：384B ・GPIO：16pin ・ADC：12Ch ・UART/USART：1Ch ・I2C：2Ch ・SPI：2Ch ・タイマ：5Ch ・オシレータ：内蔵/外付 ・パッケージ：DIP18  ・丸ピン18ピン(2227MC-18-03):P-00030 ・平ピン18ピン(2227-18-03)(10個単位販売):P-00008 ICソケット関連一覧 SSOPパッケージ→I-08400"
+        categoryId: register
+        makerId: Microchip Technology Inc.
+        images:
+          - "https://akizukidenshi.com/img/goods/C/I-04430.jpg"
 
-    NotFound:
-      description: |
-        ## Not Found
-        ### CRE0102
-        カテゴリーが存在しない
-
-        ### CRE0103
-        メーカーが存在しない
-      content:
-        application/json:
-          schema:
-            $ref: ../common/models.yaml#/components/schemas/errorResponse
+    registryComponentResponse:
+      title: 電子部品登録レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                componentId:
+                  $ref: "./models.yaml#/components/schemas/componentId"
+          required:
+            - componentId

@@ -10,6 +10,49 @@ tags:
 servers:
   - url: "http://localhost:3000/api/v1/"
 paths:
+  "/components":
+    get:
+      summary: 電子部品情報一覧取得
+      description: 電子部品情報を取得する
+      tags:
+        - components
+      operationId: fetchComponents
+      responses:
+        200:
+          $ref: "./fetch-components.yaml#/components/responses/Ok"
+        204:
+          description: "NotContent"
+      parameters:
+        - $ref: ../common/models.yaml#/components/parameters/pageIndex
+        - $ref: ../common/models.yaml#/components/parameters/pageSize
+        - $ref: ../common/models.yaml#/components/parameters/sortColumn
+        - $ref: ../common/models.yaml#/components/parameters/sortOrder
+        - $ref: ../common/models.yaml#/components/parameters/filterColumn
+        - $ref: ../common/models.yaml#/components/parameters/filterQuery
+
+    post:
+      summary: 電子部品新規登録
+      tags:
+        - components
+      operationId: registryComponents
+      description: 電子部品を新規登録する
+      requestBody:
+        $ref: "./registry-body.yaml#/components/requestBodies/registry"
+      responses:
+        201:
+          $ref: "./registry-body.yaml#/components/responses/Create"
+        400:
+          description: |-
+            ### CRE40001
+            電子部品がすでに存在する
+        404:
+          description: |-
+            ### CRE40401
+            カテゴリーが存在しない
+
+            ### CRE40402
+            メーカーが存在しない
+
   "/components/{componentId}":
     parameters:
       - $ref: "./models.yaml#/components/parameters/componentId"
@@ -17,46 +60,10 @@ paths:
       summary: 電子部品情報取得
       tags:
         - components
-      operationId: get-components-componentId
+      operationId: fetchComponent
       description: 指定した電子部品IDと一致する電子部品情報を取得する
       responses:
         200:
-          $ref: "./get-body.yaml#/components/responses/Ok"
+          $ref: "./fetch-component.yaml#/components/responses/Ok"
         404:
-          $ref: "./get-body.yaml#/components/responses/NotFound"
-
-  "/components":
-    get:
-      summary: 電子部品情報取得
-      description: 電子部品情報を取得する
-      tags:
-        - components
-      operationId: get-components
-      responses:
-        "200":
-          $ref: "./fetch-list-body.yaml#/components/responses/Ok"
-        "204":
-          $ref: "./fetch-list-body.yaml#/components/responses/NoContent"
-      parameters:
-        - $ref: ../common/models.yaml#/components/parameters/page-index
-        - $ref: ../common/models.yaml#/components/parameters/page-size
-        - $ref: ../common/models.yaml#/components/parameters/sort-column
-        - $ref: ../common/models.yaml#/components/parameters/sort-order
-        - $ref: ../common/models.yaml#/components/parameters/filter-column
-        - $ref: ../common/models.yaml#/components/parameters/filter-query
-
-    post:
-      summary: 電子部品新規登録
-      tags:
-        - components
-      operationId: post-components
-      description: 電子部品を新規登録する
-      requestBody:
-        $ref: "./registry-body.yaml#/components/requestBodies/registry"
-      responses:
-        200:
-          $ref: "./registry-body.yaml#/components/responses/Ok"
-        400:
-          $ref: "./registry-body.yaml#/components/responses/BadRequest"
-        404:
-          $ref: "./registry-body.yaml#/components/responses/NotFound"
+          description: "NotFound"
