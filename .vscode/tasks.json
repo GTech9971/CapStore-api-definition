@@ -5,6 +5,16 @@
             "label": "validate",
             "detail": "openapiファイルのバリデーション",
             "command": "openapi-generator",
+            "windows": {
+                "command": "java",
+                "args": [
+                    "-jar",
+                    "openapi-generator-cli.jar",
+                    "validate",
+                    "-i",
+                    "./${input:api}/root.yaml"
+                ]
+            },
             "type": "shell",
             "group": "test",
             "args": [
@@ -33,6 +43,14 @@
             "label": "delete generated - server",
             "detail": "自動生成されたフォルダを削除",
             "command": "rm",
+            "windows": {
+                "command": "rm",
+                "args": [
+                    "-r",
+                    "-fo",
+                    "*generated*"
+                ]
+            },
             "type": "shell",
             "group": "build",
             "args": [
@@ -44,6 +62,24 @@
             "label": "generate - server",
             "detail": "aspnetcoreのコードを自動生成",
             "command": "openapi-generator",
+            "windows": {
+                "command": "java",
+                "args": [
+                    "-jar",
+                    "openapi-generator-cli.jar",
+                    "generate",
+                    "-i",
+                    "./${input:api}/root.yaml",
+                    "-g",
+                    "aspnetcore",
+                    "-o",
+                    "./${input:api}-generated-server",
+                    "-c",
+                    "./server.config.json",
+                    "--model-name-suffix",
+                    "Model"
+                ]
+            },
             "type": "shell",
             "group": "build",
             "args": [
