@@ -101,20 +101,19 @@
             ]
         },
         {
-            "label": "generate - client:typescript",
-            "command": "openapi-generator",
+            "label": "build - server",
             "type": "shell",
             "group": "build",
+            "detail": "サーバーコードをビルドする",
+            "command": "dotnet",
             "args": [
-                "generate",
-                "-i",
-                "openapi.yaml",
-                "-g",
-                "typescript-fetch",
-                "-o",
-                "./generated-client-typescript",
-                "-c",
-                "typescript.config.json"
+                "build"
+            ],
+            "options": {
+                "cwd": "./generated-server/src/CapStore.Models"
+            },
+            "dependsOn": [
+                "generate - server"
             ]
         }
     ],
