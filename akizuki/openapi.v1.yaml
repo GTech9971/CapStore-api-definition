@@ -12,39 +12,9 @@ tags:
   - name: "catalogs"
 
 paths:
-  /catalogs/{catalogId}:
-    get:
-      summary: カタログ情報取得
-      description: |-
-        1. カタログIDを基に秋月電子の通販サイトを検索する
-
-        2. 電子部品が存在した場合、ページ内容をパースする
-
-        3. メーカーID、カテゴリーが未登録の場合、その情報を`unRegistered`に返す
-      tags:
-        - "catalogs"
-      operationId: fetchComponentByAkizukiCatalogId
-      parameters:
-        - $ref: "./models.yaml#/components/parameters/catalogId"
-      responses:
-        200:
-          $ref: "./fetch-component-by-catalog-id.yaml#/components/responses/Ok"
-        400:
-          description: |-
-            - カタログIDが不正
-        404:
-          description: |-
-            - カタログIDが存在しない
-        500:
-          description: |-
-            ### エラーコード:AKE0102
-            パース処理に失敗
-
-            ### エラーコード:AKE0103
-            通販サイトの接続に失敗
-
   /orders/upload:
     post:
+      deprecated: true
       summary: 購入履歴取得
       description: |-
         # 購入履歴取得API
@@ -69,6 +39,7 @@ paths:
 
   /orders/details/upload:
     post:
+      deprecated: true
       summary: 購入履歴詳細取得
       description: |-
         # 購入履歴詳細取得API
@@ -102,6 +73,7 @@ paths:
 
   /orders:
     post:
+      deprecated: true
       summary: 秋月電子の注文登録
       description: |-
         ## 秋月電子の注文を登録する
@@ -133,6 +105,7 @@ paths:
             異常終了
 
     get:
+      deprecated: true
       summary: 秋月電子の注文取得
       description: |
         ## 秋月電子の注文を取得する

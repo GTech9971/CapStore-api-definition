@@ -5,12 +5,12 @@ info:
   description: |-
     # Components API
     電子部品のCRUDを行うWebAPI
-tags:
-  - name: components
-  - name: categories
-  - name: makers
+
+    # 秋月電子連携API
+    秋月電子通販サイトの情報を取得、注文情報の取得等を行う
+  termsOfService: "https://akizukidenshi.com/catalog/top.aspx"
 servers:
-  - url: "http://localhost:3000/api/v1/"
+  - url: "http://localhost:3000/api/v1/caps"
 paths:
   /components:
     $ref: "./parts-component/components.yaml"
@@ -24,3 +24,6 @@ paths:
     $ref: "./parts-component/makers.yaml"
   /makers/{makerId}/components:
     $ref: "./parts-component/makers/components.yaml"
+
+  /akizuki/catalogs/{catalogId}:
+    $ref: "./akizuki/{catalogId}.yaml"
