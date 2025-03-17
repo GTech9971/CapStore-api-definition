@@ -1,0 +1,27 @@
+openapi: 3.0.2
+info:
+  title: ""
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    registryCategoryRequest:
+      title: カテゴリー新規登録リクエスト
+      type: object
+      properties:
+        id:
+          $ref: "./models.yaml#/components/schemas/categoryId"
+        name:
+          $ref: "./models.yaml#/components/schemas/categoryName"
+      required:
+        - id
+        - name
+
+    registryMakerRequest:
+      title: メーカー新規登録リクエスト
+      type: object
+      properties:
+        id:
+          $ref: "./models.yaml#/components/schemas/makerId"
+      required:
+        - id

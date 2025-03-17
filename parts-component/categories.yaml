@@ -1,0 +1,44 @@
+get:
+  summary: カテゴリー一覧取得
+  tags:
+    - categories
+  operationId: fetchCategories
+  responses:
+    200:
+      description: カテゴリー一覧取得レスポンス
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchCategoriesResponse"
+    204:
+      description: NoContent
+post:
+  summary: カテゴリー新規登録
+  tags:
+    - categories
+  operationId: registryCategory
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryCategoryRequest"
+
+  responses:
+    201:
+      description: カテゴリー登録レスポンス
+      headers:
+        Location:
+          description: 生成したカテゴリーのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxxx/categories/register"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryCategoryResponse"
+    400:
+      description: |-
+        - カテゴリーIDが既に登録済み
+        - カテゴリー名が重複

@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: PartsComponentsAPI.v1
+  version: "1.0"
+  description: |-
+    # Components API
+    電子部品のCRUDを行うWebAPI
+tags:
+  - name: components
+  - name: categories
+  - name: makers
+servers:
+  - url: "http://localhost:3000/api/v1/"
+paths:
+  /components:
+    $ref: "./parts-component/components.yaml"
+  /components/{componentId}:
+    $ref: "./parts-component/components/componentId.yaml"
+  /categories:
+    $ref: "./parts-component/categories.yaml"
+  /categories/{categoryId}/components:
+    $ref: "./parts-component/categories/components.yaml"
+  /makers:
+    $ref: "./parts-component/makers.yaml"
+  /makers/{makerId}/components:
+    $ref: "./parts-component/makers/components.yaml"

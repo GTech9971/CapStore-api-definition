@@ -1,0 +1,98 @@
+openapi: 3.0.2
+info:
+  title: ""
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    fetchComponentsResponse:
+      title: "電子部品一覧取得"
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/pageResponse
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/partsComponent"
+
+    fetchComponentResponse:
+      title: 電子部品情報取得成功時のレスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/partsComponent"
+
+    fetchCategoriesResponse:
+      title: カテゴリー一覧取得レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/category"
+
+    registryCategoryResponse:
+      title: カテゴリー登録レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                categoryId:
+                  $ref: "./models.yaml#/components/schemas/categoryId"
+              required:
+                - categoryId
+
+    fetchComponentsByCategoryIdResponse:
+      title: カテゴリーIDをもとに電子部品情報を返す
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/partsComponent"
+
+    fetchMakersResponse:
+      title: メーカー一覧取得レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/makerId"
+
+    registryMakerResponse:
+      title: メーカー新規登録レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                makerId:
+                  $ref: "./models.yaml#/components/schemas/makerId"
+              required:
+                - makerId
+
+    fetchComponentsByMakerIdResponse:
+      title: メーカーIDをもとに電子部品情報を返すレスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/partsComponent"

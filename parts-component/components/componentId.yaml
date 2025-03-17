@@ -1,0 +1,21 @@
+get:
+  summary: 電子部品情報取得
+  description: 指定した電子部品IDと一致する電子部品情報を取得する
+  tags:
+    - components
+  operationId: fetchComponent
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/componentId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchComponentResponse"
+    400:
+      description: |-
+        - 電子部品IDの形式が不正
+    404:
+      description: |-
+        - 電子部品が存在しない

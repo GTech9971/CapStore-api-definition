@@ -1,0 +1,19 @@
+get:
+  summary: 指定カテゴリーIDに一致する電子部品を取得
+  tags:
+    - categories
+  operationId: fetchComponentsByCategoryId
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/categoryId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchComponentsByCategoryIdResponse"
+    204:
+      description: NoContent
+    404:
+      description: |-
+        指定したカテゴリーIDが存在しない

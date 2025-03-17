@@ -1,0 +1,42 @@
+get:
+  summary: メーカー一覧取得
+  tags:
+    - makers
+  operationId: fetchMakers
+  responses:
+    200:
+      description: 成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchMakersResponse"
+    204:
+      description: NoContent
+post:
+  summary: メーカー新規登録
+  tags:
+    - makers
+  operationId: registryMaker
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "requests.yaml#/components/schemas/registryMakerRequest"
+  responses:
+    201:
+      description: メーカー新規登録レスポンス
+      headers:
+        Location:
+          description: 生成したメーカーのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/makers/MicrochipTechnologyInc"
+      content:
+        application/json:
+          schema:
+            $ref: "responses.yaml#/components/schemas/registryMakerResponse"
+    400:
+      description: |-
+        - メーカーIDが既に登録済み

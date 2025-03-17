@@ -1,0 +1,22 @@
+get:
+  summary: 電子部品情報一覧取得
+  description: 電子部品情報を取得する
+  tags:
+    - components
+  operationId: fetchComponents
+  responses:
+    200:
+      description: ""
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchComponentsResponse"
+    204:
+      description: "NotContent"
+  parameters:
+    - $ref: ../common/models.yaml#/components/parameters/pageIndex
+    - $ref: ../common/models.yaml#/components/parameters/pageSize
+    - $ref: ../common/models.yaml#/components/parameters/sortColumn
+    - $ref: ../common/models.yaml#/components/parameters/sortOrder
+    - $ref: ../common/models.yaml#/components/parameters/filterColumn
+    - $ref: ../common/models.yaml#/components/parameters/filterQuery

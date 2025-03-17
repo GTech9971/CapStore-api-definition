@@ -12,7 +12,7 @@
                     "openapi-generator-cli.jar",
                     "validate",
                     "-i",
-                    "./${input:api}/root.yaml"
+                    "root.yaml"
                 ]
             },
             "type": "shell",
@@ -20,7 +20,7 @@
             "args": [
                 "validate",
                 "-i",
-                "./${input:api}/root.yaml",
+                "root.yaml",
             ],
             "dependsOn": [
                 "bundle"
@@ -34,9 +34,9 @@
             "group": "build",
             "args": [
                 "bundle",
-                "./${input:api}/openapi.v1.yaml",
+                "openapi.v1.yaml",
                 "--output",
-                "./${input:api}/root.yaml"
+                "root.yaml"
             ]
         },
         {
@@ -69,11 +69,11 @@
                     "openapi-generator-cli.jar",
                     "generate",
                     "-i",
-                    "./${input:api}/root.yaml",
+                    "root.yaml",
                     "-g",
                     "aspnetcore",
                     "-o",
-                    "./${input:api}-generated-server",
+                    "generated-server",
                     "-c",
                     "./server.config.json",
                     "--model-name-suffix",
@@ -85,11 +85,11 @@
             "args": [
                 "generate",
                 "-i",
-                "./${input:api}/root.yaml",
+                "root.yaml",
                 "-g",
                 "aspnetcore",
                 "-o",
-                "./${input:api}-generated-server",
+                "generated-server",
                 "-c",
                 "./server.config.json",
                 "--model-name-suffix",
