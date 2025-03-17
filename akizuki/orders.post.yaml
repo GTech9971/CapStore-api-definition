@@ -35,26 +35,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ../common/models.yaml#/components/schemas/successResponse
-
-    BadRequest:
-      description: |-
-        ## Bad Request
-        ### C400
-        入力バリデーションエラー
-        ### AKE0401
-        注文IDが既に登録済み
-
-    NotFound:
-      description: |-
-        ## Not Found
-        ### AKE0402
-        電子部品IDが電子部品マスタに登録されていない
-    InternalServerError:
-      description: |-
-        ## Internal Server Error
-        ### C999
-        異常終了
+            $ref: ../common/models.yaml#/components/schemas/baseResponse
 
   schemas:
     akizuki-order-registry-component:

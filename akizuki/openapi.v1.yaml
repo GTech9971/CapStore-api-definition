@@ -9,35 +9,39 @@ info:
 servers:
   - url: "http://localhost:3000/api/v1/akizuki/"
 tags:
-  - name: "akizuki"
+  - name: "catalogs"
 
 paths:
-  "/catalogs/{catalogId}":
+  /catalogs/{catalogId}:
     get:
       summary: カタログ情報取得
       description: |-
-        # カタログ情報取得 API
         1. パスパラメーターのカタログIDを基に秋月電子の通販サイトを検索する
 
         2. 電子部品が存在した場合、ページ内容をパースする
 
-        3. メーカー名、カテゴリー名がDBに存在しなければ登録する
-          - TODO この動きはどうかと。。。
-
-        4. パースした結果をレスポンスとして返す
-      tags: ["akizuki"]
-      operationId: get-catalogs-catalogId
+        3. パースした結果をレスポンスとして返す
+      tags:
+        - "catalogs"
+      operationId: fetchComponentByAkizukiCatalogId
       parameters:
         - $ref: "./models.yaml#/components/parameters/catalogId"
       responses:
         200:
-          $ref: "./catalogs-catalogId.get.yaml#/components/responses/Ok"
+          $ref: "./fetch-component-by-catalog-id.yaml#/components/responses/Ok"
         400:
-          $ref: "./catalogs-catalogId.get.yaml#/components/responses/BadRequest"
+          description: |-
+            - カタログIDが不正
         404:
-          $ref: "./catalogs-catalogId.get.yaml#/components/responses/NotFound"
+          description: |-
+            - カタログIDが存在しない
         500:
-          $ref: "./catalogs-catalogId.get.yaml#/components/responses/InternalServerError"
+          description: |-
+            ### エラーコード:AKE0102
+            パース処理に失敗
+
+            ### エラーコード:AKE0103
+            通販サイトの接続に失敗
 
   /orders/upload:
     post:
@@ -53,9 +57,15 @@ paths:
         200:
           $ref: "./orders-upload.post.yaml#/components/responses/Ok"
         400:
-          $ref: "./orders-upload.post.yaml#/components/responses/BadRequest"
+          description: |-
+            ### AKE0201
+            htmlのファイル容量エラー
+
+            ### AKE0202
+            htmlファイルフォーマットエラー
         500:
-          $ref: "./orders-upload.post.yaml#/components/responses/InternalServerError"
+          description: |-
+            TODO
 
   /orders/details/upload:
     post:
@@ -71,9 +81,24 @@ paths:
         200:
           $ref: "./orders-details-upload.post.yaml#/components/responses/Ok"
         400:
-          $ref: "./orders-details-upload.post.yaml#/components/responses/BadRequest"
+          description: |-
+            ## Bad Request
+            ### C400
+            入力パラメターエラー
+
+            ### AKE0301
+            htmlのファイル容量エラー
+
+            ### AKE0302
+            htmlファイルフォーマットエラー
         500:
-          $ref: "./orders-details-upload.post.yaml#/components/responses/InternalServerError"
+          description: |-
+            ## Internal Server Error
+            ### C999
+            予期せぬエラー
+
+            ### AKE0303
+            htmlファイル解析失敗エラー
 
   /orders:
     post:
@@ -92,11 +117,20 @@ paths:
         200:
           $ref: "orders.post.yaml#/components/responses/Ok"
         400:
-          $ref: "orders.post.yaml#/components/responses/BadRequest"
+          description: |-
+            ## Bad Request
+            ### AKE0401
+            注文IDが既に登録済み
         404:
-          $ref: "orders.post.yaml#/components/responses/NotFound"
+          description: |-
+            ## Not Found
+            ### AKE0402
+            電子部品IDが電子部品マスタに登録されていない
         500:
-          $ref: "orders.post.yaml#/components/responses/InternalServerError"
+          description: |-
+            ## Internal Server Error
+            ### C999
+            異常終了
 
     get:
       summary: 秋月電子の注文取得
@@ -112,6 +146,6 @@ paths:
         200:
           $ref: "./orders.get.yaml#/components/responses/Ok"
         204:
-          $ref: "./orders.get.yaml#/components/responses/NoContent"
+          description: NoContent
         500:
-          $ref: "./orders.get.yaml#/components/responses/InternalServerError"
+          description: TODO

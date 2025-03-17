@@ -23,7 +23,7 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: ../common/models.yaml#/components/schemas/successResponse
+              - $ref: ../common/models.yaml#/components/schemas/baseResponse
               - type: object
                 properties:
                   data:
@@ -39,35 +39,6 @@ components:
                           $ref: "#/components/schemas/akizuki-order-component"
                         required:
                           - components
-
-    BadRequest:
-      description: |-
-        ## Bad Request
-        ### C400
-        入力パラメターエラー
-
-        ### AKE0301
-        htmlのファイル容量エラー
-
-        ### AKE0302
-        htmlファイルフォーマットエラー
-      content:
-        application/json:
-          schema:
-            $ref: ../common/models.yaml#/components/schemas/errorResponse
-
-    InternalServerError:
-      description: |-
-        ## Internal Server Error
-        ### C999
-        予期せぬエラー
-
-        ### AKE0303
-        htmlファイル解析失敗エラー
-      content:
-        application/json:
-          schema:
-            $ref: ../common/models.yaml#/components/schemas/errorResponse
 
   schemas:
     akizuki-order-component:

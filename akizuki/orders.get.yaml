@@ -11,26 +11,13 @@ components:
         application/json:
           schema:
             allOf:
-              - $ref: ../common/models.yaml#/components/schemas/successPageResponse
+              - $ref: ../common/models.yaml#/components/schemas/pageResponse
               - type: object
                 properties:
                   data:
                     type: array
                     items:
                       $ref: "#/components/schemas/akizuki-order-fetch-component"
-
-    NoContent:
-      description: "NoContent"
-
-    InternalServerError:
-      description: |-
-        ## Internal Server Error
-        ### C999
-        異常終了
-      content:
-        application/json:
-          schema:
-            $ref: ../common/models.yaml#/components/schemas/errorResponse
 
   schemas:
     akizuki-order-fetch-component:
@@ -51,7 +38,7 @@ components:
               unit:
                 $ref: ../inventory/models.yaml#/components/schemas/unit
               component:
-                $ref: ../parts-component/models.yaml#/components/schemas/parts-component
+                $ref: ../parts-component/models.yaml#/components/schemas/partsComponent
               status:
                 $ref: ../inventory/models.yaml#/components/schemas/status
             required:

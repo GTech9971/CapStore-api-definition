@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: "カタログ情報取得"
+  version: "1.0"
+paths: {}
+components:
+  responses:
+    Ok:
+      description: |-
+        電子部品情報取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/fetchComponentByAkizukiCatalogId"
+
+  schemas:
+    fetchComponentByAkizukiCatalogId:
+      title: 秋月電子のカタログIDをもとに電子部品情報を返す
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              allOf:
+                - $ref: ../parts-component/models.yaml#/components/schemas/partsComponent
+              properties:
+                categoryId:
+                  $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
+                id:
+                  writeOnly: true
+                category:
+                  writeOnly: true
+              required:
+                - images
+                - categoryId
+                - makerId
