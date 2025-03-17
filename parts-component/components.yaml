@@ -4,15 +4,6 @@ get:
   tags:
     - components
   operationId: fetchComponents
-  responses:
-    200:
-      description: ""
-      content:
-        application/json:
-          schema:
-            $ref: "./responses.yaml#/components/schemas/fetchComponentsResponse"
-    204:
-      description: "NotContent"
   parameters:
     - $ref: ../common/models.yaml#/components/parameters/pageIndex
     - $ref: ../common/models.yaml#/components/parameters/pageSize
@@ -20,3 +11,38 @@ get:
     - $ref: ../common/models.yaml#/components/parameters/sortOrder
     - $ref: ../common/models.yaml#/components/parameters/filterColumn
     - $ref: ../common/models.yaml#/components/parameters/filterQuery
+  responses:
+    200:
+      description: "取得成功"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchComponentsResponse"
+    204:
+      description: "NotContent"
+
+post:
+  summary: 電子部品登録
+  tags:
+    - components
+  operationId: registryComponent
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryComponentRequest"
+  responses:
+    201:
+      description: 登録成功
+      headers:
+        Location:
+          description: 新規登録した電子部品のURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/components/C-123531"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryComponentResponse"

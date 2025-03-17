@@ -5,6 +5,20 @@ info:
 paths: {}
 components:
   schemas:
+    registryComponentRequest:
+      title: 電子部品新規登録リクエスト
+      allOf:
+        - $ref: "./models.yaml#/components/schemas/partsComponent"
+      properties:
+        categoryId:
+          $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
+        id:
+          readOnly: true
+        category:
+          readOnly: true
+      required:
+        - categoryId
+
     registryCategoryRequest:
       title: カテゴリー新規登録リクエスト
       type: object

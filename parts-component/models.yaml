@@ -105,7 +105,7 @@ components:
         - name
         - modelName
         - category
-        - maker
+        - makerId
 
   parameters:
     componentId:
