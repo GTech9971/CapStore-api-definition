@@ -46,3 +46,11 @@ post:
         application/json:
           schema:
             $ref: "./responses.yaml#/components/schemas/registryComponentResponse"
+    400:
+      description: |-
+        - 既に同じモデル名・カテゴリー・メーカーで電子部品が登録済み
+          - どれかが異なれば登録可能
+    404:
+      description: |-
+        - メーカーIDが存在しない
+        - カテゴリーIDが存在しない
