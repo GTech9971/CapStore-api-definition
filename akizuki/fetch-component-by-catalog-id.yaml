@@ -30,7 +30,17 @@ components:
                   writeOnly: true
                 category:
                   writeOnly: true
+                unRegistered:
+                  title: 未登録情報
+                  description: |-
+                    本システムに未登録の以下がある
+                    - makerId 未登録メーカーID
+                    - category 未登録カテゴリー
+                  type: object
+                  properties:
+                    makerId:
+                      $ref: "../parts-component/models.yaml#/components/schemas/makerId"
+                    category:
+                      $ref: "../parts-component/models.yaml#/components/schemas/category"
               required:
                 - images
-                - categoryId
-                - makerId

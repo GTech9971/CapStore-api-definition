@@ -16,11 +16,11 @@ paths:
     get:
       summary: カタログ情報取得
       description: |-
-        1. パスパラメーターのカタログIDを基に秋月電子の通販サイトを検索する
+        1. カタログIDを基に秋月電子の通販サイトを検索する
 
         2. 電子部品が存在した場合、ページ内容をパースする
 
-        3. パースした結果をレスポンスとして返す
+        3. メーカーID、カテゴリーが未登録の場合、その情報を`unRegistered`に返す
       tags:
         - "catalogs"
       operationId: fetchComponentByAkizukiCatalogId
