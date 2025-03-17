@@ -4,6 +4,8 @@
         "EEPROM",
         "GPIO",
         "openapi",
+        "Redoc",
+        "redocly",
         "SSOP",
         "UART",
         "USART"

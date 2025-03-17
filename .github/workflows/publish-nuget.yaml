@@ -1,0 +1,69 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # git tag からバージョン取得
+      - name: Create version from git tag
+        id: fetch-version
+        run: |
+          LATEST_TAG=${{github.ref_name}}
+          echo ${LATEST_TAG}
+
+          VERSION=${LATEST_TAG#v}
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+
+      - name: Install Redoc CLI
+        run: npm install -g @redocly/cli
+
+      - name: bundle openapi.yaml
+        run: redocly bundle openapi.v1.yaml --output root.yaml
+
+      # OpenAPI Generator を実行してコードを生成
+      - name: Generate code from OpenAPI spec
+        env:
+          VERSION: ${{steps.fetch-version.outputs.version}}
+        run: |
+          # 必要に応じて OpenAPI Generator CLI をインストール
+          curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -o openapi-generator-cli.jar
+
+          java -jar openapi-generator-cli.jar validate -i ./root.yaml
+
+          # コード生成
+          java -jar openapi-generator-cli.jar generate \
+              -i ./root.yaml \
+              -g aspnetcore \
+              -o ./generated-server \
+              -c ./server.config.json \
+              --additional-properties=packageVersion=${VERSION} \
+              --model-name-suffix Model
+
+      # NuGet パッケージの作成
+      - name: Build NuGet Package
+        run: |
+          cd generated-server/src/CapStore.Models
+          dotnet pack -c Release
+
+      # NuGet にパッケージをアップロード
+      - name: Publish to NuGet
+        run: |
+          cd generated-server/src/CapStore.Models
+          pwd
+          dotnet nuget push ./bin/Release/*.nupkg \
+            -s https://api.nuget.org/v3/index.json \
+            -k ${{ secrets.NUGET_API_KEY }}
