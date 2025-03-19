@@ -84,7 +84,7 @@ components:
             data:
               type: array
               items:
-                $ref: "./models.yaml#/components/schemas/makerId"
+                $ref: "./models.yaml#/components/schemas/maker"
 
     registryMakerResponse:
       title: メーカー新規登録レスポンス

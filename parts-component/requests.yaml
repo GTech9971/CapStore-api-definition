@@ -12,12 +12,17 @@ components:
       properties:
         categoryId:
           $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
+        makerId:
+          $ref: "../parts-component/models.yaml#/components/schemas/makerId"
         id:
           readOnly: true
         category:
           readOnly: true
+        maker:
+          readOnly: true
       required:
         - categoryId
+        - makerId
 
     registryCategoryRequest:
       title: カテゴリー新規登録リクエスト
@@ -37,5 +42,8 @@ components:
       properties:
         id:
           $ref: "./models.yaml#/components/schemas/makerId"
+        name:
+          $ref: "./models.yaml#/components/schemas/makerName"
       required:
         - id
+        - name

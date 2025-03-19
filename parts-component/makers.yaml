@@ -32,7 +32,7 @@ post:
           schema:
             type: string
             format: uri
-            example: "https://xxx/makers/MicrochipTechnologyInc"
+            example: "https://xxx/makers/M-JPN-029859"
       content:
         application/json:
           schema:

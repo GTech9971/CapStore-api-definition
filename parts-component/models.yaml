@@ -79,8 +79,28 @@ components:
 
     makerId:
       title: メーカーID
+      description: |-
+        M-国コード-6桁0左0埋め
       type: string
-      example: "MicrochipTechnologyInc"
+      pattern: ^M-[A-Z]{2,3}-\d{6}$
+      example: "M-JPN-120138"
+
+    makerName:
+      title: メーカー名
+      type: string
+      example: "Microchip Technology Inc."
+
+    maker:
+      title: メーカー情報
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/makerId"
+        name:
+          $ref: "#/components/schemas/makerName"
+      required:
+        - id
+        - name
 
     partsComponent:
       title: 電子部品
@@ -96,8 +116,8 @@ components:
           $ref: "#/components/schemas/componentDescription"
         category:
           $ref: "#/components/schemas/category"
-        makerId:
-          $ref: "#/components/schemas/makerId"
+        maker:
+          $ref: "#/components/schemas/maker"
         images:
           $ref: "#/components/schemas/componentImageList"
       required:
@@ -105,7 +125,7 @@ components:
         - name
         - modelName
         - category
-        - makerId
+        - maker
 
   parameters:
     componentId:
