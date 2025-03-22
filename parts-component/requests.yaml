@@ -40,10 +40,10 @@ components:
       title: メーカー新規登録リクエスト
       type: object
       properties:
-        id:
-          $ref: "./models.yaml#/components/schemas/makerId"
+        countryCode:
+          $ref: "./models.yaml#/components/schemas/countryCode"
         name:
           $ref: "./models.yaml#/components/schemas/makerName"
       required:
-        - id
+        - countryCode
         - name

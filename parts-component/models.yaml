@@ -77,6 +77,13 @@ components:
 
     #メーカー
 
+    countryCode:
+      title: 国コード
+      type: string
+      example: "JPN"
+      minLength: 2
+      maxLength: 3
+
     makerId:
       title: メーカーID
       description: |-
