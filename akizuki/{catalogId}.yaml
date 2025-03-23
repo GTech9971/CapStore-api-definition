@@ -18,13 +18,16 @@ get:
       content:
         application/json:
           schema:
-            $ref: "./responses.yaml#/components/schemas/fetchComponentByAkizukiCatalogId"
+            $ref: "./responses.yaml#/components/schemas/fetchComponentByAkizukiCatalogIdResponse"
     400:
       description: |-
         - カタログIDが不正
     404:
       description: |-
         - カタログIDが存在しない
+    409:
+      description: |-
+        - 既に同じモデル名・カテゴリー・メーカーで電子部品が登録済み
     500:
       description: |-
         ### エラーコード:AKE0102

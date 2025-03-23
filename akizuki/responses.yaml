@@ -5,7 +5,7 @@ info:
 paths: {}
 components:
   schemas:
-    fetchComponentByAkizukiCatalogId:
+    fetchComponentByAkizukiCatalogIdResponse:
       title: 秋月電子のカタログIDをもとに電子部品情報を返す
       allOf:
         - $ref: ../common/models.yaml#/components/schemas/baseResponse
@@ -13,30 +13,39 @@ components:
           properties:
             data:
               title: FetchComponentByAkizukiCatalogIdData
-              allOf:
-                - $ref: ../parts-component/models.yaml#/components/schemas/partsComponent
+              type: object
               properties:
+                name:
+                  $ref: "../parts-component/models.yaml#/components/schemas/componentName"
+                modelName:
+                  $ref: "../parts-component/models.yaml#/components/schemas/componentModelName"
+                description:
+                  $ref: "../parts-component/models.yaml#/components/schemas/componentDescription"
+                images:
+                  title: 電子部品画像リスト
+                  type: array
+                  items:
+                    $ref: "../parts-component/models.yaml#/components/schemas/componentImageUrl"
                 categoryId:
                   $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
-                id:
-                  writeOnly: true
-                  allOf:
-                    - $ref: "../parts-component/models.yaml#/components/schemas/componentId"
-                category:
-                  writeOnly: true
-                  allOf:
-                    - $ref: "../parts-component/models.yaml#/components/schemas/category"
+                makerName:
+                  $ref: "../parts-component/models.yaml#/components/schemas/makerName"
                 unRegistered:
                   title: 未登録情報
                   description: |-
                     本システムに未登録の以下がある
-                    - makerId 未登録メーカーID
+                    - makerName 未登録メーカー名
                     - category 未登録カテゴリー
                   type: object
                   properties:
-                    makerId:
-                      $ref: "../parts-component/models.yaml#/components/schemas/makerId"
+                    makerName:
+                      $ref: "../parts-component/models.yaml#/components/schemas/makerName"
                     category:
                       $ref: "../parts-component/models.yaml#/components/schemas/category"
               required:
+                - name
+                - modelName
+                - description
                 - images
+                - makerName
+                - categoryId
