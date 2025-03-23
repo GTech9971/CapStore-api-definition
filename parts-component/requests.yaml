@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.3
 info:
   title: ""
   version: "v1"
@@ -16,10 +16,16 @@ components:
           $ref: "../parts-component/models.yaml#/components/schemas/makerId"
         id:
           readOnly: true
+          allOf:
+            - $ref: "./models.yaml#/components/schemas/componentId"
         category:
           readOnly: true
+          allOf:
+            - $ref: "./models.yaml#/components/schemas/category"
         maker:
           readOnly: true
+          allOf:
+            - $ref: "./models.yaml#/components/schemas/maker"
       required:
         - categoryId
         - makerId

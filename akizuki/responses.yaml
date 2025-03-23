@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.3
 info:
   title: ""
   version: "v1"
@@ -12,6 +12,7 @@ components:
         - type: object
           properties:
             data:
+              title: FetchComponentByAkizukiCatalogIdData
               allOf:
                 - $ref: ../parts-component/models.yaml#/components/schemas/partsComponent
               properties:
@@ -19,8 +20,12 @@ components:
                   $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
                 id:
                   writeOnly: true
+                  allOf:
+                    - $ref: "../parts-component/models.yaml#/components/schemas/componentId"
                 category:
                   writeOnly: true
+                  allOf:
+                    - $ref: "../parts-component/models.yaml#/components/schemas/category"
                 unRegistered:
                   title: 未登録情報
                   description: |-

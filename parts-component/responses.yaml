@@ -1,4 +1,4 @@
-openapi: 3.0.2
+openapi: 3.0.3
 info:
   title: ""
   version: "v1"
@@ -32,6 +32,7 @@ components:
         - type: object
           properties:
             data:
+              title: RegistryComponentIdData
               type: object
               properties:
                 componentId:
@@ -57,6 +58,7 @@ components:
         - type: object
           properties:
             data:
+              title: RegistryCategoryIdData
               type: object
               properties:
                 categoryId:
@@ -93,6 +95,7 @@ components:
         - type: object
           properties:
             data:
+              title: RegistryMakerIdData
               type: object
               properties:
                 makerId:
