@@ -15,6 +15,7 @@ components:
               title: FetchComponentsInventoryData
               type: array
               items:
+                title: FetchComponentsInventoryArray
                 type: object
                 properties:
                   id:

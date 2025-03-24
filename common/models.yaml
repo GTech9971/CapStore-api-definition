@@ -43,13 +43,13 @@ components:
         message:
           title: メッセージ
           type: string
+          example: "桁数違反"
         code:
           title: エラーコード
           type: string
           example: null
       required:
         - message
-      example: null
 
     baseResponse:
       title: レスポンス
@@ -59,8 +59,11 @@ components:
           title: データ
           type: object
           readOnly: true
-        error:
-          $ref: "#/components/schemas/error"
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/error"
+          example: []
 
     pageResponse:
       title: ページレスポンス

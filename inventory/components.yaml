@@ -1,18 +1,10 @@
 get:
   summary: 電子部品リストの在庫情報取得
-  description: |-
-    TODO
   tags:
     - inventories
   operationId: fetchComponentsInventory
   parameters:
-    - id:
-      description: "電子部品ID"
-      name: id
-      required: true
-      in: query
-      schema:
-        $ref: "../parts-component/models.yaml#/components/schemas/componentId"
+    - $ref: "../parts-component/models.yaml#/components/parameters/componentIdQuery"
   responses:
     200:
       description: 取得成功

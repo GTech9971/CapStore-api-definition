@@ -143,6 +143,14 @@ components:
       schema:
         $ref: "#/components/schemas/componentId"
 
+    componentIdQuery:
+      name: componentId
+      description: "電子部品ID"
+      in: query
+      required: true
+      schema:
+        $ref: "#/components/schemas/componentId"
+
     categoryId:
       name: categoryId
       description: カテゴリーID
