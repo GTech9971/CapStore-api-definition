@@ -27,3 +27,13 @@ paths:
 
   /akizuki/catalogs/{catalogId}:
     $ref: "./akizuki/{catalogId}.yaml"
+
+  # 在庫情報
+  /components/inventories/:
+    $ref: "./inventory/components.yaml"
+
+  /components/{componentId}/inventories:add:
+    $ref: "./inventory/{componentId}-add.yaml"
+
+  /components/{componentId}/inventories:remove:
+    $ref: "./inventory/{componentId}-remove.yaml"

@@ -1,0 +1,29 @@
+post:
+  summary: 電子部品在庫削除
+  description: |-
+    - 電子部品在庫イベントに登録を記録
+    - 電子部品在庫数を削除
+  tags:
+    - inventories
+  operationId: removeComponentInventory
+  parameters:
+    - $ref: "../parts-component/models.yaml#/components/parameters/componentId"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/removeComponentInventoryRequest"
+  responses:
+    200:
+      description: 削除成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchComponentInventoryResponse"
+    400:
+      description: |-
+        - 電子部品IDが不正
+    404:
+      description: |-
+        - 電子部品IDが存在しない

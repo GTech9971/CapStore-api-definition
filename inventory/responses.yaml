@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: ""
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    fetchComponentsInventoryResponse:
+      title: 電子部品リストの在庫情報を返す
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              title: FetchComponentsInventoryData
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    $ref: "../parts-component/models.yaml#/components/schemas/componentId"
+                  quantity:
+                    $ref: "./models.yaml#/components/schemas/quantity"
+                required:
+                  - id
+                  - quantity
+
+    fetchComponentInventoryResponse:
+      title: 電子部品の在庫情報を返す
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              title: FetchComponentInventoryData
+              type: object
+              properties:
+                quantity:
+                  $ref: "./models.yaml#/components/schemas/quantity"
+              required:
+                - quantity

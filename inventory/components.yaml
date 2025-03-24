@@ -1,0 +1,28 @@
+get:
+  summary: 電子部品リストの在庫情報取得
+  description: |-
+    TODO
+  tags:
+    - inventories
+  operationId: fetchComponentsInventory
+  parameters:
+    - id:
+      description: "電子部品ID"
+      name: id
+      required: true
+      in: query
+      schema:
+        $ref: "../parts-component/models.yaml#/components/schemas/componentId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchComponentsInventoryResponse"
+    400:
+      description: |-
+        - 電子部品IDが不正
+    404:
+      description: |-
+        - 電子部品IDが存在しない

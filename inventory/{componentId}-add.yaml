@@ -1,0 +1,29 @@
+post:
+  summary: 電子部品在庫追加
+  description: |-
+    - 電子部品在庫イベントに登録を記録
+    - 電子部品在庫数を追加
+  tags:
+    - inventories
+  operationId: registryComponentInventory
+  parameters:
+    - $ref: "../parts-component/models.yaml#/components/parameters/componentId"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryComponentInventoryRequest"
+  responses:
+    200:
+      description: 追加成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchComponentInventoryResponse"
+    400:
+      description: |-
+        - 電子部品IDが不正
+    404:
+      description: |-
+        - 電子部品IDが存在しない
