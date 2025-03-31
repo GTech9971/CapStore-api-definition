@@ -1,0 +1,75 @@
+name: Publish npm Package
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    timeout-minutes: 5
+
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # git tag からバージョン取得
+      - name: Create version from git tag
+        id: fetch-version
+        run: |
+          LATEST_TAG=${{github.ref_name}}
+          echo ${LATEST_TAG}
+
+          VERSION=${LATEST_TAG#v}
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}" 
+
+            
+      - name: Install Redoc CLI
+        run: npm install -g @redocly/cli
+      
+      - name: Bundle openapi.yaml
+        run: redocly bundle openapi.v1.yaml --output root.yaml
+
+      # OpenAPI Generator を実行してコードを生成
+      - name: Generate code from OpenAPI spec
+        env:
+          VERSION: ${{steps.fetch-version.outputs.version}}
+        run: |
+            # 必要に応じて OpenAPI Generator CLI をインストール
+            curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.10.0/openapi-generator-cli-7.10.0.jar -o openapi-generator-cli.jar
+            
+            java -jar openapi-generator-cli.jar validate -i ./root.yaml
+
+            # コード生成
+            java -jar openapi-generator-cli.jar generate \
+                -i ./root.yaml \
+                -g typescript-fetch \
+                -o ./generated-client-typescript \
+                -c ./typescript.config.json \
+                --git-user-id=GTech9971 \
+                --git-repo-id=arsenals-api-def \
+                --additional-properties=npmVersion=${VERSION}
+
+      # npmのログイン
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 21 # Node.js のバージョン
+          registry-url: 'https://registry.npmjs.org'
+      
+      # npmパッケージ公開
+      - name: publish to npm
+        run: |
+          cd generated-client-typescript
+          npm install
+          npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN : ${{ secrets.NPM_API_KEY }}
