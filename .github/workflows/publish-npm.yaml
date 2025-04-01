@@ -82,7 +82,11 @@ jobs:
             },
             "keywords": ["openapi", "typescript", "fetch"],
             "author": "GTech9971",
-            "license": "MIT"
+            "license": "MIT",
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/GTech9971/CapStore-api-definition"
+            }
           }
           EOF
 
