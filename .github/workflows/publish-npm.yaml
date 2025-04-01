@@ -65,8 +65,27 @@ jobs:
                 -c ./typescript.config.json \
                 --model-name-suffix=Model \
                 --git-user-id=GTech9971 \
-                --git-repo-id=arsenals-api-def \
+                --git-repo-id=cap-store-api-def \
                 --additional-properties=npmVersion=${VERSION}
+
+      - name: Inject package.json for npm publish
+        run: |
+          cat <<EOF > ./generated-client-typescript/package.json
+          {
+            "name": "cap-store-api-def",
+            "version": "${{ steps.fetch-version.outputs.version }}",
+            "description": "Auto-generated TypeScript client using fetch",
+            "main": "index.ts",
+            "types": "index.ts",
+            "scripts": {
+              "build": "tsc",
+              "prepublishOnly": "npm run build"
+            },
+            "keywords": ["openapi", "typescript", "fetch"],
+            "author": "GTech9971",
+            "license": "MIT"
+          }
+          EOF
 
       # npmのログイン
       - uses: actions/setup-node@v4
