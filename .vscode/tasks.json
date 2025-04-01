@@ -101,6 +101,33 @@
             ]
         },
         {
+            "label": "generate - client:typescript",
+            "detail": "フロントエンドのコード自動生成",
+            "command": "openapi-generator",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "generate",
+                "-i",
+                "root.yaml",
+                "-g",
+                "typescript-fetch",
+                "-o",
+                "generated-client-typescript",
+                "-c",
+                "typescript.config.json",
+                "--model-name-suffix",
+                "Model",
+                "--git-user-id=GTech9971",
+                "--git-repo-id=arsenals-api-def",
+                "--additional-properties=npmVersion=1.0.0"
+            ],
+            "dependsOn": [
+                // "delete generated - client",
+                "bundle",
+            ]
+        },
+        {
             "label": "build - server",
             "type": "shell",
             "group": "build",
