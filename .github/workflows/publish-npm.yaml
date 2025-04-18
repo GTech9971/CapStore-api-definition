@@ -63,6 +63,7 @@ jobs:
                 -g typescript-fetch \
                 -o ./generated-client-typescript \
                 -c ./typescript.config.json \
+                --model-name-suffix=Model \
                 --git-user-id=GTech9971 \
                 --git-repo-id=cap-store-api-def \
                 --additional-properties=npmVersion=${VERSION}
