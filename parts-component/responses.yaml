@@ -25,6 +25,15 @@ components:
             data:
               $ref: "./models.yaml#/components/schemas/partsComponent"
 
+    updateComponentResponse:
+      title: 電子部品更新成功時のレスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/partsComponent"
+
     registryComponentResponse:
       title: 電子部品登録成功レスポンス
       allOf:

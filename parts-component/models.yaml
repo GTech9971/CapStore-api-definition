@@ -151,6 +151,23 @@ components:
       schema:
         $ref: "#/components/schemas/componentId"
 
+    updateComponentFieldMask:
+      name: fieldMask
+      description: 電子部品更新フィールドマスク
+      in: query
+      required: true
+      schema:
+        title: 更新内容
+        type: string
+        enum:
+          - "name"
+          - modelName
+          - description
+          - categoryId
+          - makerId
+          - images
+        example: "name"
+
     categoryId:
       name: categoryId
       description: カテゴリーID

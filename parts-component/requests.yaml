@@ -30,6 +30,23 @@ components:
         - categoryId
         - makerId
 
+    updateComponentRequest:
+      title: 電子部品更新リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentName"
+        modelName:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentModelName"
+        description:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentDescription"
+        images:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentImageList"
+        categoryId:
+          $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
+        makerId:
+          $ref: "../parts-component/models.yaml#/components/schemas/makerId"
+
     registryCategoryRequest:
       title: カテゴリー新規登録リクエスト
       type: object

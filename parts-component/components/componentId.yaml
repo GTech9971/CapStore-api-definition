@@ -19,3 +19,32 @@ get:
     404:
       description: |-
         - 電子部品が存在しない
+
+patch:
+  summary: 電子部品情報更新
+  tags:
+    - components
+  operationId: updateComponent
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/componentId"
+    - $ref: "../models.yaml#/components/parameters/updateComponentFieldMask"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../requests.yaml#/components/schemas/updateComponentRequest"
+  responses:
+    200:
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/updateComponentResponse"
+
+    400:
+      description: |-
+        - 電子部品IDが不正
+        - フィールドマスクが不正
+    404:
+      description: |-
+        - 電子部品が存在しない
