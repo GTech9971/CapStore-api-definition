@@ -160,13 +160,13 @@ components:
         title: 更新内容
         type: string
         enum:
-          - "name"
+          - name
           - modelName
           - description
           - categoryId
           - makerId
           - images
-        example: "name"
+        example: name
 
     categoryId:
       name: categoryId
