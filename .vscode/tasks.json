@@ -116,8 +116,6 @@
                 "generated-client-typescript",
                 "-c",
                 "typescript.config.json",
-                "--model-name-suffix",
-                "Model",
                 "--git-user-id=GTech9971",
                 "--git-repo-id=arsenals-api-def",
                 "--additional-properties=npmVersion=1.0.0"

@@ -27,8 +27,9 @@ patch:
   operationId: updateComponent
   parameters:
     - $ref: "../models.yaml#/components/parameters/componentId"
-    - $ref: "../models.yaml#/components/parameters/updateComponentFieldMask"
+    - $ref: "../models.yaml#/components/parameters/componentFieldMask"
   requestBody:
+    required: true
     content:
       application/json:
         schema:

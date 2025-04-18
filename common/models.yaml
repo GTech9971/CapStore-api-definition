@@ -99,6 +99,7 @@ components:
       schema:
         $ref: "#/components/schemas/pageIndex"
       allowEmptyValue: true
+
     pageSize:
       name: pageSize
       in: query
@@ -106,6 +107,7 @@ components:
         $ref: "#/components/schemas/pageSize"
       description: 表示数
       allowEmptyValue: true
+
     sortColumn:
       name: sortColumn
       in: query
@@ -114,6 +116,7 @@ components:
         type: string
         example: ComponentName
       description: ソートするカラム名
+
     sortOrder:
       name: sortOrder
       in: query
@@ -124,6 +127,7 @@ components:
           - DESC
         example: ASC
       description: ソート順(ASC、DESC)
+
     filterColumn:
       name: filterColumn
       in: query
@@ -131,6 +135,7 @@ components:
       schema:
         type: string
       description: フィルター項目
+
     filterQuery:
       name: filterQuery
       in: query
