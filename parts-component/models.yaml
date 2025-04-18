@@ -134,6 +134,18 @@ components:
         - category
         - maker
 
+    updateComponentFieldMask:
+      title: 電子部品更新フィールドマスク
+      type: string
+      enum:
+        - name
+        - modelName
+        - description
+        - categoryId
+        - makerId
+        - images
+      example: name
+
   parameters:
     componentId:
       name: componentId
@@ -151,24 +163,13 @@ components:
       schema:
         $ref: "#/components/schemas/componentId"
 
-    # Enumの場合、名前とnameが不一致だとビルドに失敗する
-
-    updateComponentOperationComponentFieldMaskEnum:
+    updateComponentFieldMask:
       name: fieldMask
       description: 電子部品更新フィールドマスク
       in: query
       required: true
       schema:
-        title: 更新内容
-        type: string
-        enum:
-          - name
-          - modelName
-          - description
-          - categoryId
-          - makerId
-          - images
-        example: name
+        $ref: "#/components/schemas/updateComponentFieldMask"
 
     categoryId:
       name: categoryId
