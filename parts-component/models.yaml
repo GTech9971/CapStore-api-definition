@@ -153,8 +153,8 @@ components:
 
     # Enumの場合、名前とnameが不一致だとビルドに失敗する
 
-    componentFieldMask:
-      name: componentFieldMask
+    updateComponentOperationComponentFieldMaskEnum:
+      name: fieldMask
       description: 電子部品更新フィールドマスク
       in: query
       required: true
