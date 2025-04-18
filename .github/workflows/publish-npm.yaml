@@ -109,6 +109,13 @@ jobs:
             "exclude": ["node_modules", "dist"]
           }
           EOF
+      
+
+      - name: Upload generated TypeScript client
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-client-typescript
+          path: generated-client-typescript
 
       # npmのログイン
       - uses: actions/setup-node@v4
