@@ -20,11 +20,14 @@ components:
                 properties:
                   componentId:
                     $ref: "../parts-component/models.yaml#/components/schemas/componentId"
-                  event:
-                    $ref: "./models.yaml#/components/schemas/inventoryChangeEvent"
+                  events:
+                    title: 在庫変更イベントリスト
+                    type: array
+                    items:
+                      $ref: "./models.yaml#/components/schemas/inventoryChangeEvent"
                 required:
                   - componentId
-                  - event
+                  - events
 
     fetchComponentInventoryResponse:
       title: 電子部品の在庫情報を返す
