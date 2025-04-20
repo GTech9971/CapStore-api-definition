@@ -19,14 +19,17 @@ components:
     removeType:
       title: 在庫削除イベント種類
       description: |-
-        紛失
-        破棄
-        使用
+        - 不明（不正値）
+        - 紛失
+        - 破棄
+        - 使用
       type: string
       enum:
+        - "unknown"
         - "lost"
         - "scrap"
         - "use"
+      example: "lost"
 
     inventoryChangeEventId:
       title: 在庫変更イベントID

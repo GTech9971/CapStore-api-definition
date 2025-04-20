@@ -13,6 +13,10 @@ components:
           $ref: "./models.yaml#/components/schemas/quantity"
         remarks:
           $ref: "./models.yaml#/components/schemas/remarks"
+        executeAt:
+          title: 実施日時
+          type: string
+          format: date-time
       required:
         - quantity
         - remarks
@@ -27,6 +31,10 @@ components:
           $ref: "./models.yaml#/components/schemas/remarks"
         type:
           $ref: "./models.yaml#/components/schemas/removeType"
+        executeAt:
+          title: 実施日時
+          type: string
+          format: date-time
       required:
         - quantity
         - remarks
