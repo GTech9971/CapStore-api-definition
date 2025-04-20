@@ -12,19 +12,19 @@ components:
         - type: object
           properties:
             data:
-              title: FetchComponentsInventoryData
+              title: FetchComponentsInventoryArray
               type: array
               items:
-                title: FetchComponentsInventoryArray
+                title: FetchComponentsInventoryData
                 type: object
                 properties:
-                  id:
+                  componentId:
                     $ref: "../parts-component/models.yaml#/components/schemas/componentId"
-                  quantity:
-                    $ref: "./models.yaml#/components/schemas/quantity"
+                  event:
+                    $ref: "./models.yaml#/components/schemas/inventoryChangeEvent"
                 required:
-                  - id
-                  - quantity
+                  - componentId
+                  - event
 
     fetchComponentInventoryResponse:
       title: 電子部品の在庫情報を返す
@@ -33,10 +33,43 @@ components:
         - type: object
           properties:
             data:
-              title: FetchComponentInventoryData
+              title: FetchComponentInventoryDataList
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/inventoryChangeEvent"
+
+    registryComponentInventoryResponse:
+      title: 電子部品の在庫登録レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+        - type: object
+          properties:
+            data:
+              title: RegistryComponentInventoryData
               type: object
               properties:
+                id:
+                  $ref: "./models.yaml#/components/schemas/inventoryChangeEventId"
                 quantity:
                   $ref: "./models.yaml#/components/schemas/quantity"
               required:
+                - id
+                - quantity
+
+    removeComponentInventoryResponse:
+      title: 電子部品の在庫削除レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+        - type: object
+          properties:
+            data:
+              title: RemoveComponentInventoryData
+              type: object
+              properties:
+                id:
+                  $ref: "./models.yaml#/components/schemas/inventoryChangeEventId"
+                quantity:
+                  $ref: "./models.yaml#/components/schemas/quantity"
+              required:
+                - id
                 - quantity

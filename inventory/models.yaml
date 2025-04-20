@@ -27,3 +27,46 @@ components:
         - "lost"
         - "scrap"
         - "use"
+
+    inventoryChangeEventId:
+      title: 在庫変更イベントID
+      description: |-
+        - A:追加イベント
+        - R:削除イベント
+        - 6桁の数字は電子部品のID
+        - 3桁の数字は順にイベント追加ごとに増える
+      pattern: ^I[AR]-\d{6}-\d{3}
+      type: string
+      example: "IA-123456-001"
+
+    inventoryChangeType:
+      title: 在庫変更種類
+      type: string
+      enum:
+        - "add"
+        - "remove"
+      example: "add"
+
+    inventoryChangeEvent:
+      title: 在庫変更イベント
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/inventoryChangeEventId"
+        changeType:
+          $ref: "#/components/schemas/inventoryChangeType"
+        quantity:
+          $ref: "#/components/schemas/quantity"
+        remarks:
+          $ref: "#/components/schemas/remarks"
+        removeType:
+          $ref: "#/components/schemas/removeType"
+        executeAt:
+          title: 実行日時
+          type: string
+          format: date-time
+      required:
+        - id
+        - changeType
+        - quantity
+        - remarks

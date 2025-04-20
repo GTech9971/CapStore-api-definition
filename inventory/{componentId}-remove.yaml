@@ -17,10 +17,22 @@ post:
   responses:
     200:
       description: 削除成功
+      headers:
+        Location:
+          description: "在庫削除イベントURL"
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/components/{componentId}/inventories/{inventoryId}"
       content:
         application/json:
           schema:
-            $ref: "./responses.yaml#/components/schemas/fetchComponentInventoryResponse"
+            $ref: "./responses.yaml#/components/schemas/removeComponentInventoryResponse"
+          example:
+            data:
+              id: "IR-123456-001"
+              quantity: 3
+            errors: []
     400:
       description: |-
         - 電子部品IDが不正

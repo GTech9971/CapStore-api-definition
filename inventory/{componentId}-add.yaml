@@ -17,10 +17,17 @@ post:
   responses:
     200:
       description: 追加成功
+      headers:
+        Location:
+          description: 在庫変更イベントID
+          schema:
+            type: string
+            format: uri
+            example: "https://xxxx/components/{componentId}/inventories/{inventoryId}"
       content:
         application/json:
           schema:
-            $ref: "./responses.yaml#/components/schemas/fetchComponentInventoryResponse"
+            $ref: "./responses.yaml#/components/schemas/registryComponentInventoryResponse"
     400:
       description: |-
         - 電子部品IDが不正

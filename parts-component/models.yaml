@@ -127,12 +127,15 @@ components:
           $ref: "#/components/schemas/maker"
         images:
           $ref: "#/components/schemas/componentImageList"
+        currentStock:
+          $ref: "../inventory/models.yaml#/components/schemas/quantity"
       required:
         - id
         - name
         - modelName
         - category
         - maker
+        - currentStock
 
     updateComponentFieldMask:
       title: 電子部品更新フィールドマスク

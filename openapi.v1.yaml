@@ -32,6 +32,9 @@ paths:
   /components/inventories/:
     $ref: "./inventory/components.yaml"
 
+  /components/{componentId}/inventories:
+    $ref: "./inventory/{componentId}.yaml"
+
   /components/{componentId}/inventories:add:
     $ref: "./inventory/{componentId}-add.yaml"
 
