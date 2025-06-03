@@ -143,3 +143,21 @@ components:
       schema:
         type: string
       description: フィルター内容
+
+    searchQuery:
+      name: searchQuery
+      description: |
+        検索クエリ文字列
+        
+        電子部品名（name）とモデル名（modelName）を対象とした部分一致検索を行います。
+        - 大文字小文字を区別しません
+        - 複数の単語をスペース区切りで指定するとAND検索になります
+        - 例: "PIC 16F" → 「PIC」と「16F」の両方を含む部品を検索
+      in: query
+      required: false
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 100
+        example: "PIC 16F"
+      allowEmptyValue: false

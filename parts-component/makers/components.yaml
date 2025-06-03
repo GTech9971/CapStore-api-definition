@@ -1,10 +1,20 @@
 get:
   summary: 指定したメーカーIDと一致する電子部品を取得
+  description: |
+    指定したメーカーIDに属する電子部品の一覧を取得します。
+    
+    ### 検索機能
+    `searchQuery`パラメータを指定することで、以下の項目で部分一致検索が可能です：
+    - 電子部品名（name）
+    - モデル名（modelName）
+    
+    検索は大文字小文字を区別せず、AND検索（複数の単語をスペース区切りで指定可能）に対応します。
   tags:
     - makers
   operationId: fetchComponentsByMakerId
   parameters:
     - $ref: "../models.yaml#/components/parameters/makerId"
+    - $ref: "../../common/models.yaml#/components/parameters/searchQuery"
   responses:
     200:
       description: 取得成功
@@ -14,6 +24,9 @@ get:
             $ref: "../responses.yaml#/components/schemas/fetchComponentsByMakerIdResponse"
     204:
       description: NoContent
+    400:
+      description: |
+        - メーカーIDの形式が不正
     404:
       description: |-
-        - 指定したメーカーIDが存在しない
+        指定したメーカーIDが存在しない
