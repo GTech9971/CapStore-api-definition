@@ -1,6 +1,7 @@
 get:
-  summary: 電子部品情報一覧取得
+  summary: "[未実装]電子部品情報一覧取得"
   description: 電子部品情報を取得する
+  deprecated: true
   tags:
     - components
   operationId: fetchComponents
