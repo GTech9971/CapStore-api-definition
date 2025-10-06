@@ -9,5 +9,32 @@
         "SSOP",
         "UART",
         "USART"
+    ],
+    "taskExplorer.exclude": [
+        "**/.vscode-test/**",
+        "**/Assets/**",
+        "**/bin/**",
+        "**/build/**",
+        "**/dist/**",
+        "**/doc/**",
+        "**/example/**",
+        "**/examples/**",
+        "**/ext/**",
+        "**/obj/**",
+        "**/out/**",
+        "**/output/**",
+        "**/packages/**",
+        "**/release/**",
+        "**/releases/**",
+        "**/samples/**",
+        "**/sdks/**",
+        "**/static/**",
+        "**/target/**",
+        "**/test/**",
+        "**/third_party/**",
+        "**/vendor/**",
+        "**/work/**",
+        "/c:/Users/user/Documents/GitHub/CapStore-api-definition/generated-server/build.sh",
+        "/c:/Users/user/Documents/GitHub/CapStore-api-definition/generated-server/build.bat"
     ]
 }

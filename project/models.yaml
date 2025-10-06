@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: "プロジェクトモデル"
+  version: "1.0"
+paths: {}
+components:
+  schemas:
+    projectId:
+      title: プロジェクトID
+      description: |-
+        TODO
+      type: string
+
+    projectName:
+      title: プロジェクト名
+      description: |-
+        1行で記載する
+      type: string
+      maxLength: 30
+      example: "VitalStrike"
+
+    projectSummary:
+      title: プロジェクト概要
+      description: |-
+        2~3行で表すプロジェクトの概要
+      maxLength: 100
+
+    projectDescription:
+      title: プロジェクト説明
+      description: |-
+        複数行で表すプロジェクトの説明
+      type: string
+
+    projectExternalLink:
+      title: 関連外部リンク
+      type: string
+      format: uri
+
+    projectStatus:
+      title: プロジェクトステータス
+      type: string
+      description: |-
+        - processing
+
+    footPrintName:
+      title: フットプリント名
+      type: string
+      example: "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+
+    bom:
+      title: BOM(BillOfMaterial)
+      description: |-
+        プロジェクトに必要なBOM
+      type: object
+      properties:
+        componentId:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentId"
+        quantity:
+          $ref: "../inventory/models.yaml#/components/schemas/quantity"
+        footPrintName:
+          $ref: "#/components/schemas/footPrintName"
+      required:
+        - componentId
+        - quantity
