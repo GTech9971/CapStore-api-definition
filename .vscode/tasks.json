@@ -132,6 +132,25 @@
             "dependsOrder": "sequence"
         },
         {
+            "label": "delete generated - client",
+            "detail": "フロントエンドの自動生成フォルダを削除",
+            "command": "rm",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-Command",
+                    "Remove-Item -Recurse -Force -ErrorAction SilentlyContinue ./generated-client-typescript"
+                ]
+            },
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "-rf",
+                "./generated-client-typescript"
+            ]
+        },
+        {
             "label": "generate - client:typescript",
             "detail": "フロントエンドのコード自動生成",
             "command": "openapi-generator",
@@ -152,9 +171,10 @@
                 "--additional-properties=npmVersion=1.0.0"
             ],
             "dependsOn": [
-                // "delete generated - client",
-                "bundle",
-            ]
+                "delete generated - client",
+                "bundle"
+            ],
+            "dependsOrder": "sequence"
         },
         {
             "label": "build - server",
