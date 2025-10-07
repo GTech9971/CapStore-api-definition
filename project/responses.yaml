@@ -1,0 +1,51 @@
+openapi: 3.0.3
+info:
+  title: "project responses"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    fetchProjectsResponse:
+      title: FetchProjectsResponse
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/pageResponse
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/project"
+
+    fetchProjectResponse:
+      title: FetchProjectResponse
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/project"
+
+    updateProjectResponse:
+      title: UpdateProjectResponse
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/project"
+
+    registryProjectResponse:
+      title: RegistryProjectResponse
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              title: RegistryProjectIdData
+              type: object
+              properties:
+                projectId:
+                  $ref: "./models.yaml#/components/schemas/projectId"
+              required:
+                - projectId
+

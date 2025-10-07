@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: "プロジェクトモデル"
+  title: "プロジェクト定義"
   version: "1.0"
 paths: {}
 components:
@@ -11,6 +11,8 @@ components:
       description: |-
         TODO
       type: string
+      pattern: ^P-\d{6}$
+      example: "P-123456"
 
     projectName:
       title: プロジェクト名
@@ -21,15 +23,15 @@ components:
       example: "VitalStrike"
 
     projectSummary:
-      title: プロジェクト概要
+      title: プロジェクト要約
       description: |-
-        2~3行で表すプロジェクトの概要
+        2~3行で説明するプロジェクトの要約
       maxLength: 100
 
     projectDescription:
       title: プロジェクト説明
       description: |-
-        複数行で表すプロジェクトの説明
+        複数行で説明するプロジェクトの説明
       type: string
 
     projectExternalLink:
@@ -42,13 +44,13 @@ components:
       type: string
       description: |-
         - planning
-          - 計画中
+          - 構想
         - processing
           - 進行中
         - pause
-          - 中断
+          - 一時停止
         - cancel
-          - 破棄
+          - 中止
         - complete
           - 完了
       example: "planning"
@@ -80,6 +82,17 @@ components:
         - summary
         - status
 
+    updateProjectFieldMask:
+      title: プロジェクト更新フィールドマスク
+      type: string
+      enum:
+        - name
+        - summary
+        - status
+        - description
+        - externalLink
+      example: name
+
     # BOM系
 
     footPrintName:
@@ -91,11 +104,12 @@ components:
       title: BOMId
       type: string
       description: |-
-        BOMの固有ID
-      example: TODO
+        BOMの識別ID
+      pattern: ^B-\d{6}$
+      example: "B-123456"
 
     bomRemarks:
-      title: BOMの備考・説明
+      title: BOMの備考・注記
       type: string
       example: パスコン用
 
@@ -126,3 +140,20 @@ components:
         - id
         - componentId
         - quantity
+
+  parameters:
+    projectId:
+      name: projectId
+      description: "プロジェクトID"
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/projectId"
+
+    updateProjectFieldMask:
+      name: fieldMask
+      description: プロジェクト更新フィールドマスク
+      in: query
+      required: true
+      schema:
+        $ref: "#/components/schemas/updateProjectFieldMask"

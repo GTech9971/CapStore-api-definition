@@ -40,3 +40,9 @@ paths:
 
   /components/{componentId}/inventories:remove:
     $ref: "./inventory/{componentId}-remove.yaml"
+
+  /projects:
+    $ref: "./project/projects.yaml"
+
+  /projects/{projectId}:
+    $ref: "./project/projects/projectId.yaml"

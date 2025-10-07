@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: "project requests"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    registryProjectRequest:
+      title: RegistryProjectRequest
+      allOf:
+        - $ref: "./models.yaml#/components/schemas/project"
+      properties:
+        id:
+          readOnly: true
+          allOf:
+            - $ref: "./models.yaml#/components/schemas/projectId"
+        bomList:
+          readOnly: true
+      required:
+        - name
+        - summary
+        - status
+
+    updateProjectRequest:
+      title: UpdateProjectRequest
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/projectName"
+        summary:
+          $ref: "./models.yaml#/components/schemas/projectSummary"
+        status:
+          $ref: "./models.yaml#/components/schemas/projectStatus"
+        description:
+          $ref: "./models.yaml#/components/schemas/projectDescription"
+        externalLink:
+          $ref: "./models.yaml#/components/schemas/projectExternalLink"
+

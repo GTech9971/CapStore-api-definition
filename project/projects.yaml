@@ -1,0 +1,52 @@
+get:
+  summary: "プロジェクト一覧取得"
+  description: プロジェクト一覧を取得する
+  tags:
+    - projects
+  operationId: fetchProjects
+  parameters:
+    - $ref: ../common/models.yaml#/components/parameters/pageIndex
+    - $ref: ../common/models.yaml#/components/parameters/pageSize
+    - $ref: ../common/models.yaml#/components/parameters/sortColumn
+    - $ref: ../common/models.yaml#/components/parameters/sortOrder
+    - $ref: ../common/models.yaml#/components/parameters/filterColumn
+    - $ref: ../common/models.yaml#/components/parameters/filterQuery
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchProjectsResponse"
+    204:
+      description: コンテンツなし
+
+post:
+  summary: プロジェクト登録
+  tags:
+    - projects
+  operationId: registryProject
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryProjectRequest"
+  responses:
+    201:
+      description: 登録成功
+      headers:
+        Location:
+          description: 新規登録したプロジェクトのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/projects/P-123456"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryProjectResponse"
+    400:
+      description: |
+        - 不正なリクエスト
+

@@ -1,0 +1,67 @@
+get:
+  summary: プロジェクト取得
+  description: 指定したプロジェクトIDのプロジェクトを取得する
+  tags:
+    - projects
+  operationId: fetchProject
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/projectId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchProjectResponse"
+    400:
+      description: |
+        - プロジェクトIDの形式が不正
+    404:
+      description: |
+        - プロジェクトが存在しない
+
+patch:
+  summary: プロジェクト更新
+  tags:
+    - projects
+  operationId: updateProject
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/projectId"
+    - $ref: "../models.yaml#/components/parameters/updateProjectFieldMask"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../requests.yaml#/components/schemas/updateProjectRequest"
+  responses:
+    200:
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/updateProjectResponse"
+    400:
+      description: |
+        - プロジェクトIDが不正
+        - フィールドマスクが不正
+    404:
+      description: |
+        - プロジェクトが存在しない
+
+delete:
+  summary: プロジェクト削除
+  tags:
+    - projects
+  operationId: deleteProject
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/projectId"
+  responses:
+    204:
+      description: NoContent
+    400:
+      description: |
+        - プロジェクトIDが不正
+    404:
+      description: |
+        - プロジェクトが存在しない
