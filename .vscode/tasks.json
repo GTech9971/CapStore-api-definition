@@ -177,6 +177,55 @@
             "dependsOrder": "sequence"
         },
         {
+            "label": "prepare package - client:typescript",
+            "detail": "npm用のpackage.jsonとtsconfig.jsonを生成",
+            "command": "node",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "-e",
+                "const fs=require(\"fs\");const path=require(\"path\");const dir=path.join(process.cwd(),\"generated-client-typescript\");if(!fs.existsSync(dir)){process.exit(0);}const pkg={name:\"cap-store-api-def\",version:\"0.0.0-local\",description:\"Auto-generated TypeScript client using fetch\",main:\"index.ts\",types:\"index.ts\",scripts:{build:\"npm run typecheck\",typecheck:\"tsc\",prepublishOnly:\"npm run build\"},keywords:[\"openapi\",\"typescript\",\"fetch\"],author:\"GTech9971\",license:\"MIT\",repository:{type:\"git\",url:\"https://github.com/GTech9971/CapStore-api-definition\"},devDependencies:{typescript:\"^5.4.0\"}};fs.writeFileSync(path.join(dir,\"package.json\"),JSON.stringify(pkg,null,2)+\"\\n\");const tsconfig={compilerOptions:{target:\"ES2020\",module:\"ESNext\",moduleResolution:\"Node\",declaration:true,outDir:\"dist\",strict:true,esModuleInterop:true,forceConsistentCasingInFileNames:true,skipLibCheck:true},include:[\"./**/*.ts\"],exclude:[\"node_modules\",\"dist\"]};fs.writeFileSync(path.join(dir,\"tsconfig.json\"),JSON.stringify(tsconfig,null,2)+\"\\n\");"
+            ],
+            "windows": {
+                "command": "node",
+                "args": [
+                    "-e",
+                    "const fs=require(\"fs\");const path=require(\"path\");const dir=path.join(process.cwd(),\"generated-client-typescript\");if(!fs.existsSync(dir)){process.exit(0);}const pkg={name:\"cap-store-api-def\",version:\"0.0.0-local\",description:\"Auto-generated TypeScript client using fetch\",main:\"index.ts\",types:\"index.ts\",scripts:{build:\"npm run typecheck\",typecheck:\"tsc\",prepublishOnly:\"npm run build\"},keywords:[\"openapi\",\"typescript\",\"fetch\"],author:\"GTech9971\",license:\"MIT\",repository:{type:\"git\",url:\"https://github.com/GTech9971/CapStore-api-definition\"},devDependencies:{typescript:\"^5.4.0\"}};fs.writeFileSync(path.join(dir,\"package.json\"),JSON.stringify(pkg,null,2)+\"\\n\");const tsconfig={compilerOptions:{target:\"ES2020\",module:\"ESNext\",moduleResolution:\"Node\",declaration:true,outDir:\"dist\",strict:true,esModuleInterop:true,forceConsistentCasingInFileNames:true,skipLibCheck:true},include:[\"./**/*.ts\"],exclude:[\"node_modules\",\"dist\"]};fs.writeFileSync(path.join(dir,\"tsconfig.json\"),JSON.stringify(tsconfig,null,2)+\"\\n\");"
+                ]
+            },
+            "dependsOn": [
+                "generate - client:typescript"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "install deps - client:typescript",
+            "detail": "生成クライアントのnpm依存関係をインストール",
+            "command": "npm",
+            "type": "shell",
+            "group": "build",
+            "args": [
+                "install",
+                "--no-audit",
+                "--no-fund"
+            ],
+            "options": {
+                "cwd": "./generated-client-typescript"
+            },
+            "windows": {
+                "command": "npm.cmd",
+                "args": [
+                    "install",
+                    "--no-audit",
+                    "--no-fund"
+                ]
+            },
+            "dependsOn": [
+                "prepare package - client:typescript"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
             "label": "build - client:typescript",
             "type": "shell",
             "group": "build",
@@ -197,7 +246,7 @@
                 ]
             },
             "dependsOn": [
-                "generate - client:typescript"
+                "install deps - client:typescript"
             ],
             "dependsOrder": "sequence"
         },
