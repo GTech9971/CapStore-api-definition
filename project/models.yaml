@@ -68,8 +68,11 @@ components:
           $ref: "#/components/schemas/projectStatus"
         description:
           $ref: "#/components/schemas/projectDescription"
-        externalLink:
-          $ref: "#/components/schemas/projectExternalLink"
+        externalLinks:
+          title: 外部リンクリスト
+          type: array
+          items:
+            $ref: "#/components/schemas/projectExternalLink"
         bomList:
           title: BOMリスト
           type: array
@@ -89,7 +92,8 @@ components:
         - summary
         - status
         - description
-        - externalLink
+        - externalLinks
+        - bomList
       example: name
 
     # BOM系
