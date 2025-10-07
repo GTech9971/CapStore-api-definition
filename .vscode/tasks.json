@@ -177,6 +177,31 @@
             "dependsOrder": "sequence"
         },
         {
+            "label": "build - client:typescript",
+            "type": "shell",
+            "group": "build",
+            "detail": "フロントエンドコードをビルドする",
+            "command": "npm",
+            "args": [
+                "run",
+                "build"
+            ],
+            "options": {
+                "cwd": "./generated-client-typescript"
+            },
+            "windows": {
+                "command": "npm.cmd",
+                "args": [
+                    "run",
+                    "build"
+                ]
+            },
+            "dependsOn": [
+                "generate - client:typescript"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
             "label": "build - server",
             "type": "shell",
             "group": "build",
