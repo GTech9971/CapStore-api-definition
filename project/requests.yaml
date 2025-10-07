@@ -6,7 +6,7 @@ paths: {}
 components:
   schemas:
     registryProjectRequest:
-      title: RegistryProjectRequest
+      title: プロジェクト登録リクエスト
       allOf:
         - $ref: "./models.yaml#/components/schemas/project"
       properties:
@@ -22,7 +22,7 @@ components:
         - status
 
     updateProjectRequest:
-      title: UpdateProjectRequest
+      title: プロジェクト更新リクエスト
       type: object
       properties:
         name:
@@ -35,4 +35,3 @@ components:
           $ref: "./models.yaml#/components/schemas/projectDescription"
         externalLink:
           $ref: "./models.yaml#/components/schemas/projectExternalLink"
-

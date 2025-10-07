@@ -35,6 +35,8 @@
         "**/vendor/**",
         "**/work/**",
         "/c:/Users/user/Documents/GitHub/CapStore-api-definition/generated-server/build.sh",
-        "/c:/Users/user/Documents/GitHub/CapStore-api-definition/generated-server/build.bat"
+        "/c:/Users/user/Documents/GitHub/CapStore-api-definition/generated-server/build.bat",
+        "/Users/george/Documents/GitHub/CapStore-api-definition/generated-server/build.sh",
+        "/Users/george/Documents/GitHub/CapStore-api-definition/generated-server/build.bat"
     ]
 }

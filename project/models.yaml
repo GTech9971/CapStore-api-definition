@@ -8,8 +8,6 @@ components:
     # プロジェクト系
     projectId:
       title: プロジェクトID
-      description: |-
-        TODO
       type: string
       pattern: ^P-\d{6}$
       example: "P-123456"
@@ -24,6 +22,7 @@ components:
 
     projectSummary:
       title: プロジェクト要約
+      type: string
       description: |-
         2~3行で説明するプロジェクトの要約
       maxLength: 100

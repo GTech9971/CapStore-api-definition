@@ -6,7 +6,7 @@ paths: {}
 components:
   schemas:
     fetchProjectsResponse:
-      title: FetchProjectsResponse
+      title: プロジェクト一覧取得レスポンス
       allOf:
         - $ref: ../common/models.yaml#/components/schemas/pageResponse
         - type: object
@@ -17,7 +17,7 @@ components:
                 $ref: "./models.yaml#/components/schemas/project"
 
     fetchProjectResponse:
-      title: FetchProjectResponse
+      title: プロジェクト取得レスポンス
       allOf:
         - $ref: ../common/models.yaml#/components/schemas/baseResponse
         - type: object
@@ -26,7 +26,7 @@ components:
               $ref: "./models.yaml#/components/schemas/project"
 
     updateProjectResponse:
-      title: UpdateProjectResponse
+      title: プロジェクト更新レスポンス
       allOf:
         - $ref: ../common/models.yaml#/components/schemas/baseResponse
         - type: object
@@ -35,17 +35,16 @@ components:
               $ref: "./models.yaml#/components/schemas/project"
 
     registryProjectResponse:
-      title: RegistryProjectResponse
+      title: プロジェクト登録レスポンス
       allOf:
         - $ref: ../common/models.yaml#/components/schemas/baseResponse
         - type: object
           properties:
             data:
-              title: RegistryProjectIdData
+              title: 登録プロジェクトID
               type: object
               properties:
                 projectId:
                   $ref: "./models.yaml#/components/schemas/projectId"
               required:
                 - projectId
-
