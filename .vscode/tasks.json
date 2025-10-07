@@ -9,7 +9,27 @@
                 "-m",
                 "http.server",
                 "8080"
-            ]
+            ],
+            "osx": {
+                "command": "python3",
+                "args": [
+                    "-m",
+                    "http.server",
+                    "8080"
+                ]
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^Serving*"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^Serving*",
+                    "endsPattern": ":8080"
+                }
+            }
         },
         {
             "label": "validate",
@@ -54,18 +74,18 @@
             "detail": "自動生成されたフォルダを削除",
             "command": "rm",
             "windows": {
-                "command": "rm",
+                "command": "powershell",
                 "args": [
-                    "-r",
-                    "-fo",
-                    "*generated*"
+                    "-NoProfile",
+                    "-Command",
+                    "Remove-Item -Recurse -Force -ErrorAction SilentlyContinue ./generated-server"
                 ]
             },
             "type": "shell",
             "group": "build",
             "args": [
                 "-rf",
-                "*generated*",
+                "./generated-server"
             ]
         },
         {
@@ -108,7 +128,8 @@
             "dependsOn": [
                 "delete generated - server",
                 "bundle"
-            ]
+            ],
+            "dependsOrder": "sequence"
         },
         {
             "label": "generate - client:typescript",
