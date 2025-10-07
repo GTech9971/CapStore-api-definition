@@ -5,6 +5,7 @@ info:
 paths: {}
 components:
   schemas:
+    # プロジェクト系
     projectId:
       title: プロジェクトID
       description: |-
@@ -40,12 +41,68 @@ components:
       title: プロジェクトステータス
       type: string
       description: |-
+        - planning
+          - 計画中
         - processing
+          - 進行中
+        - pause
+          - 中断
+        - cancel
+          - 破棄
+        - complete
+          - 完了
+      example: "planning"
+
+    project:
+      title: プロジェクト
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/projectId"
+        name:
+          $ref: "#/components/schemas/projectName"
+        summary:
+          $ref: "#/components/schemas/projectSummary"
+        status:
+          $ref: "#/components/schemas/projectStatus"
+        description:
+          $ref: "#/components/schemas/projectDescription"
+        externalLink:
+          $ref: "#/components/schemas/projectExternalLink"
+        bomList:
+          title: BOMリスト
+          type: array
+          items:
+            $ref: "#/components/schemas/bom"
+      required:
+        - id
+        - name
+        - summary
+        - status
+
+    # BOM系
 
     footPrintName:
       title: フットプリント名
       type: string
       example: "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+
+    bomId:
+      title: BOMId
+      type: string
+      description: |-
+        BOMの固有ID
+      example: TODO
+
+    bomRemarks:
+      title: BOMの備考・説明
+      type: string
+      example: パスコン用
+
+    bomRefName:
+      title: BOMのリファレンス名
+      type: string
+      example: "C1"
 
     bom:
       title: BOM(BillOfMaterial)
@@ -53,12 +110,19 @@ components:
         プロジェクトに必要なBOM
       type: object
       properties:
+        id:
+          $ref: "#/components/schemas/bomId"
         componentId:
           $ref: "../parts-component/models.yaml#/components/schemas/componentId"
         quantity:
           $ref: "../inventory/models.yaml#/components/schemas/quantity"
         footPrintName:
           $ref: "#/components/schemas/footPrintName"
+        remarks:
+          $ref: "#/components/schemas/bomRemarks"
+        refName:
+          $ref: "#/components/schemas/bomRefName"
       required:
+        - id
         - componentId
         - quantity
