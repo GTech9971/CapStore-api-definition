@@ -1,6 +1,10 @@
 get:
   summary: プロジェクト取得
-  description: 指定したプロジェクトIDのプロジェクトを取得する
+  description: |
+    指定したプロジェクトIDのプロジェクトを取得する。
+
+    Accept: `application/json` の場合はプロジェクト情報(JSON)を返す。
+    Accept: `text/csv` の場合は当該プロジェクトのBOMリストをCSVで返す。
   tags:
     - projects
   operationId: fetchProject
@@ -13,6 +17,21 @@ get:
         application/json:
           schema:
             $ref: "../responses.yaml#/components/schemas/fetchProjectResponse"
+        text/csv:
+          schema:
+            type: string
+            description: プロジェクトのBOMリストCSV
+            example: |-
+              id,componentId,quantity,footPrintName,remarks,refName
+              B-000001,C-124286,2,Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm,パスコン用,C1
+              B-000002,C-044430,4,Resistor_SMD:R_0603_1608Metric,,R1
+      headers:
+        Content-Disposition:
+          description: |-
+            CSVダウンロード用ファイル名（例: {projectId}-BOM.csv）
+          schema:
+            type: string
+            example: 'attachment; filename="P-123456-BOM.csv"'
     400:
       description: |
         - プロジェクトIDの形式が不正
