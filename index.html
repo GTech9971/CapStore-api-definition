@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@3/swagger-ui.css">
+    <title>CapStoreWebAPI</title>
+</head>
+
+<body>
+    <div id="farmstall-docs"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+    <script>
+        window.onload = function () {
+            const ui = SwaggerUIBundle({
+                url: 'openapi.v1.yaml',
+                dom_id: "#farmstall-docs",
+                deepLinking: true,
+            });
+        }
+    </script>
+</body>
+
+</html>
