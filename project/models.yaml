@@ -26,17 +26,26 @@ components:
       description: |-
         2~3行で説明するプロジェクトの要約
       maxLength: 100
+      example: "光学センサーを用いたトリガーセンサーの開発"
 
     projectDescription:
       title: プロジェクト説明
       description: |-
         複数行で説明するプロジェクトの説明
       type: string
+      example: "磁気センサーIC(ホールIC)リニア型UGN3503EUAでは取り付けに難があり..."
 
     projectExternalLink:
       title: 関連外部リンク
       type: string
       format: uri
+      example: "https://airsoft97.com/products/detail/10597"
+
+    projectImgUrl:
+      title: プロジェクト画像Url
+      type: string
+      format: uri
+      example: "https://demo.part-db.de/img/part_placeholder.svg"
 
     projectStatus:
       title: プロジェクトステータス
@@ -54,6 +63,16 @@ components:
           - 完了
       example: "planning"
 
+    createdAt:
+      title: プロジェクト作成日時
+      type: string
+      format: date-time
+
+    lastModified:
+      title: プロジェクト最終変更日時
+      type: string
+      format: date-time
+
     project:
       title: プロジェクト
       type: object
@@ -68,6 +87,11 @@ components:
           $ref: "#/components/schemas/projectStatus"
         description:
           $ref: "#/components/schemas/projectDescription"
+        imgUrls:
+          title: プロジェクト画像Urlリスト
+          type: array
+          items:
+            $ref: "#/components/schemas/projectImgUrl"
         externalLinks:
           title: 外部リンクリスト
           type: array
@@ -78,11 +102,17 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/bom"
+        createdAt:
+          $ref: "#/components/schemas/createdAt"
+        lastModified:
+          $ref: "#/components/schemas/lastModified"
       required:
         - id
         - name
         - summary
         - status
+        - createdAt
+        - lastModified
 
     updateProjectFieldMask:
       title: プロジェクト更新フィールドマスク
@@ -92,6 +122,7 @@ components:
         - summary
         - status
         - description
+        - imgUrls
         - externalLinks
         - bomList
       example: name

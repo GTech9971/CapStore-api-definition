@@ -42,7 +42,7 @@ get:
 patch:
   summary: プロジェクト更新
   description: |-
-    externalLinks、bomListについては更新ではなく置き換え処理となる
+    imgUrls、externalLinks、bomListについては更新ではなく置き換え処理となる
   tags:
     - projects
   operationId: updateProject
