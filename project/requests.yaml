@@ -33,6 +33,8 @@ components:
           $ref: "./models.yaml#/components/schemas/projectStatus"
         description:
           $ref: "./models.yaml#/components/schemas/projectDescription"
+        tag:
+          $ref: "./models.yaml#/components/schemas/tag"
         imgUrls:
           title: プロジェクト画像Urlリスト
           type: array
