@@ -7,19 +7,29 @@ components:
   schemas:
     registryProjectRequest:
       title: プロジェクト登録リクエスト
-      allOf:
-        - $ref: "./models.yaml#/components/schemas/project"
+      type: object
       properties:
-        id:
-          readOnly: true
-          allOf:
-            - $ref: "./models.yaml#/components/schemas/projectId"
-        bomList:
-          readOnly: true
+        name:
+          $ref: "./models.yaml#/components/schemas/projectName"
+        summary:
+          $ref: "./models.yaml#/components/schemas/projectSummary"
+        description:
+          $ref: "./models.yaml#/components/schemas/projectDescription"
+        tag:
+          $ref: "./models.yaml#/components/schemas/tag"
+        imgUrls:
+          title: プロジェクト画像リスト
+          type: array
+          items:
+            $ref: "./models.yaml#/components/schemas/projectImg"
+        externalLinks:
+          title: 外部リンクリスト
+          type: array
+          items:
+            $ref: "./models.yaml#/components/schemas/projectExternalLink"
       required:
         - name
         - summary
-        - status
 
     updateProjectRequest:
       title: プロジェクト更新リクエスト
