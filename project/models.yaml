@@ -35,17 +35,49 @@ components:
       type: string
       example: "磁気センサーIC(ホールIC)リニア型UGN3503EUAでは取り付けに難があり..."
 
+    tag:
+      title: タグ
+      type: string
+      example: "GitHub"
+      maxLength: 15
+
+    linkTitle:
+      title: リンクのタイトル
+      type: string
+      example: "パーツの写真"
+      maxLength: 20
+
     projectExternalLink:
       title: 関連外部リンク
-      type: string
-      format: uri
-      example: "https://airsoft97.com/products/detail/10597"
+      type: object
+      properties:
+        link:
+          title: リンク
+          type: string
+          format: uri
+          example: "https://airsoft97.com/products/detail/10597"
+        tag:
+          $ref: "#/components/schemas/tag"
+        title:
+          $ref: "#/components/schemas/linkTitle"
+      required:
+        - link
 
-    projectImgUrl:
-      title: プロジェクト画像Url
-      type: string
-      format: uri
-      example: "https://demo.part-db.de/img/part_placeholder.svg"
+    projectImg:
+      title: プロジェクト画像
+      type: object
+      properties:
+        url:
+          title: 画像URL
+          type: string
+          format: uri
+          example: "https://demo.part-db.de/img/part_placeholder.svg"
+        tag:
+          $ref: "#/components/schemas/tag"
+        title:
+          $ref: "#/components/schemas/linkTitle"
+      required:
+        - url
 
     projectStatus:
       title: プロジェクトステータス
@@ -87,11 +119,13 @@ components:
           $ref: "#/components/schemas/projectStatus"
         description:
           $ref: "#/components/schemas/projectDescription"
+        tag:
+          $ref: "#/components/schemas/tag"
         imgUrls:
           title: プロジェクト画像Urlリスト
           type: array
           items:
-            $ref: "#/components/schemas/projectImgUrl"
+            $ref: "#/components/schemas/projectImg"
         externalLinks:
           title: 外部リンクリスト
           type: array
@@ -122,6 +156,7 @@ components:
         - summary
         - status
         - description
+        - tag
         - imgUrls
         - externalLinks
         - bomList

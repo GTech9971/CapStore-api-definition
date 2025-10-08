@@ -37,7 +37,7 @@ components:
           title: プロジェクト画像Urlリスト
           type: array
           items:
-            $ref: "./models.yaml#/components/schemas/projectImgUrl"
+            $ref: "./models.yaml#/components/schemas/projectImg"
         externalLinks:
           title: 外部リンクリスト
           type: array
