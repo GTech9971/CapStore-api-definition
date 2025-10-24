@@ -59,4 +59,4 @@ components:
           title: BOMリスト
           type: array
           items:
-            $ref: "./models.yaml#/components/schemas/bom"
+            $ref: "./models.yaml#/components/schemas/bomForNewOrUpdate"

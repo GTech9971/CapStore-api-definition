@@ -210,6 +210,28 @@ components:
         - componentId
         - quantity
 
+    bomForNewOrUpdate:
+      title: 新規登録・更新リクエスト用 BOM(BillOfMaterial)
+      description: |-
+        プロジェクトに必要なBOM
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/bomId"
+        componentId:
+          $ref: "../parts-component/models.yaml#/components/schemas/componentId"
+        quantity:
+          $ref: "../inventory/models.yaml#/components/schemas/quantity"
+        footPrintName:
+          $ref: "#/components/schemas/footPrintName"
+        remarks:
+          $ref: "#/components/schemas/bomRemarks"
+        refName:
+          $ref: "#/components/schemas/bomRefName"
+      required:
+        - componentId
+        - quantity
+
   parameters:
     projectId:
       name: projectId
