@@ -168,6 +168,35 @@ components:
       title: フットプリント名
       type: string
       example: "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+      
+    supplierName:
+      title: 購入先名
+      type: string
+      example: "秋月電子"
+    
+    supplierUrl:
+      title: 購入先URL
+      type: string
+      format: uri
+      example: "https://akizukidenshi.com/catalog/g/g131275/"
+    
+    supplierModelId:
+      title: 購入先の固有ID
+      type: string
+      example: "g131275"
+    
+    supplier:
+      title: 購入先
+      type: object
+      properties:
+        name:
+          $ref: "#/components/schemas/supplierName"
+        url:
+          $ref: "#/components/schemas/supplierUrl"
+        modelId:
+          $ref: "#/components/schemas/supplierModelId"
+      required:
+        - url
 
     bomId:
       title: BOMId
@@ -205,6 +234,8 @@ components:
           $ref: "#/components/schemas/bomRemarks"
         refName:
           $ref: "#/components/schemas/bomRefName"
+        supplier:
+          $ref: "#/components/schemas/supplier"
       required:
         - id
         - componentId
@@ -228,6 +259,8 @@ components:
           $ref: "#/components/schemas/bomRemarks"
         refName:
           $ref: "#/components/schemas/bomRefName"
+        supplier:
+          $ref: "#/components/schemas/supplier"
       required:
         - componentId
         - quantity

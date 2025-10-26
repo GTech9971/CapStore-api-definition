@@ -3,8 +3,9 @@ get:
   description: |
     指定したプロジェクトIDのプロジェクトを取得する。
 
-    Accept: `application/json` の場合はプロジェクト情報(JSON)を返す。
-    Accept: `text/csv` の場合は当該プロジェクトのBOMリストをCSVで返す。
+    - Accept: `application/json` の場合はプロジェクト情報(JSON)を返す。
+    - Accept: `text/csv` の場合は当該プロジェクトのBOMリストをCSVで返す。
+    - Accept: `application/pdf` の場合はプロジェクト情報(pdf)を返す。
   tags:
     - projects
   operationId: fetchProject
