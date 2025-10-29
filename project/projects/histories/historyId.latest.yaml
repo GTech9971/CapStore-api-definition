@@ -1,0 +1,22 @@
+get:
+  summary: 最新のプロジェクト履歴取得
+  description: |
+    指定したプロジェクトの最新履歴を取得する。
+  tags:
+    - projectsHistory
+  operationId: fetchLatestProjectHistory
+  parameters:
+    - $ref: "../../models.yaml#/components/parameters/projectId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses.yaml#/components/schemas/fetchProjectHistoryResponse"
+    400:
+      description: |
+        - プロジェクトIDの形式が不正
+    404:
+      description: |
+        - 履歴が存在しない

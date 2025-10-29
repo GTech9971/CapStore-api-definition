@@ -46,3 +46,19 @@ paths:
 
   /projects/{projectId}:
     $ref: "./project/projects/projectId.yaml"
+
+  # Project histories
+  /projects/{projectId}/histories:
+    $ref: "./project/projects/histories/projectId.yaml"
+
+  /projects/{projectId}/histories/latest:
+    $ref: "./project/projects/histories/historyId.latest.yaml"
+
+  /projects/{projectId}/histories/{historyId}:
+    $ref: "./project/projects/histories/historyId.yaml"
+
+  /projects/{projectId}/histories/{historyId}:diff:
+    $ref: "./project/projects/histories/historyId.diff.yaml"
+
+  /projects/{projectId}/histories/{historyId}:revert:
+    $ref: "./project/projects/histories/historyId.revert.yaml"

@@ -48,3 +48,42 @@ components:
                   $ref: "./models.yaml#/components/schemas/projectId"
               required:
                 - projectId
+
+    # 履歴系レスポンス
+    fetchProjectHistoriesResponse:
+      title: プロジェクト履歴一覧取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/projectHistory"
+
+    fetchProjectHistoryResponse:
+      title: プロジェクト履歴取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/projectHistory"
+
+    fetchProjectDiffResponse:
+      title: プロジェクト差分取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/projectDiff"
+
+    revertProjectResponse:
+      title: プロジェクト復元レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/project"

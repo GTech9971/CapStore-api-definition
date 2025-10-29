@@ -1,0 +1,24 @@
+get:
+  summary: プロジェクト履歴差分取得
+  description: |
+    指定した履歴IDと直前の履歴との差分を取得する。
+  tags:
+    - projectsHistory
+  operationId: fetchProjectHistoryDiff
+  parameters:
+    - $ref: "../../models.yaml#/components/parameters/projectId"
+    - $ref: "../../models.yaml#/components/parameters/historyId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses.yaml#/components/schemas/fetchProjectDiffResponse"
+    400:
+      description: |
+        - プロジェクトIDの形式が不正
+        - 履歴IDの形式が不正
+    404:
+      description: |
+        - 履歴が存在しない

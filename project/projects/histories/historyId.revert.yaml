@@ -1,0 +1,24 @@
+post:
+  summary: プロジェクト履歴へロールバック
+  description: |
+    指定した履歴IDの内容へプロジェクトを復元する。
+  tags:
+    - projectsHistory
+  operationId: revertProjectToHistory
+  parameters:
+    - $ref: "../../models.yaml#/components/parameters/projectId"
+    - $ref: "../../models.yaml#/components/parameters/historyId"
+  responses:
+    200:
+      description: 復元成功
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses.yaml#/components/schemas/revertProjectResponse"
+    400:
+      description: |
+        - プロジェクトIDの形式が不正
+        - 履歴IDの形式が不正
+    404:
+      description: |
+        - 履歴が存在しない

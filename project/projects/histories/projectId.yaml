@@ -1,0 +1,22 @@
+get:
+  summary: プロジェクト履歴一覧取得
+  description: |
+    指定したプロジェクトの履歴一覧を取得する。
+  tags:
+    - projectsHistory
+  operationId: fetchProjectHistories
+  parameters:
+    - $ref: "../../models.yaml#/components/parameters/projectId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses.yaml#/components/schemas/fetchProjectHistoriesResponse"
+    400:
+      description: |
+        - プロジェクトIDの形式が不正
+    404:
+      description: |
+        - プロジェクトが存在しない
