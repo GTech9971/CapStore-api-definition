@@ -318,7 +318,7 @@ components:
         snapshotJson:
           title: プロジェクトのスナップショット(json)
           type: string
-          example: "{'name' : 'xxxx', 'summary' : 'test', }"
+          example: "{'name' : 'xxxx', 'summary' : 'test', ... }"
         changedFields:
           title: 変更されたフィールド
           type: array
@@ -329,6 +329,7 @@ components:
         - historyId
         - projectId
         - createdAt
+        - changeType
 
     jsonPatchOperation:
       title: JSON Patch Operation
