@@ -168,23 +168,23 @@ components:
       title: フットプリント名
       type: string
       example: "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
-      
+
     supplierName:
       title: 購入先名
       type: string
       example: "秋月電子"
-    
+
     supplierUrl:
       title: 購入先URL
       type: string
       format: uri
       example: "https://akizukidenshi.com/catalog/g/g131275/"
-    
+
     supplierModelId:
       title: 購入先の固有ID
       type: string
       example: "g131275"
-    
+
     supplier:
       title: 購入先
       type: object
@@ -276,10 +276,13 @@ components:
       pattern: ^P-\d{6}-H-\d{6}$
       example: "P-123456-H-000123"
 
-    
-
     projectHistoryChangeType:
       title: 変更種別
+      description: |-
+        - created 新規登録
+        - updated 更新
+        - deleted 削除
+        - restored 復元
       type: string
       enum:
         - created
@@ -290,6 +293,12 @@ components:
 
     projectHistory:
       title: プロジェクト履歴
+      description: |-
+        changeTypeが`restored`の場合、以下必須
+        - restoredHistoryId 復元元履歴ID
+
+        changeTypeが`restored`,`updated`の場合、以下必須
+        - snapshotJson
       type: object
       properties:
         historyId:
@@ -304,6 +313,12 @@ components:
           example: "BOMの抵抗を0603へ変更"
         changeType:
           $ref: "#/components/schemas/projectHistoryChangeType"
+        restoredHistoryId:
+          $ref: "#/components/schemas/projectHistoryId"
+        snapshotJson:
+          title: プロジェクトのスナップショット(json)
+          type: string
+          example: "{'name' : 'xxxx', 'summary' : 'test', }"
         changedFields:
           title: 変更されたフィールド
           type: array

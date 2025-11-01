@@ -3,14 +3,25 @@ info:
   title: PartsComponentsAPI.v1
   version: "1.0"
   description: |-
-    # Components API
-    電子部品のCRUDを行うWebAPI
+    - 電子部品のCRUDを行うWebAPI
 
-    # 秋月電子連携API
-    秋月電子通販サイトの情報を取得、注文情報の取得等を行う
-  termsOfService: "https://akizukidenshi.com/catalog/top.aspx"
+    - 電子部品のカテゴリー
+
+    - 電子部品のメーカー
+
+    - 秋月電子通販サイトの情報を取得、注文情報の取得等を行う
+
+    - 電子部品の在庫
+
+    - プロジェクト管理
+    - 履歴管理
+
+  termsOfService: "https://akizukidenshi.com/catalog/default.aspx"
 servers:
-  - url: "http://localhost:3000/api/v1/caps"
+  - url: "http://localhost:5000"
+    description: "開発環境"
+  - url: "https://10.211.55.4/api/v1/caps"
+    description: "検証環境"
 paths:
   /components:
     $ref: "./parts-component/components.yaml"
