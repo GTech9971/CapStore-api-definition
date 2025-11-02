@@ -2,7 +2,7 @@ get:
   summary: "プロジェクト一覧取得"
   description: |-
     - プロジェクト一覧を取得する
-    - 作成日時の降順でソートする
+    - 更新日時の降順でソートする
   tags:
     - projects
   operationId: fetchProjects
