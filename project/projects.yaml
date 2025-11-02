@@ -1,6 +1,8 @@
 get:
   summary: "プロジェクト一覧取得"
-  description: プロジェクト一覧を取得する
+  description: |-
+    - プロジェクト一覧を取得する
+    - 作成日時の降順でソートする
   tags:
     - projects
   operationId: fetchProjects
@@ -49,4 +51,3 @@ post:
     400:
       description: |
         - 不正なリクエスト
-

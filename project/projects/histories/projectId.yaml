@@ -2,6 +2,7 @@ get:
   summary: プロジェクト履歴一覧取得
   description: |
     指定したプロジェクトの履歴一覧を取得する。
+    履歴作成日時の降順でソート
   tags:
     - projectsHistory
   operationId: fetchProjectHistories
