@@ -1,4 +1,5 @@
 get:
+  deprecated: true
   summary: プロジェクト履歴差分取得
   description: |
     指定した履歴IDと直前の履歴との差分を取得する。

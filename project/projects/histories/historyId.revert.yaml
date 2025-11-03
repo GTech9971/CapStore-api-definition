@@ -1,7 +1,7 @@
 post:
   summary: プロジェクト履歴へロールバック
   description: |
-    指定した履歴IDの内容へプロジェクトを復元する。
+    - 指定した履歴IDの内容へプロジェクトを復元する。
   tags:
     - projectsHistory
   operationId: revertProjectToHistory
@@ -22,3 +22,6 @@ post:
     404:
       description: |
         - 履歴が存在しない
+    422:
+      description: |-
+        - BOMに削除済みのComponentIdが設定されているため復元不可
