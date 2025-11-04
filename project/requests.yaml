@@ -33,8 +33,17 @@ components:
 
     updateProjectRequest:
       title: プロジェクト更新リクエスト
+      description: |-
+        - クエリパラメーターで指定された項目のみ更新内容に反映される。
+          - 例外として、更新メッセージ`updateMessage`のみ値さえあれば更新履歴に登録される
       type: object
       properties:
+        updateMessage:
+          title: 更新メッセージ
+          description: |-
+            履歴に表示される
+          type: string
+          example: プロジェクト概要を追記
         name:
           $ref: "./models.yaml#/components/schemas/projectName"
         summary:
