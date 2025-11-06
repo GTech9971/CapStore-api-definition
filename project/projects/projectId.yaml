@@ -46,7 +46,6 @@ get:
     404:
       description: |
         - プロジェクトが存在しない
-        - プロジェクトが論理削除済み
 
 patch:
   summary: プロジェクト更新
