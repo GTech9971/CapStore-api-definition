@@ -14,7 +14,7 @@ get:
     - $ref: ../common/models.yaml#/components/parameters/sortOrder
     - $ref: ../common/models.yaml#/components/parameters/filterColumn
     - $ref: ../common/models.yaml#/components/parameters/filterQuery
-    - $ref: ../common/models.yaml#/components/parameters/includedDeleted
+    - $ref: ../common/models.yaml#/components/parameters/includeDeleted
   responses:
     200:
       description: 取得成功
