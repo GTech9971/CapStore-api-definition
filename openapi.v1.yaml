@@ -58,6 +58,9 @@ paths:
   /projects/{projectId}:
     $ref: "./project/projects/projectId.yaml"
 
+  /projects/{projectId}:undelete:
+    $ref: "./project/projects/projectId.undelete.yaml"
+
   # Project histories
   /projects/{projectId}/histories:
     $ref: "./project/projects/histories/projectId.yaml"
@@ -67,9 +70,6 @@ paths:
 
   /projects/{projectId}/histories/{historyId}:
     $ref: "./project/projects/histories/historyId.yaml"
-
-  /projects/{projectId}/histories/{historyId}:diff:
-    $ref: "./project/projects/histories/historyId.diff.yaml"
 
   /projects/{projectId}/histories/{historyId}:revert:
     $ref: "./project/projects/histories/historyId.revert.yaml"

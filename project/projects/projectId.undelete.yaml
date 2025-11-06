@@ -1,0 +1,23 @@
+post:
+  summary: プロジェクト復元
+  description: |
+    論理削除済みのプロジェクトを復元し、通常の取得や一覧に再び含める。
+  tags:
+    - projects
+  operationId: undeleteProject
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/projectId"
+  responses:
+    200:
+      description: 復元成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/undeleteProjectResponse"
+    400:
+      description: |
+        - プロジェクトIDが不正
+        - プロジェクトが論理削除されていない
+    404:
+      description: |
+        - プロジェクトが存在しない

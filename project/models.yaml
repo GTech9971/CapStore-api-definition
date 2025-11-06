@@ -117,6 +117,12 @@ components:
           $ref: "#/components/schemas/projectSummary"
         status:
           $ref: "#/components/schemas/projectStatus"
+        isDeleted:
+          title: 論理削除フラグ
+          description: プロジェクトが論理削除済みかどうか
+          type: boolean
+          readOnly: true
+          default: false
         description:
           $ref: "#/components/schemas/projectDescription"
         tag:
@@ -145,6 +151,7 @@ components:
         - name
         - summary
         - status
+        - isDeleted
         - createdAt
         - lastModified
 
@@ -350,39 +357,6 @@ components:
       required:
         - op
         - path
-
-    jsonPatch:
-      title: JSON Patch
-      type: array
-      items:
-        $ref: "#/components/schemas/jsonPatchOperation"
-
-    projectDiff:
-      title: プロジェクト差分
-      type: object
-      properties:
-        baseHistoryId:
-          $ref: "#/components/schemas/projectHistoryId"
-        previousHistoryId:
-          $ref: "#/components/schemas/projectHistoryId"
-        patch:
-          $ref: "#/components/schemas/jsonPatch"
-        summary:
-          title: 要約
-          type: object
-          properties:
-            totalChanges:
-              type: integer
-              example: 5
-            added:
-              type: integer
-              example: 2
-            removed:
-              type: integer
-              example: 1
-            replaced:
-              type: integer
-              example: 2
 
   parameters:
     projectId:

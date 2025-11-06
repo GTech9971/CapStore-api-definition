@@ -34,6 +34,15 @@ components:
             data:
               $ref: "./models.yaml#/components/schemas/project"
 
+    undeleteProjectResponse:
+      title: プロジェクト復元レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/project"
+
     registryProjectResponse:
       title: プロジェクト登録レスポンス
       allOf:
@@ -69,15 +78,6 @@ components:
           properties:
             data:
               $ref: "./models.yaml#/components/schemas/projectHistory"
-
-    fetchProjectDiffResponse:
-      title: プロジェクト差分取得レスポンス
-      allOf:
-        - $ref: ../common/models.yaml#/components/schemas/baseResponse
-        - type: object
-          properties:
-            data:
-              $ref: "./models.yaml#/components/schemas/projectDiff"
 
     revertProjectResponse:
       title: プロジェクト復元レスポンス

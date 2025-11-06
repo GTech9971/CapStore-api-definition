@@ -8,6 +8,7 @@
         "redocly",
         "SSOP",
         "UART",
+        "undelete",
         "USART"
     ],
     "taskExplorer.exclude": [

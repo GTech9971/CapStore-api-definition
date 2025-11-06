@@ -144,6 +144,17 @@ components:
         type: string
       description: フィルター内容
 
+    includedDeleted:
+      name: includedDeleted
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: |
+        論理削除済みプロジェクトを含めるかどうか
+      allowEmptyValue: true
+
     searchQuery:
       name: searchQuery
       description: |

@@ -22,6 +22,7 @@ post:
     404:
       description: |
         - 履歴が存在しない
+        - プロジェクトが論理削除済み
     422:
       description: |-
         - BOMに削除済みのComponentIdが設定されているため復元不可

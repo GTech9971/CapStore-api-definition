@@ -6,6 +6,7 @@ get:
     - Accept: `application/json` の場合はプロジェクト情報(JSON)を返す。
     - Accept: `text/csv` の場合は当該プロジェクトのBOMリストをCSVで返す。
     - Accept: `application/pdf` の場合はプロジェクト情報(pdf)を返す。
+    - 論理削除済みのプロジェクトは404を返す
   tags:
     - projects
   operationId: fetchProject
@@ -31,7 +32,7 @@ get:
             type: string
             format: "binary"
             example: "pdf binary"
-            description : "プロジェクトの内容" 
+            description: "プロジェクトの内容"
       headers:
         Content-Disposition:
           description: |-
@@ -45,11 +46,13 @@ get:
     404:
       description: |
         - プロジェクトが存在しない
+        - プロジェクトが論理削除済み
 
 patch:
   summary: プロジェクト更新
   description: |-
-    imgUrls、externalLinks、bomListについては更新ではなく置き換え処理となる
+    - imgUrls、externalLinks、bomListについては更新ではなく置き換え処理となる
+    - 論理削除済みのプロジェクトは404を返す
   tags:
     - projects
   operationId: updateProject
@@ -76,9 +79,14 @@ patch:
     404:
       description: |
         - プロジェクトが存在しない
+        - プロジェクトが論理削除済
 
 delete:
   summary: プロジェクト削除
+  description: |
+    プロジェクトを論理削除し、通常の取得や一覧から除外する。
+
+    再度利用する場合は `POST /projects/{projectId}:undelete` を使用する。
   tags:
     - projects
   operationId: deleteProject
@@ -90,6 +98,7 @@ delete:
     400:
       description: |
         - プロジェクトIDが不正
+        - プロジェクトが論理削除済み
     404:
       description: |
         - プロジェクトが存在しない
