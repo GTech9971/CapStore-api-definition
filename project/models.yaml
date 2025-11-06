@@ -289,12 +289,14 @@ components:
         - created 新規登録
         - updated 更新
         - deleted 削除
+        - undeleted 削除取消
         - restored 復元
       type: string
       enum:
         - created
         - updated
         - deleted
+        - undeleted
         - restored
       example: updated
 
@@ -337,26 +339,6 @@ components:
         - projectId
         - createdAt
         - changeType
-
-    jsonPatchOperation:
-      title: JSON Patch Operation
-      type: object
-      properties:
-        op:
-          type: string
-          enum: [add, remove, replace, move, copy, test]
-        path:
-          type: string
-          example: "/bomList/0/quantity"
-        from:
-          type: string
-          example: "/bomList/0"
-        value:
-          description: 変更値
-          nullable: true
-      required:
-        - op
-        - path
 
   parameters:
     projectId:

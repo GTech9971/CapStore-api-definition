@@ -2,6 +2,7 @@ post:
   summary: プロジェクト履歴へロールバック
   description: |
     - 指定した履歴IDの内容へプロジェクトを復元する。
+      - 履歴の変更種別は`restored`となる
   tags:
     - projectsHistory
   operationId: revertProjectToHistory

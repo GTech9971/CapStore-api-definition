@@ -2,6 +2,7 @@ post:
   summary: プロジェクト復元
   description: |
     論理削除済みのプロジェクトを復元し、通常の取得や一覧に再び含める。
+     - 履歴の変更種別は`undeleted`となる
   tags:
     - projects
   operationId: undeleteProject
