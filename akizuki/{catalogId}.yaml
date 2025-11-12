@@ -28,6 +28,7 @@ get:
     409:
       description: |-
         - 既に同じモデル名・カテゴリー・メーカーで電子部品が登録済み
+          - errors[n].detailに該当する電子部品Idが設定される
     500:
       description: |-
         ### エラーコード:AKE0102

@@ -48,6 +48,12 @@ components:
           title: エラーコード
           type: string
           example: null
+        
+        detail:
+          title: 詳細
+          type: string
+          example: "桁数が12桁です。10桁まで入力可能"
+          
       required:
         - message
 
