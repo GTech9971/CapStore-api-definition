@@ -26,6 +26,11 @@ components:
           readOnly: true
           allOf:
             - $ref: "./models.yaml#/components/schemas/maker"
+        storageIds:
+          title: 紐づくストレージID一覧
+          type: array
+          items:
+            $ref: "../storage/models.yaml#/components/schemas/storageId"
       required:
         - categoryId
         - makerId
@@ -46,6 +51,11 @@ components:
           $ref: "../parts-component/models.yaml#/components/schemas/categoryId"
         makerId:
           $ref: "../parts-component/models.yaml#/components/schemas/makerId"
+        storageIds:
+          title: 紐づくストレージID一覧
+          type: array
+          items:
+            $ref: "../storage/models.yaml#/components/schemas/storageId"
 
     registryCategoryRequest:
       title: カテゴリー新規登録リクエスト

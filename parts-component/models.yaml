@@ -129,6 +129,11 @@ components:
           $ref: "#/components/schemas/componentImageList"
         currentStock:
           $ref: "../inventory/models.yaml#/components/schemas/quantity"
+        storages:
+          title: 紐づくストレージ一覧
+          type: array
+          items:
+            $ref: "../storage/models.yaml#/components/schemas/storage"
       required:
         - id
         - name
@@ -147,6 +152,7 @@ components:
         - categoryId
         - makerId
         - images
+        - storageIds
       example: name
 
   parameters:
