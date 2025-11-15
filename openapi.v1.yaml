@@ -73,3 +73,16 @@ paths:
 
   /projects/{projectId}/histories/{historyId}:revert:
     $ref: "./project/projects/histories/historyId.revert.yaml"
+
+  # Storage / Locations
+  /locations:
+    $ref: "./storage/locations.yaml"
+
+  /locations/{locationId}:
+    $ref: "./storage/locations/locationId.yaml"
+
+  /storages:
+    $ref: "./storage/storages.yaml"
+
+  /storages/{storageId}:
+    $ref: "./storage/storages/storageId.yaml"

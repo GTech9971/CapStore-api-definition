@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: "保管場所・ストレージモデル"
+  version: "1.0"
+paths: {}
+components:
+  schemas:
+    locationId:
+      title: ロケーションID
+      description: ロケーションの識別子
+      type: string
+      example: "L-000001"
+
+    storageId:
+      title: ストレージID
+      description: ストレージの識別子
+      type: string
+      example: "S-000001"
+
+    locationName:
+      title: ロケーション名
+      type: string
+      maxLength: 50
+      example: "デスク下"
+
+    storageName:
+      title: ストレージ名
+      type: string
+      maxLength: 50
+      example: "保管箱A"
+
+    useableFreeSpace:
+      title: 使用可能空き容量
+      description: |-
+        ロケーションまたはストレージに、さらに収納可能な容量
+        単位はシステム定義の論理単位とする
+      type: integer
+      minimum: 0
+      example: 100
+
+    positionIndex:
+      title: 位置番号
+      description: |-
+        同一ロケーション内での位置を表す番号
+        例: キャビネット3段目なら3
+      type: integer
+      minimum: 1
+      example: 3
+
+    location:
+      title: ロケーション
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/locationId"
+        name:
+          $ref: "#/components/schemas/locationName"
+        useableFreeSpace:
+          $ref: "#/components/schemas/useableFreeSpace"
+        storages:
+          title: 紐づくストレージ一覧
+          type: array
+          items:
+            $ref: "#/components/schemas/storage"
+      required:
+        - id
+        - name
+
+    storage:
+      title: ストレージ
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/storageId"
+        name:
+          $ref: "#/components/schemas/storageName"
+        useableFreeSpace:
+          $ref: "#/components/schemas/useableFreeSpace"
+        locationId:
+          $ref: "#/components/schemas/locationId"
+        positionIndex:
+          $ref: "#/components/schemas/positionIndex"
+      required:
+        - id
+        - name
+
+    updateLocationFieldMask:
+      title: ロケーション更新フィールドマスク
+      type: string
+      enum:
+        - name
+        - useableFreeSpace
+      example: name
+
+    updateStorageFieldMask:
+      title: ストレージ更新フィールドマスク
+      type: string
+      enum:
+        - name
+        - useableFreeSpace
+        - locationId
+        - positionIndex
+      example: name
+
+  parameters:
+    locationId:
+      name: locationId
+      description: ロケーションID
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/locationId"
+
+    storageId:
+      name: storageId
+      description: ストレージID
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/storageId"
+
+    updateLocationFieldMask:
+      name: fieldMask
+      description: ロケーション更新フィールドマスク
+      in: query
+      required: true
+      schema:
+        $ref: "#/components/schemas/updateLocationFieldMask"
+
+    updateStorageFieldMask:
+      name: fieldMask
+      description: ストレージ更新フィールドマスク
+      in: query
+      required: true
+      schema:
+        $ref: "#/components/schemas/updateStorageFieldMask"

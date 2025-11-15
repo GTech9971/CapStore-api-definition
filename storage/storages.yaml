@@ -1,0 +1,44 @@
+get:
+  summary: ストレージ一覧取得
+  description: ストレージ一覧を取得する
+  tags:
+    - storages
+  operationId: fetchStorages
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchStoragesResponse"
+    204:
+      description: コンテンツなし
+
+post:
+  summary: ストレージ登録
+  tags:
+    - storages
+  operationId: registryStorage
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryStorageRequest"
+  responses:
+    201:
+      description: 登録成功
+      headers:
+        Location:
+          description: 新規登録したストレージのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/storages/S-000001"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryStorageResponse"
+    400:
+      description: |
+        - 不正なリクエスト

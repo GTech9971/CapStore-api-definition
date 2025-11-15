@@ -1,0 +1,47 @@
+get:
+  summary: ロケーション一覧取得
+  description: ロケーション一覧を取得する
+  tags:
+    - locations
+  operationId: fetchLocations
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchLocationsResponse"
+    204:
+      description: コンテンツなし
+
+post:
+  summary: ロケーション登録
+  tags:
+    - locations
+  operationId: registryLocation
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryLocationRequest"
+  responses:
+    201:
+      description: 登録成功
+      headers:
+        Location:
+          description: 新規登録したロケーションのURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/locations/L-000001"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryLocationResponse"
+    400:
+      description: |
+        - 不正なリクエスト
+    409:
+      description: |-
+        - すでに同じ名前のローケーションが登録されている

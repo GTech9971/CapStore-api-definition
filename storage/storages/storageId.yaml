@@ -1,0 +1,69 @@
+get:
+  summary: ストレージ取得
+  description: 指定したストレージIDのストレージを取得する
+  tags:
+    - storages
+  operationId: fetchStorage
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/storageId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchStorageResponse"
+    400:
+      description: |
+        - ストレージIDの形式が不正
+    404:
+      description: |
+        - ストレージが存在しない
+
+patch:
+  summary: ストレージ更新
+  tags:
+    - storages
+  operationId: updateStorage
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/storageId"
+    - $ref: "../models.yaml#/components/parameters/updateStorageFieldMask"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../requests.yaml#/components/schemas/updateStorageRequest"
+  responses:
+    200:
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/updateStorageResponse"
+    400:
+      description: |
+        - ストレージIDが不正
+        - フィールドマスクが不正
+    404:
+      description: |
+        - ストレージが存在しない
+
+delete:
+  summary: ストレージ削除
+  description: ストレージを削除する
+  tags:
+    - storages
+  operationId: deleteStorage
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/storageId"
+  responses:
+    204:
+      description: NoContent
+    400:
+      description: |
+        - ストレージIDが不正
+    404:
+      description: |
+        - ストレージが存在しない
+

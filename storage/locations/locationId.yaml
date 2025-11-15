@@ -1,0 +1,71 @@
+get:
+  summary: ロケーション取得
+  description: 指定したロケーションIDのロケーションを取得する
+  tags:
+    - locations
+  operationId: fetchLocation
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/locationId"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchLocationResponse"
+    400:
+      description: |
+        - ロケーションIDの形式が不正
+    404:
+      description: |
+        - ロケーションが存在しない
+
+patch:
+  summary: ロケーション更新
+  tags:
+    - locations
+  operationId: updateLocation
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/locationId"
+    - $ref: "../models.yaml#/components/parameters/updateLocationFieldMask"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../requests.yaml#/components/schemas/updateLocationRequest"
+  responses:
+    200:
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/updateLocationResponse"
+    400:
+      description: |
+        - ロケーションIDが不正
+        - フィールドマスクが不正
+    404:
+      description: |
+        - ロケーションが存在しない
+    409:
+      description: |-
+        - すでに同じ名前のローケーションが登録されている
+
+delete:
+  summary: ロケーション削除
+  description: ロケーションを削除する
+  tags:
+    - locations
+  operationId: deleteLocation
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/locationId"
+  responses:
+    204:
+      description: NoContent
+    400:
+      description: |
+        - ロケーションIDが不正
+    404:
+      description: |
+        - ロケーションが存在しない

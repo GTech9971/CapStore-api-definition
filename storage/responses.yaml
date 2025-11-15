@@ -1,0 +1,94 @@
+openapi: 3.0.3
+info:
+  title: "storage responses"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    fetchLocationsResponse:
+      title: ロケーション一覧取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/location"
+
+    fetchLocationResponse:
+      title: ロケーション取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/location"
+
+    registryLocationResponse:
+      title: ロケーション登録レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              title: RegistryLocationIdData
+              type: object
+              properties:
+                locationId:
+                  $ref: "./models.yaml#/components/schemas/locationId"
+              required:
+                - locationId
+
+    updateLocationResponse:
+      title: ロケーション更新レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/location"
+
+    fetchStoragesResponse:
+      title: ストレージ一覧取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/storage"
+
+    fetchStorageResponse:
+      title: ストレージ取得レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/storage"
+
+    registryStorageResponse:
+      title: ストレージ登録レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              title: RegistryStorageIdData
+              type: object
+              properties:
+                storageId:
+                  $ref: "./models.yaml#/components/schemas/storageId"
+              required:
+                - storageId
+
+    updateStorageResponse:
+      title: ストレージ更新レスポンス
+      allOf:
+        - $ref: ../common/models.yaml#/components/schemas/baseResponse
+        - type: object
+          properties:
+            data:
+              $ref: "./models.yaml#/components/schemas/storage"

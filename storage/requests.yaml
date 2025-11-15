@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: "storage requests"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    registryLocationRequest:
+      title: ロケーション登録リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/locationName"
+        useableFreeSpace:
+          $ref: "./models.yaml#/components/schemas/useableFreeSpace"
+      required:
+        - name
+
+    updateLocationRequest:
+      title: ロケーション更新リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/locationName"
+        useableFreeSpace:
+          $ref: "./models.yaml#/components/schemas/useableFreeSpace"
+
+    registryStorageRequest:
+      title: ストレージ登録リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/storageName"
+        useableFreeSpace:
+          $ref: "./models.yaml#/components/schemas/useableFreeSpace"
+        locationId:
+          $ref: "./models.yaml#/components/schemas/locationId"
+        positionIndex:
+          $ref: "./models.yaml#/components/schemas/positionIndex"
+      required:
+        - name
+
+    updateStorageRequest:
+      title: ストレージ更新リクエスト
+      type: object
+      properties:
+        name:
+          $ref: "./models.yaml#/components/schemas/storageName"
+        useableFreeSpace:
+          $ref: "./models.yaml#/components/schemas/useableFreeSpace"
+        locationId:
+          $ref: "./models.yaml#/components/schemas/locationId"
+        positionIndex:
+          $ref: "./models.yaml#/components/schemas/positionIndex"
