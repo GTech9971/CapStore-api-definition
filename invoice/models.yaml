@@ -93,3 +93,31 @@ components:
         - purchaser
         - totalAmount
         - details
+
+    updateInvoiceFieldMask:
+      title: 納品書更新フィールドマスク
+      type: string
+      enum:
+        - purchaser
+        - orderDate
+        - shipDate
+        - totalAmount
+        - details
+      example: purchaser
+
+  parameters:
+    orderNumber:
+      name: orderNumber
+      description: 注文番号
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/invoiceOrderNumber"
+
+    updateInvoiceFieldMask:
+      name: fieldMask
+      description: 納品書更新フィールドマスク
+      in: query
+      required: true
+      schema:
+        $ref: "#/components/schemas/updateInvoiceFieldMask"

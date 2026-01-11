@@ -89,3 +89,6 @@ paths:
 
   /invoices:
     $ref: "./invoice/invoices.yaml"
+
+  /invoices/{orderNumber}:
+    $ref: "./invoice/invoices/orderNumber.yaml"

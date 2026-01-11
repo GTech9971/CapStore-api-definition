@@ -1,0 +1,31 @@
+patch:
+  summary: 納品書更新
+  description: |-
+    - details を更新する場合は置き換えのみ行う
+    - details の部分更新は行わない
+  tags:
+    - invoices
+  operationId: updateInvoice
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/orderNumber"
+    - $ref: "../models.yaml#/components/parameters/updateInvoiceFieldMask"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../requests.yaml#/components/schemas/updateInvoiceRequest"
+  responses:
+    200:
+      description: 更新成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/updateInvoiceResponse"
+    400:
+      description: |-
+        - 注文番号が不正
+        - フィールドマスクが不正
+    404:
+      description: |-
+        - 納品書が存在しない

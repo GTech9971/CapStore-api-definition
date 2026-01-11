@@ -9,3 +9,18 @@ components:
       title: 納品書登録リクエスト
       allOf:
         - $ref: "./models.yaml#/components/schemas/invoice"
+
+    updateInvoiceRequest:
+      title: 納品書更新リクエスト
+      type: object
+      properties:
+        purchaser:
+          $ref: "./models.yaml#/components/schemas/invoicePurchaser"
+        orderDate:
+          $ref: "./models.yaml#/components/schemas/invoiceOrderDate"
+        shipDate:
+          $ref: "./models.yaml#/components/schemas/invoiceShipDate"
+        totalAmount:
+          $ref: "./models.yaml#/components/schemas/invoiceTotalAmount"
+        details:
+          $ref: "./models.yaml#/components/schemas/invoiceDetailList"
