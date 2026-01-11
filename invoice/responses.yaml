@@ -55,3 +55,14 @@ components:
           properties:
             data:
               $ref: "./models.yaml#/components/schemas/invoice"
+
+    fetchInvoicesResponse:
+      title: 納品書一覧取得成功時のレスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/pageResponse"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "./models.yaml#/components/schemas/invoice"

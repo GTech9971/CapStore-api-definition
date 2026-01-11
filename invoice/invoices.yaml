@@ -32,3 +32,27 @@ post:
     409:
       description: |-
         - 同じ注文番号の納品書が既に登録されている
+
+get:
+  summary: 納品書一覧取得
+  description: |-
+    - 論理削除済みの納品書は除外する
+  tags:
+    - invoices
+  operationId: fetchInvoices
+  parameters:
+    - $ref: "../common/models.yaml#/components/parameters/pageIndex"
+    - $ref: "../common/models.yaml#/components/parameters/pageSize"
+    - $ref: "../common/models.yaml#/components/parameters/sortColumn"
+    - $ref: "../common/models.yaml#/components/parameters/sortOrder"
+    - $ref: "../common/models.yaml#/components/parameters/filterColumn"
+    - $ref: "../common/models.yaml#/components/parameters/filterQuery"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/fetchInvoicesResponse"
+    204:
+      description: コンテンツなし

@@ -14,9 +14,9 @@ components:
     pageSize:
       title: 表示数
       type: integer
-      example: "10"
+      example: 50
       minimum: 1
-      default: 10
+      default: 50
       description: 表示数
     totalPages:
       title: 全ページ数
