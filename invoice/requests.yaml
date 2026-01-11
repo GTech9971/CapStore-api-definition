@@ -1,0 +1,11 @@
+openapi: 3.0.3
+info:
+  title: "invoice requests"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    registryInvoiceRequest:
+      title: 納品書登録リクエスト
+      allOf:
+        - $ref: "./models.yaml#/components/schemas/invoice"

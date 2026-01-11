@@ -1,0 +1,39 @@
+openapi: 3.0.3
+info:
+  title: "invoice responses"
+  version: "v1"
+paths: {}
+components:
+  schemas:
+    registryInvoiceResponse:
+      title: 納品書登録成功レスポンス
+      allOf:
+        - $ref: "../common/models.yaml#/components/schemas/baseResponse"
+        - type: object
+          properties:
+            data:
+              title: RegistryInvoiceData
+              type: object
+              properties:
+                orderNumber:
+                  $ref: "./models.yaml#/components/schemas/invoiceOrderNumber"
+                unRegistered:
+                  title: 未登録情報
+                  description: |-
+                    メーカー名、カテゴリーが未登録の場合に返却する
+                    - makerName 未登録メーカー名
+                    - category 未登録カテゴリー
+                  type: object
+                  properties:
+                    makerNames:
+                      title: 未登録メーカー名リスト
+                      type: array
+                      items:
+                        $ref: "../parts-component/models.yaml#/components/schemas/makerName"
+                    categories:
+                      title: 未登録カテゴリリスト
+                      type: array
+                      items:
+                        $ref: "../parts-component/models.yaml#/components/schemas/category"
+              required:
+                - orderNumber

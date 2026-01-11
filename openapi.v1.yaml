@@ -86,3 +86,6 @@ paths:
 
   /storages/{storageId}:
     $ref: "./storage/storages/storageId.yaml"
+
+  /invoices:
+    $ref: "./invoice/invoices.yaml"

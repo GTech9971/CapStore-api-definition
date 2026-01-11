@@ -1,0 +1,34 @@
+post:
+  summary: 納品書登録
+  description: |-
+    1. 納品書を登録する
+    2. メーカー名、カテゴリーが未登録の場合、その情報を`unRegistered`に返す
+  tags:
+    - invoices
+  operationId: registryInvoice
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./requests.yaml#/components/schemas/registryInvoiceRequest"
+  responses:
+    201:
+      description: 登録成功
+      headers:
+        Location:
+          description: 新規登録した納品書のURL
+          schema:
+            type: string
+            format: uri
+            example: "https://xxx/invoices/ORD-20240131-0001"
+      content:
+        application/json:
+          schema:
+            $ref: "./responses.yaml#/components/schemas/registryInvoiceResponse"
+    400:
+      description: |-
+        - 不正なリクエスト
+    409:
+      description: |-
+        - 同じ注文番号の納品書が既に登録されている
