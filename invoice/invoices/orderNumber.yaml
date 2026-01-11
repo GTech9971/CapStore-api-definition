@@ -1,3 +1,27 @@
+get:
+  summary: 納品書取得
+  description: |-
+    - 論理削除済みの納品書は404を返す
+  tags:
+    - invoices
+  operationId: fetchInvoice
+  parameters:
+    - $ref: "../models.yaml#/components/parameters/orderNumber"
+  responses:
+    200:
+      description: 取得成功
+      content:
+        application/json:
+          schema:
+            $ref: "../responses.yaml#/components/schemas/fetchInvoiceResponse"
+    400:
+      description: |-
+        - 注文番号が不正
+    404:
+      description: |-
+        - 納品書が存在しない
+        - 納品書が論理削除済み
+
 patch:
   summary: 納品書更新
   description: |-
