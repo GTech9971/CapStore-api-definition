@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: "納品書モデル"
+  version: "1.0"
+paths: {}
+components:
+  schemas:
+    invoiceOrderNumber:
+      title: 注文番号
+      type: string
+      example: "ORD-20240131-0001"
+
+    invoicePurchaser:
+      title: 購入先
+      type: string
+      example: "株式会社テスト商事"
+
+    invoiceOrderDate:
+      title: 注文日
+      type: string
+      format: date
+      example: "2024-01-31"
+
+    invoiceShipDate:
+      title: 出荷日
+      type: string
+      format: date
+      example: "2024-02-03"
+
+    invoiceTotalAmount:
+      title: 合計金額
+      type: integer
+      minimum: 0
+      example: 12800
+
+    invoiceDetailProductName:
+      title: 商品名
+      type: string
+      example: "USB電源アダプタ"
+
+    invoiceDetailProductId:
+      title: 商品ID
+      type: string
+      example: "P-000123"
+
+    invoiceDetailAmount:
+      title: 金額
+      type: integer
+      minimum: 0
+      example: 3200
+
+    invoiceDetail:
+      title: 納品書明細
+      type: object
+      properties:
+        productName:
+          $ref: "#/components/schemas/invoiceDetailProductName"
+        productId:
+          $ref: "#/components/schemas/invoiceDetailProductId"
+        quantity:
+          $ref: "../inventory/models.yaml#/components/schemas/quantity"
+        amount:
+          $ref: "#/components/schemas/invoiceDetailAmount"
+      required:
+        - productName
+        - quantity
+        - amount
+
+    invoiceDetailList:
+      title: 納品書明細リスト
+      type: array
+      items:
+        $ref: "#/components/schemas/invoiceDetail"
+
+    invoice:
+      title: 納品書
+      type: object
+      properties:
+        orderNumber:
+          $ref: "#/components/schemas/invoiceOrderNumber"
+        purchaser:
+          $ref: "#/components/schemas/invoicePurchaser"
+        orderDate:
+          $ref: "#/components/schemas/invoiceOrderDate"
+        shipDate:
+          $ref: "#/components/schemas/invoiceShipDate"
+        totalAmount:
+          $ref: "#/components/schemas/invoiceTotalAmount"
+        details:
+          $ref: "#/components/schemas/invoiceDetailList"
+      required:
+        - orderNumber
+        - purchaser
+        - totalAmount
+        - details
