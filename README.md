@@ -58,6 +58,9 @@
 4. `tsconfig.json` も CI 上で挿入（ビルドのため）
 5. `npm publish --provenance --access public` による公開
 
+*Githubにnpmのtokenを登録する方式からtrusted-publisher方式に移行*
+[公式URL](https://docs.npmjs.com/trusted-publishers)
+
 ### なぜ package.json を CI で生成するのか？
 
 `typescript-fetch` は `withNpmPackage=true` に非対応で、`package.json` が自動生成されません。よって GitHub Actions 内で手動で生成する必要があります。

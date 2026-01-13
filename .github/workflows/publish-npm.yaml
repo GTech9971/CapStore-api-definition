@@ -134,4 +134,4 @@ jobs:
       - name: npm publish
         run: |
           cd generated-client-typescript
-          npm publish
+          npm publish --province --access publish
