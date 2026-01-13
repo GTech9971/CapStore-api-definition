@@ -116,14 +116,22 @@ jobs:
           path: generated-client-typescript
 
       # npmのログイン
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v4
         with:
           node-version: "24.x" # Node.js のバージョン
           registry-url: "https://registry.npmjs.org"
 
+      # npm 11.5.1以降がtrusted publisherには必要
+      - name: Update npm
+        run: npm install -g npm@latest
+
       # npmパッケージ公開
-      - name: publish to npm
+      - name: npm install
         run: |
           cd generated-client-typescript
           npm install
-          npm publish --provenance --access public
+
+      - name: npm publish
+        run: |
+          cd generated-client-typescript
+          npm publish
